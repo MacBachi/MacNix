@@ -22,4 +22,9 @@ sudo mv /etc/zshrc /etc/zhsrc.before-nix-darwin
 sudo nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake $HOME/mynix/hosts/macos
 ```
 
+## Rebuild NIX
+```
+sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#HOSTNAME
+```
+
 
