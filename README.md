@@ -14,6 +14,12 @@ nix-shell -p git --run 'git clone https://github.com/MacBachi/MacNix.git $HOME/m
 ```
 
 ```
+sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
+sudo mv /etc/zshrc /etc/zhsrc.before-nix-darwin
+```
+
+```
 sudo nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake $HOME/mynix/hosts/macos
 ```
+
 
