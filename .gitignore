@@ -1,0 +1,19 @@
+# Build-Artefakte von Nix
+/result
+/results
+/nix/store/*
+
+# Temporäre Dateien und Verzeichnisse von Nix Flakes
+.direnv/
+.envrc
+flake.lock
+
+# macOS spezifische Dateien
+.DS_Store
+
+# Übliche Editor/IDE-Dateien
+.idea/
+.vscode/
+*~
+\#*
+.cache/
