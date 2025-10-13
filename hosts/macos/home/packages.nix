@@ -5,7 +5,7 @@
     atuin
     chroma
     nushell
-    tmux
+    #👉homemanager -> tmux
     hostmux
     zellij
     starship
@@ -16,7 +16,7 @@
 
     # Development & Tools
     gh
-    git
+    #👉homemanager -> git
     jq
     ollama
     pipx
@@ -27,17 +27,17 @@
     autojump
     aria2
     broot
-    bat
-    bat-extras.core
+    #👉homemanager bat
+    #👉homemanager bat-extras.core
     colordiff
     cowsay
     duf
     dust
-    eza
+    #👉homemanager -> eza
     fd
-    fzf
+    #👉homemanager -> fzf
     glances
-    htop
+    #👉homemanager -> htop
     httpie
     icdiff
     lolcat

@@ -7,8 +7,11 @@
     "/opt/homebrew/bin"
   ];
 
+  programs.bash.enable = true;
+
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
@@ -71,6 +74,8 @@
 
   programs.starship = {
     enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
     settings = {
       # Wählt die Farbpalette aus den unten definierten Paletten
       palette = "catppuccin_mocha";

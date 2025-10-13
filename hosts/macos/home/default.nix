@@ -4,6 +4,7 @@
     ./packages.nix
     ./shell.nix
     ./environment.nix
+    ./macbachi.nix
   ];
 
   # Home Manager Basiskonfiguration
