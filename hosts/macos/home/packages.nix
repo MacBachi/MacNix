@@ -78,5 +78,6 @@ tldr
     fortune
     gnupg
     lynis
+    yubikey-manager
   ];
 }
