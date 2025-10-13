@@ -9,13 +9,6 @@
       cleanup = "zap";
     };
 
-
-#    taps = [
-#      "homebrew/homebrew-core"
-#      "homebrew/homebrew-cask"
-#    ];
-
-
     casks = [
       "setapp"
       "signal"
@@ -23,6 +16,7 @@
       "keyclu"
       "displaylink"
       "arduino-ide"
+      "yubico-authenticator"
     ];
     brews = [
       "dug"
