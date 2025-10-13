@@ -152,8 +152,6 @@
   programs.bat.enable = true;
   programs.bat.config.theme = "Nord";
 
-  programs.bat-extras.core.enable = true;
-
   programs.zoxide.enable = true;
 
   programs.ssh = {

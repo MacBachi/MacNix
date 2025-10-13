@@ -28,7 +28,7 @@
     aria2
     broot
     #👉homemanager bat
-    #👉homemanager bat-extras.core
+    #👉homemanager bat-extras.core  #💁 gibt es nicht in home-manager
     colordiff
     cowsay
     duf
