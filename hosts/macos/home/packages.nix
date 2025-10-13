@@ -38,6 +38,7 @@
     #👉homemanager -> fzf
     glances
     #👉homemanager -> htop
+    btop
     httpie
     icdiff
     lolcat
