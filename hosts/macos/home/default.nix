@@ -7,13 +7,13 @@
     ./macbachi.nix
   ];
 
-  # Home Manager Basiskonfiguration
+  # Home Manager Basiskonfiguration #
   home = {
     username = "mb";
     homeDirectory = "/Users/mb";
-    stateVersion = "23.11"; # Setze auf die aktuelle Version
+    stateVersion = "25.05"; # Setze auf die aktuelle Version
   };
 
-  # Home Manager Programme aktivieren
+  # Home Manager Programme aktivieren #
   programs.home-manager.enable = true;
 }
