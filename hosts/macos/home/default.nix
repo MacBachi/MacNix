@@ -1,4 +1,4 @@
-# ./home/home.nix
+# ./home/default.nix
 {
   imports = [
     ./packages.nix
