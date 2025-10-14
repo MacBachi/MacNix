@@ -1,11 +1,5 @@
 # ./darwin/system.nix
 {
-  # Definiere den Systembenutzer
-  users.users.mb = {
-    name = "mb";
-    home = "/Users/mb";
-  };
-
   # Hauptbenutzer für benutzerspezifische Einstellungen (Homebrew, Dock etc.)
   system.primaryUser = "mb";
 

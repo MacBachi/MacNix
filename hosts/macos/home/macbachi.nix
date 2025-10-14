@@ -66,12 +66,6 @@
 
   programs.fzf = {
     enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    tmux.enableShellIntegration = true;
-    defaultOptions = [
-      "--no-mouse"
-    ];
   };
 
   programs.git = {
@@ -198,6 +192,7 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
+    
     extraConfig = ''
       StrictHostKeyChecking no
     '';

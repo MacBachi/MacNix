@@ -8,10 +8,10 @@
   ];
 
   home = {
-    username = "mb";
-    homeDirectory = "/Users/mb";
+#    username = "mb";
+#    homeDirectory = "/Users/mb";
     stateVersion = "25.05"; # Setze auf die aktuelle Version
   };
 
-  programs.home-manager.enable = true;
+#  programs.home-manager.enable = true;
 }
