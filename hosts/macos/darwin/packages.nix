@@ -16,8 +16,6 @@
     iterm2
     obsidian
     teams
-    vscode
-    # warp-terminal
     waveterm
   ];
 

@@ -2,7 +2,6 @@
 {
   home, ...
 }: {
-  # Homebrew-Pfad für die Benutzersession
   home.sessionPath = [
     "/opt/homebrew/bin"
   ];
@@ -16,10 +15,8 @@
     syntaxHighlighting.enable = true;
 
     initContent = ''
-      # Source system-wide zshrc für Homebrew PATH etc.
       source /etc/zshrc;
 
-      # Konfiguration für das Oh My Zsh 'alias-finder' Plugin
       zstyle ':omz:plugins:alias-finder' autoload yes
       zstyle ':omz:plugins:alias-finder' longer yes
       zstyle ':omz:plugins:alias-finder' exact yes
@@ -28,7 +25,6 @@
       MAGIC_ENTER_OTHER_COMMAND='ls -lh .'
     '';
     
-    # Korrekte Konfiguration für Oh My Zsh MIT BINDESTRICH
     oh-my-zsh = {
       enable = true;
       plugins = [ 
@@ -77,10 +73,8 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     settings = {
-      # Wählt die Farbpalette aus den unten definierten Paletten
       palette = "catppuccin_mocha";
 
-      # Der Format-String als eine einzige, lange Zeile
       format = ''[](red)''$os''$username[](bg:peach fg:red)''$directory[](bg:yellow fg:peach)''$git_branch''$git_status[](fg:yellow bg:green)''$c''$rust''$golang''$nodejs''$php''$java''$kotlin''$haskell''$python[](fg:green bg:sapphire)''$conda[](fg:sapphire bg:lavender)''$time[ ](fg:lavender)''$cmd_duration''$line_break''$character'';
 
       # Module
@@ -242,7 +236,6 @@
           surface2 = "#585b70"; surface1 = "#45475a"; surface0 = "#313244"; base = "#1e1e2e";
           mantle = "#181825"; crust = "#11111b";
         };
-        # Andere Paletten hier bei Bedarf hinzufügen
       };
     };
   };

@@ -11,6 +11,10 @@
     nix-direnv.enable = true;
   };
 
+  programs.vscode = {
+      enable = true;
+  };
+
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
