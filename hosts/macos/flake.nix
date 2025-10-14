@@ -1,6 +1,8 @@
 # ./flake.nix
 {
   description = "Markus zenful darwin system flake";
+
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
@@ -11,7 +13,16 @@
     };
    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
-  outputs = inputs@{ self, nix-darwin, ... }: {
+
+
+  outputs = 
+    inputs@{ self
+    , nix-darwin
+    , nix-vscode-extensions
+    , home-manager
+    , nixpkgs
+    , ... }: 
+  {
     darwinConfigurations."rizzo2025" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       specialArgs = { inherit inputs; };

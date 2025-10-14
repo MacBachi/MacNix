@@ -12,11 +12,12 @@
   };
 
   programs.vscode = {
-      enable = true;
-      profiles.default.userSettings = {
+    enable = true;
+    profiles.default = {
+      userSettings = {
         "editor.formatOnSave" = true;
       };
-      profiles.default.keybindings = [
+      keybindings = [
         {
           # schnell vom Terminal wieder zum Code springen, ohne die Maus zu benutzen
           key = "shift+cmd+j";
@@ -24,7 +25,11 @@
           when = "terminalFocus";
         }
       ];
+      extensions = with pkgs.vscode-marketplace; [
+        jnoortheen.nix-ide
+      ];
     };
+  };
 
   programs.eza = {
     enable = true;

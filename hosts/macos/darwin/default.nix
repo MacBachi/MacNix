@@ -10,6 +10,11 @@
     ./users.nix
   ];
 
+  nixpkgs.overlays = [
+    inputs.nix-vscode-extensions.overlays.default
+  ];
+
+
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 
