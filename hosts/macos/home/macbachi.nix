@@ -25,8 +25,29 @@
           when = "terminalFocus";
         }
       ];
-      extensions = with pkgs.vscode-marketplace; [
+      extensions = with pkgs.vscode-marketplace-release; [
         jnoortheen.nix-ide
+	janisdd.vscode-edit-csv
+	mhutchie.git-graph
+	eamodio.gitlens
+        oderwat.indent-rainbow
+	yzhang.markdown-all-in-one
+	mechatroner.rainbow-csv
+	vscode-icons-team.vscode-icons
+	ms-vscode-remote.remote-ssh
+	ms-vscode-remote.remote-ssh-edit
+	ms-vscode.remote-explorer
+	ms-python.python
+	ms-python.debugpy
+	ms-python.vscode-pylance
+        ms-toolsai.vscode-jupyter-slideshow
+	ms-toolsai.jupyter-renderers
+	ms-toolsai.jupyter-keymap
+	ms-toolsai.vscode-jupyter-cell-tags
+	ms-toolsai.jupyter
+	github.copilot
+	github.copilot-chat
+	github.vscode-pull-request-github
       ];
     };
   };
