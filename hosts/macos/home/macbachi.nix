@@ -13,16 +13,18 @@
 
   programs.vscode = {
       enable = true;
-      userSettings = {
-        "editor.formatOnSave = true;
+      profiles.default.userSettings = {
+        "editor.formatOnSave" = true;
       };
-      keybindings = [
-        # schnell vom Terminal wieder zum Code springen, ohne die Maus zu benutzen
-        key = "shift+cmd+j";
-        command = "workbench.action.focusActiveEditorGroup";
-        when = "terminalFocus";
+      profiles.default.keybindings = [
+        {
+          # schnell vom Terminal wieder zum Code springen, ohne die Maus zu benutzen
+          key = "shift+cmd+j";
+          command = "workbench.action.focusActiveEditorGroup";
+          when = "terminalFocus";
+        }
       ];
-  };
+    };
 
   programs.eza = {
     enable = true;
