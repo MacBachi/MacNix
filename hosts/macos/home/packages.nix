@@ -5,42 +5,35 @@
     # Shell & Terminal
     atuin
     chroma
-    nushell
-    #👉homemanager -> tmux
     hostmux
-    zellij
+    neovim
+    nushell
+    ranger
     starship
     wezterm
-    neovim
-    ranger
     z-lua
+    zellij
 
     # Development & Tools
+    fabric-ai
     gh
-    #👉homemanager -> git
     jq
+    nixfmt-rfc-style
     ollama
     pipx
     rlwrap
-    fabric-ai
-    nixfmt-rfc-style
 
     # CLI Utilities
-    autojump
     aria2
+    autojump
     broot
-    #👉homemanager bat
-    #👉homemanager bat-extras.core  #💁 gibt es nicht in home-manager
+    btop
     colordiff
     cowsay
     duf
     dust
-    #👉homemanager -> eza
     fd
-    #👉homemanager -> fzf
     glances
-    #👉homemanager -> htop
-    btop
     httpie
     icdiff
     lolcat
@@ -55,8 +48,8 @@
     tree
     unp
     watch
-    wget
     w3m
+    wget
 
     # Networking
     arping
