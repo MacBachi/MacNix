@@ -22,6 +22,7 @@
     pipx
     rlwrap
     fabric-ai
+    nixfmt-rfc-style
 
     # CLI Utilities
     autojump
