@@ -1,17 +1,13 @@
 # ./home/default.nix
 {
   imports = [
-    ./packages.nix
-    ./shell.nix
     ./environment.nix
     ./macbachi.nix
+    ./packages.nix
+    ./shell.nix
   ];
 
   home = {
-#    username = "mb";
-#    homeDirectory = "/Users/mb";
-    stateVersion = "25.05"; # Setze auf die aktuelle Version
+    stateVersion = "25.05";
   };
-
-#  programs.home-manager.enable = true;
 }
