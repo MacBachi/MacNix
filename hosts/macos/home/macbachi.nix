@@ -1,4 +1,12 @@
-{ config, inputs, pkgs, lib, unstablePkgs, ... }:
+# Home-Manager Programme und Einstellungen für MacBachi
+{
+  config,
+  inputs,
+  pkgs,
+  lib,
+  unstablePkgs,
+  ...
+}:
 {
 
   # list of programs
@@ -26,28 +34,28 @@
         }
       ];
       extensions = with pkgs.vscode-marketplace-release; [
+        eamodio.gitlens
+        github.copilot
+        github.copilot-chat
+        github.vscode-pull-request-github
+        janisdd.vscode-edit-csv
         jnoortheen.nix-ide
-	janisdd.vscode-edit-csv
-	mhutchie.git-graph
-	eamodio.gitlens
-        oderwat.indent-rainbow
-	yzhang.markdown-all-in-one
-	mechatroner.rainbow-csv
-	vscode-icons-team.vscode-icons
-	ms-vscode-remote.remote-ssh
-	ms-vscode-remote.remote-ssh-edit
-	ms-vscode.remote-explorer
-	ms-python.python
-	ms-python.debugpy
-	ms-python.vscode-pylance
+        mechatroner.rainbow-csv
+        mhutchie.git-graph
+        ms-python.debugpy
+        ms-python.python
+        ms-python.vscode-pylance
+        ms-toolsai.jupyter
+        ms-toolsai.jupyter-keymap
+        ms-toolsai.jupyter-renderers
+        ms-toolsai.vscode-jupyter-cell-tags
         ms-toolsai.vscode-jupyter-slideshow
-	ms-toolsai.jupyter-renderers
-	ms-toolsai.jupyter-keymap
-	ms-toolsai.vscode-jupyter-cell-tags
-	ms-toolsai.jupyter
-	github.copilot
-	github.copilot-chat
-	github.vscode-pull-request-github
+        ms-vscode-remote.remote-ssh
+        ms-vscode-remote.remote-ssh-edit
+        ms-vscode.remote-explorer
+        oderwat.indent-rainbow
+        vscode-icons-team.vscode-icons
+        yzhang.markdown-all-in-one
       ];
     };
   };
@@ -64,9 +72,7 @@
     ];
   };
 
-  programs.fzf = {
-    enable = true;
-  };
+  programs.fzf.enable = true;
 
   programs.git = {
     enable = true;
@@ -75,16 +81,12 @@
     diff-so-fancy.enable = true;
     lfs.enable = true;
     extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
+      init.defaultBranch = "main";
       merge = {
         conflictStyle = "diff3";
         tool = "meld";
       };
-      pull = {
-        rebase = true;
-      };
+      pull.rebase = true;
     };
   };
 
@@ -103,8 +105,8 @@
     mouse = true;
     plugins = with pkgs.tmuxPlugins; [
       gruvbox
-      vim-tmux-navigator
       sensible
+      vim-tmux-navigator
     ];
     extraConfig = ''
       # remap prefix from 'C-b' to 'C-a'
@@ -184,24 +186,25 @@
 
   programs.alacritty.enable = true;
 
-  programs.bat.enable = true;
-  programs.bat.config.theme = "Nord";
+  programs.bat = {
+    enable = true;
+    config.theme = "Nord";
+  };
 
   programs.zoxide.enable = true;
 
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    
+
     extraConfig = ''
       StrictHostKeyChecking no
     '';
     matchBlocks = {
-      # ~/.ssh/config
       "*" = {
         extraOptions = {
-          UserKnownHostsFile = "/dev/null";
           LogLevel = "ERROR";
+          UserKnownHostsFile = "/dev/null";
         };
       };
       "github.com" = {
