@@ -20,6 +20,7 @@
       "displaylink"
       "arduino-ide"
       "yubico-authenticator"
+      "hazel"
     ];
     brews = [
       "dug"
