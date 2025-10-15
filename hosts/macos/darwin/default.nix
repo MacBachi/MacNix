@@ -3,13 +3,11 @@
 {
   imports = [
     inputs.home-manager.darwinModules.home-manager
-
     ./system.nix
     ./packages.nix
     ./macos.nix
     ./homebrew.nix
     ./users.nix
-    ./setapp-pathfinder.nix
   ];
 
   nixpkgs.overlays = [
