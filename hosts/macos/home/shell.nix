@@ -36,7 +36,6 @@
         "autopep8"
         "autojump"
         "brew"
-        "btop"
         "colored-man-pages"
         "colorize"
         "common-aliases"
