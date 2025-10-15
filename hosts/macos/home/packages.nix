@@ -1,5 +1,6 @@
 # ./home/packages.nix
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # Shell & Terminal
     atuin
@@ -50,7 +51,7 @@
     pv
     ripgrep
     ripgrep-all
-tldr
+    tldr
     tree
     unp
     watch
