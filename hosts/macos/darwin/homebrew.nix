@@ -1,5 +1,7 @@
 # ./darwin/homebrew.nix
-{ ... }: { # "inputs" wird nicht mehr gebraucht
+{ ... }:
+{
+  # "inputs" wird nicht mehr gebraucht
   homebrew = {
     enable = true;
     user = "mb";
@@ -10,6 +12,7 @@
     };
 
     casks = [
+      "alfred"
       "setapp"
       "signal"
       "nordvpn"
