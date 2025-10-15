@@ -24,50 +24,40 @@
       mac-app-util,
       ...
     }:
+    let
+      baseModules = [
+        ./darwin
+        mac-app-util.darwinModules.default
+        home-manager.darwinModules.home-manager
+        (
+          {
+            pkgs,
+            config,
+            inputs,
+            ...
+          }:
+          {
+            home-manager.sharedModules = [
+              mac-app-util.homeManagerModules.default
+            ];
+          }
+        )
+      ];
+      aarch64_hosts = [
+        "rizzo2025"
+        "beaker2025"
+      ];
+    in
     {
-      darwinConfigurations."rizzo2025" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./darwin
-          mac-app-util.darwinModules.default
-          home-manager.darwinModules.home-manager
-          (
-            {
-              pkgs,
-              config,
-              inputs,
-              ...
-            }:
-            {
-              home-manager.sharedModules = [
-                mac-app-util.homeManagerModules.default
-              ];
-            }
-          )
-        ];
-      };
-      darwinConfigurations."beaker2025" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./darwin
-          mac-app-util.darwinModules.default
-          home-manager.darwinModules.home-manager
-          (
-            {
-              pkgs,
-              config,
-              inputs,
-              ...
-            }:
-            {
-              home-manager.sharedModules = [
-                mac-app-util.homeManagerModules.default
-              ];
-            }
-          )
-        ];
-      };
+      darwinConfigurations = builtins.listToAttrs (
+        map (host: {
+          name = host;
+          value = nix-darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            specialArgs = { inherit inputs; };
+            modules = baseModules;
+          };
+        }) aarch64_hosts
+      );
     };
 }
