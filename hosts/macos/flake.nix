@@ -28,12 +28,46 @@
       darwinConfigurations."rizzo2025" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = { inherit inputs; };
-        modules = [ ./darwin ];
+        modules = [
+          ./darwin
+          mac-app-util.darwinModules.default
+          home-manager.darwinModules.home-manager
+          (
+            {
+              pkgs,
+              config,
+              inputs,
+              ...
+            }:
+            {
+              home-manager.sharedModules = [
+                mac-app-util.homeManagerModules.default
+              ];
+            }
+          )
+        ];
       };
       darwinConfigurations."beaker2025" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = { inherit inputs; };
-        modules = [ ./darwin ];
+        modules = [
+          ./darwin
+          mac-app-util.darwinModules.default
+          home-manager.darwinModules.home-manager
+          (
+            {
+              pkgs,
+              config,
+              inputs,
+              ...
+            }:
+            {
+              home-manager.sharedModules = [
+                mac-app-util.homeManagerModules.default
+              ];
+            }
+          )
+        ];
       };
     };
 }
