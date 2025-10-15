@@ -22,6 +22,7 @@
     options = "--delete-older-than 5";
   };
 
+  # Unfreie Pakete erlauben (z.B. Chrome, VSCode)
   nixpkgs.config.allowUnfree = true;
 
   # Firewall-Einstellungen
@@ -29,6 +30,10 @@
     enable = true;
     allowSigned = true;
   };
+
+  # Hostname und Zeitzone (optional)
+  # networking.hostName = "macbachi";
+  # time.timeZone = "Europe/Vienna";
 
   # System-State-Version
   system.stateVersion = 6;
@@ -38,5 +43,8 @@
     touchIdAuth = true;
     watchIdAuth = true;
   };
+
+  # Optionale Systempakete
+  # environment.systemPackages = with pkgs; [ git htop ];
 
 }
