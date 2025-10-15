@@ -1,5 +1,6 @@
 # ./darwin/default.nix
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   imports = [
     inputs.home-manager.darwinModules.home-manager
 
@@ -8,12 +9,12 @@
     ./macos.nix
     ./homebrew.nix
     ./users.nix
+    ./setapp-pathfinder.nix
   ];
 
   nixpkgs.overlays = [
     inputs.nix-vscode-extensions.overlays.default
   ];
-
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
