@@ -24,7 +24,23 @@ sudo nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- sw
 
 ## Rebuild NIX
 ```
-sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#HOSTNAME
+sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)
+```
+
+## Maintain NIX
+
+Garbage Collection
+```
+nix-collect-garbage -d
+```
+
+Diskspace NIX is using
+```
+du -sh /nix/store
 ```
 
 
+```
+nix flake update --flake $HOME/mynix/hosts/macos
+sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)
+```
