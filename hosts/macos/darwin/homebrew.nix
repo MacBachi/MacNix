@@ -21,6 +21,7 @@
       "arduino-ide"
       "yubico-authenticator"
       "hazel"
+      "ultimaker-cura"
     ];
     brews = [
       "dug"
