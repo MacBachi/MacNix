@@ -10,7 +10,6 @@
     nushell
     ranger
     starship
-    wezterm
     z-lua
     zellij
 

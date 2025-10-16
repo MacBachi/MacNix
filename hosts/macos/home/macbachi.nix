@@ -184,8 +184,6 @@
 
   programs.nix-index.enable = true;
 
-  programs.alacritty.enable = true;
-
   programs.bat = {
     enable = true;
     config.theme = "Nord";
