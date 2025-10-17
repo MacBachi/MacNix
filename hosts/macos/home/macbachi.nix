@@ -19,6 +19,22 @@
     nix-direnv.enable = true;
   };
 
+  programs.waveterm = {
+    enable = true;
+    settings = {
+      "app:theme" = "dark";
+      "term:fontfamily" = "JetBrains Mono";
+      "term:fontsize" = 12;
+      "window:opacity" = 0.95;
+      "autoupdate:enabled" = false;
+      "term:scrollback" = 10000;
+      "term:optionasmeta" = true;
+      "remote:autossh" = true;
+      "telemetry:enabled" = false;
+    };
+  };
+
+
   programs.vscode = {
     enable = true;
     profiles.default = {
