@@ -22,6 +22,7 @@
       "yubico-authenticator"
       "hazel"
       "ultimaker-cura"
+      "uhk-agent"
     ];
     brews = [
       "dug"
