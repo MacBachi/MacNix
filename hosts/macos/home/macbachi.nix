@@ -76,6 +76,17 @@
           "**/.pytest_cache" = true;
           "**/.mypy_cache" = true;
         };
+        "editor.inlineSuggest.enabled" = true;
+        "editor.acceptSuggestionOnEnter" = "smart";
+        "editor.rulers" = [
+	  80
+          100
+        ];
+        "editor.guides.bracketPairs" = true;
+        "workbench.startupEditor" = "newUntitledFile";
+        "workbench.editor.labelFormat" = "short";
+        "explorer.confirmDragAndDrop" = true;
+        "editor.scm.diffDecorations" = "overview";
       };
       keybindings = [
         {
