@@ -23,6 +23,7 @@
       "hazel"
       "ultimaker-cura"
       "uhk-agent"
+      "little-snitch"
     ];
     brews = [
       "dug"
