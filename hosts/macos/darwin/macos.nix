@@ -19,7 +19,35 @@
           };
           "31" = {
             # Copy picture of selected area to the clipboard
-            enabled = true;
+            enabled = false;
+          };
+          "185" = {
+            # screenshot options
+            enabled = false;
+          };
+          "122" = {
+            # Fokus auf Menüleiste
+            enabled = false;
+          };
+          "123" = {
+            # Fokus auf Dock 
+            enabled = false;
+          };
+          "125" = {
+            # Fokus auf Symbolleiste
+            enabled = false;
+          };
+          "126" = {
+            # Fokus auf Schwebende Fenster
+            enabled = false;
+          };
+          "60" = {
+            # Vorherige Eingabequelle
+            enabled = false;
+          };
+          "61" = {
+            # Nächste Eingabequelle
+            enabled = false;
           };
         };
       };
