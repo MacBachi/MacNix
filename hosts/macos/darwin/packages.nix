@@ -17,6 +17,7 @@
     obsidian
     teams
     waveterm
+    # qflipper  #broken atm (2025-10-20)
   ];
 
   # Schriftarten
