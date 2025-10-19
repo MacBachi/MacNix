@@ -9,6 +9,32 @@
 }:
 {
 
+  home.shell.enableShellIntegration = true;
+  home.shellAliases = {
+    # aliases. should only be used to manage 
+    # simple aliases that are compatible across all shells.
+    top = "btop";
+  };
+
+  targets = {
+    darwin = { 
+      defaults = {
+        "com.apple.Safari" = {
+          AutoFillPasswords = false;
+          IncludeDevelopMenu = true;
+          AutoFillCreditCardData = false;
+          AutoOpenSafeDownloads = false;
+          ShowOverlayStatusBar = true;
+        };
+        "com.apple.desktopservices" = {
+          DSDontWriteNetworkStores = true;
+          DSDontWriteUSBStores = true;
+        };
+      };
+    };
+  }; 
+
+
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
 
@@ -136,14 +162,19 @@
   };
 
   programs.fzf.enable = true;
+  programs.diff-so-fancy = {
+    enable = true;
+    enableGitIntegration = true;
+  };
 
   programs.git = {
     enable = true;
-    userEmail = "mac@bachi.at";
-    userName = "MacBachi";
-    diff-so-fancy.enable = true;
+    settings = {
+      user.email = "mac@bachi.at";
+      user.name = "MacBachi";
+    };
     lfs.enable = true;
-    extraConfig = {
+    settings = {
       init.defaultBranch = "main";
       merge = {
         conflictStyle = "diff3";

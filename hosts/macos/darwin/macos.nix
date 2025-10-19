@@ -1,6 +1,30 @@
 # ./darwin/macos.nix
 {
   system.defaults = {
+
+    CustomUserPreferences = {
+      "com.apple.symbolichotkeys" = {
+        AppleSymbolicHotKeys = {
+          "28" = {
+            # Save picture of screen as a file
+            enabled = false;
+          };
+          "29" = {
+            # Copy picture of screen to the clipboard
+            enabled = false;
+          };
+          "30" = {
+            # Save picture of selected area as a file
+            enabled = false;
+          };
+          "31" = {
+            # Copy picture of selected area to the clipboard
+            enabled = true;
+          };
+        };
+      };
+    };
+
     loginwindow = {
       GuestEnabled = false;
       LoginwindowText = "🤙 markus@bachlechner.org, ☎️ +4368110274079, 🌍 Austria ";
@@ -13,6 +37,7 @@
       SleepDisabled = false;
       autoLoginUser = "Off";
     };
+
     menuExtraClock = {
       FlashDateSeparators = false;
       IsAnalog = false;
@@ -20,6 +45,7 @@
       ShowDate = 2;
       ShowSeconds = false;
     };
+
     dock = {
       autohide = false;
       show-recents = false;
@@ -138,4 +164,8 @@
     remapCapsLockToControl = true;
     nonUS.remapTilde = true;
   };
+  system.activationScripts.postActivation.text = ''
+      # Following line should allow us to avoid a logout/login cycle when changing settings
+      sudo -u mb /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+      '';
 }
