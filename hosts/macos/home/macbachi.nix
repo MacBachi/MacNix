@@ -44,6 +44,38 @@
         "telemetry.telemetryLevel" = "off";
         "telemetry.enableTelemetry" = false;
         "telemetry.enableCrashReporter" = false;
+        "editor.minimap.enabled" = true;
+        "editor.wordWrap" = "on";
+        "breadcrumbs.enabled" = true;
+        "window.zoomlevel" = 0;
+        "files.exclude" = {
+          # Standard
+          "**/.github" = true;
+          "**/.git" = true;
+          "**/.svn" = true;
+          "**/.hg" = true;
+          "**/CVS" = true;
+          "**/.DS_Store" = true;
+          "**/Thumbs.db" = true;
+          "**/.vscode" = true;
+  
+          # Node.js / JavaScript
+          "**/node_modules" = true;
+          "**/dist" = true;
+          "**/build" = true;
+          "**/.next" = true;
+          "**/.nuxt" = true;
+          "npm-debug.log*" = true;
+          "yarn-error.log*" = true;
+
+          # Python
+          "**/__pycache__" = true;
+          "**/*.pyc" = true;
+          "**/.venv" = true;
+          "**/venv" = true;
+          "**/.pytest_cache" = true;
+          "**/.mypy_cache" = true;
+        };
       };
       keybindings = [
         {
