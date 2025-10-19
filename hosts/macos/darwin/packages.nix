@@ -3,10 +3,10 @@
   # Systemweit installierte Pakete (meist GUI-Apps)
   environment.systemPackages = with pkgs; [
     # System & WM
-    aerospace
-    sketchybar
-    skhd
-    pinentry_mac
+    # aerospace
+    # sketchybar
+    # skhd
+    # pinentry_mac
     yubikey-manager
 
     # Apps
