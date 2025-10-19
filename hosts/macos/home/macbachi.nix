@@ -41,6 +41,9 @@
       userSettings = {
         "editor.formatOnSave" = true;
         "update.channel" = "none";
+        "telemetry.telemetryLevel" = "off";
+        "telemetry.enableTelemetry" = false;
+        "telemetry.enableCrashReporter" = false;
       };
       keybindings = [
         {
