@@ -40,6 +40,7 @@
     profiles.default = {
       userSettings = {
         "editor.formatOnSave" = true;
+        "update.channel" = "none";
       };
       keybindings = [
         {
