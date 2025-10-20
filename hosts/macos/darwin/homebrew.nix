@@ -24,6 +24,9 @@
       "ultimaker-cura"
       "uhk-agent"
       "little-snitch"
+      "mactex"
+      "texstudio"
+      "texmaker"
     ];
     brews = [
       "dug"
@@ -31,6 +34,7 @@
       "httping"
       "nethogs"
       "hugo"
+      "no-more-secrets"         # Recreates the SETEC ASTRONOMY effect from 'Sneakers'
     ];
     masApps = {
       "1Password for Safari" = 1569813296;
