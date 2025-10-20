@@ -37,6 +37,14 @@
   }; 
 
 
+  home.file.".config/git/allowed_signers" = {
+    text = ''
+      mac@bachi.at ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOeooB06kqRyNbJtis4I6OlqA2DVudcCPNAAjS4Hhw3e
+    '';
+  };
+
+
+
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
 
@@ -203,6 +211,7 @@
       };
       "gpg \"ssh\"" = {
         program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+        allowedSignersFile = "${config.home.homeDirectory}/.config/git/allowed_signers";
       };
       init = {
         defaultBranch = "main";
