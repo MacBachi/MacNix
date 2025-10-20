@@ -24,9 +24,6 @@
       "ultimaker-cura"
       "uhk-agent"
       "little-snitch"
-      "mactex"
-      "texstudio"
-      "texmaker"
     ];
     brews = [
       "dug"
