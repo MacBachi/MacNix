@@ -15,6 +15,7 @@
     # simple aliases that are compatible across all shells.
     top = "btop";
     renix = "sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)";
+    flushdns = "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
   };
 
   targets = {
