@@ -169,22 +169,54 @@
     enableGitIntegration = true;
   };
 
+ # programs.git = {
+ #   enable = true;
+ #   settings = {
+ #     user.email = "mac@bachi.at";
+ #     user.name = "MacBachi";
+ #   };
+ #   lfs.enable = true;
+ #   settings = {
+ #     init.defaultBranch = "main";
+ #     merge = {
+ #       conflictStyle = "diff3";
+ #       tool = "meld";
+ #     };
+ #     pull.rebase = true;
+ #   };
+ # };
+
   programs.git = {
     enable = true;
-    settings = {
-      user.email = "mac@bachi.at";
-      user.name = "MacBachi";
-    };
     lfs.enable = true;
+    signing = {
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOeooB06kqRyNbJtis4I6OlqA2DVudcCPNAAjS4Hhw3e";
+      signByDefault = true;
+    };
     settings = {
-      init.defaultBranch = "main";
+      user = {
+        name = "MacBachi";
+        email = "mac@bachi.at";
+      };
+      gpg = {
+        format = "ssh";
+      };
+      "gpg \"ssh\"" = {
+        program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+      };
+      init = {
+        defaultBranch = "main";
+      };
       merge = {
         conflictStyle = "diff3";
         tool = "meld";
       };
-      pull.rebase = true;
+      pull = {
+        rebase = true;
+      };
     };
   };
+
 
   programs.htop = {
     enable = true;
