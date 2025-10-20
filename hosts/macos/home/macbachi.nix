@@ -290,7 +290,6 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-
     extraConfig = ''
       StrictHostKeyChecking no
     '';
@@ -299,6 +298,7 @@
         extraOptions = {
           LogLevel = "ERROR";
           UserKnownHostsFile = "/dev/null";
+          IdentityAgent = "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
         };
       };
       "github.com" = {
