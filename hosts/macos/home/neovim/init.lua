@@ -2,7 +2,7 @@
 -- Neovim init.lua (Home Manager)
 -- ===================================
 
--- 1. Allgemeine Optionen
+--  Allgemeine Optionen
 vim.o.termguicolors = true
 vim.o.number = true
 vim.o.relativenumber = true
@@ -12,24 +12,77 @@ vim.o.expandtab = true
 vim.o.smartindent = true
 vim.o.updatetime = 300 -- Schnelleres Schreiben von swap-Dateien
 
--- 2. Theme Setup (Catppuccin)
+
+vim.api.nvim_set_keymap('v', '<C-c>', '"+y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-v>', '"+p', { noremap = true, silent = true })
+
+
+-- Theme Setup (Catppuccin)
 vim.cmd.colorscheme('catppuccin')
 vim.cmd [[
   hi NvimTreeNormal guibg=none ctermbg=none
   hi Normal guibg=none ctermbg=none
 ]]
 
--- 3. nvim-treesitter Setup
-
+-- nvim-treesitter Setup
 require('nvim-treesitter.configs').setup {
-  -- KEINE ensure_installed oder similar verwenden. Nix erledigt dies.
   highlight = { enable = true },
   indent = { enable = true },
-  -- Optional: Hinzufügen einer leeren `ensure_installed` verhindert Warnungen.
   ensure_installed = {},
 }
 
--- 4. nvim-tree (Datei-Explorer) Setup
+
+
+require('gitsigns').setup {
+  -- Emojis für die verschiedenen Git-Status
+  signs = {
+    add          = { text = '➕' }, -- Hinzugefügte Zeile
+    change       = { text = '🟡' }, -- Geänderte Zeile
+    delete       = { text = '➖' }, -- Gelöschte Zeile (wird in der Zeile darüber angezeigt)
+    topdelete    = { text = '❌' }, -- Oberste gelöschte Zeile
+    changedelete = { text = '⚡️' }, -- Geändert und gelöscht
+    untracked    = { text = '❔' }, -- Nicht verfolgte Zeile
+  };
+}
+  
+
+
+--  indent-blankline
+require("ibl").setup {
+  -- ... Konfiguration für die Einrückungslinien ...
+}
+
+-- e) dashboard-nvim
+require('dashboard').setup {
+  theme = 'hyper', -- Beispiel-Theme
+  config = {
+    header = {
+		  "                                              ",
+		  "        >>  W.O.P.R. ACTIVATION SEQUENCE  <<  ",
+		  "          ** CRITICAL SYSTEM STATUS: RED **   ",
+		  "            [ TARGETING PROTOCOL ENGAGED ]    ",
+		  "                                              ",
+		},
+	center = {
+      { icon = '👀', desc = ' Find Files (Telescope)', action = 'Telescope find_files', key = 'f' },
+      { icon = '🔎', desc = ' Grep Code (RipGrep)', action = 'Telescope live_grep', key = 'g' },
+      { icon = '💬', desc = ' Toggle Terminal', action = 'Toggleterm', key = 't' },
+      { icon = '♻️', desc = ' Session Restore', action = 'RestoreSession', key = 's' },
+      { icon = '🏥', desc = ' Health Check (LSP)', action = 'checkhealth lsp', key = 'h' },
+      { icon = '😩', desc = ' Quit Neovim', action = 'qa', key = 'q' },
+
+    footer = { 
+      'WARNING: GLOBAL THERMONUCLEAR WAR INITIATED.',
+      'The only winning move is not to play. - WOPR',
+      'Have a nice day.',
+    },
+
+    shortcut = 'c',
+    },
+  },
+}
+
+--  nvim-tree (Datei-Explorer) Setup
 require('nvim-tree').setup {
   sort_by = "case_sensitive",
   view = {
