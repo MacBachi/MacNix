@@ -20,10 +20,13 @@ vim.cmd [[
 ]]
 
 -- 3. nvim-treesitter Setup
+
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "all", -- Installiert alle von Nix bereitgestellten Grammatiken
+  -- KEINE ensure_installed oder similar verwenden. Nix erledigt dies.
   highlight = { enable = true },
   indent = { enable = true },
+  -- Optional: Hinzufügen einer leeren `ensure_installed` verhindert Warnungen.
+  ensure_installed = {},
 }
 
 -- 4. nvim-tree (Datei-Explorer) Setup

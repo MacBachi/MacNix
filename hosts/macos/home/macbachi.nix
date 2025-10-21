@@ -74,6 +74,7 @@
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
       nvim-cmp
+      nvim-treesitter.withAllGrammars
       cmp-nvim-lsp
       cmp-buffer
       cmp-path

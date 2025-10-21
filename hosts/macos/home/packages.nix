@@ -6,7 +6,7 @@
     atuin
     chroma
     hostmux
-    neovim
+    # neovim
     nushell
     ranger
     starship
