@@ -16,6 +16,11 @@
     top = "btop";
     renix = "sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)";
     flushdns = "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder";
+
+    l = "eza -i";
+    ll = "eza -lgha --icons --group-directories-first";
+    vim = "nvim";
+
   };
 
   targets = {
@@ -53,6 +58,35 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    extraConfig = ''
+      set mouse=a
+      " Setzt die systemweite Zwischenablage ('unnamedplus')
+      set clipboard=unnamed,unnamedplus
+    '';
+
+    plugins = with pkgs.vimPlugins; [
+      nvim-lspconfig
+      nvim-cmp
+      cmp-nvim-lsp
+      cmp-buffer
+      cmp-path
+      cmp-vsnip
+      luasnip
+      nvim-treesitter.withAllGrammars
+      nvim-tree-lua   # Moderner Datei-Explorer
+      telescope-nvim  # Fuzzy Finder für Dateien/Greps/LSPs
+      plenary-nvim    # Allgemeine Lua-Bibliothek, oft Abhängigkeit
+      lualine-nvim    # Produktive Statuszeile
+      catppuccin-nvim
+    ];
+      extraLuaConfig = builtins.readFile ./neovim/init.lua;
   };
 
   programs.waveterm = {
