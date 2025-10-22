@@ -15,18 +15,18 @@
 
     # Development & Tools
     fabric-ai   # CLI tool for executing pre-defined AI recipes (tasks, utilities)
-    gh
-    jq
-    nixfmt-rfc-style
-    ollama
-    pipx
-    rlwrap
+    gh          # Official GitHub CLI tool to manage pull requests, workflows, ..., directly from the terminal.
+    jq          # Configuration-as-Code data templating tool
+    nixfmt-rfc-style   # Code formatter for the Nix language
+    ollama      # Framework to run large language models (LLMs) locally
+    pipx        # Installs and runs Python command-line applications in isolated virtual environments
+    rlwrap      # Readline wrapper that provides command history, completion, and editing capabilities for any command-line program that lacks these features.
 
     # CLI Utilities
-    aria2
-    autojump
-    broot
-    btop
+    aria2       # command-line download utility supporting multi-protocol and multi-source segmented downloads
+    autojump    # utility that learns visited directories, allowing quick navigation via partial keywords
+    broot       # terminal file manager
+    btop        # Resource monitor providing a TUI display of CPU, MEM, disks, network, and running processes.
     colordiff
     cowsay
     duf
