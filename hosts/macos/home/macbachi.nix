@@ -288,7 +288,11 @@
 
   programs.lf.enable = true;
 
-  programs.tmux = {
+  programs.tmux = let
+    zshPath = "${pkgs.zsh}/bin/zsh";
+    # Für macOS ist reattach-to-user-namespace oft notwendig
+    reattachPath = "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace"; 
+  in {
     enable = true;
     keyMode = "vi";
     clock24 = true;
@@ -298,78 +302,104 @@
       gruvbox
       sensible
       vim-tmux-navigator
+      resurrect
+      yank
     ];
     extraConfig = ''
-      # remap prefix from 'C-b' to 'C-a'
-      unbind C-b
-      set-option -g prefix C-a
-      bind-key C-a send-prefix
 
-      # split panes using | and -
-      bind | split-window -h
-      bind / split-window -h
-      bind - split-window -v
-      unbind '"'
-      unbind %
 
-      # reload config file
-      bind r source-file ~/.config/tmux/tmux.conf \; display-message "~/.config/tmux/tmux.conf reloaded."
+# --- Allgemeine Einstellungen ---
+     set -g default-shell ${zshPath}
+     set -g default-command "${reattachPath} -l ${zshPath}"
 
-      # switch panes using Alt-arrow without prefix
-      bind -n M-Left select-pane -L
-      bind -n M-Right select-pane -R
-      bind -n M-Up select-pane -U
-      bind -n M-Down select-pane -D
 
-      # switch windows using Shift-arrow without prefix
-      bind -n S-Left previous-window
-      bind -n S-Right next-window
+     unbind C-b
+     set-option -g prefix C-a
+     bind-key C-a send-prefix
 
-      # don't rename windows automatically
-      set-option -g allow-rename off
+     set -g status-interval 1
+     set -g display-time 4000
+     set -g allow-rename off
 
-      # rename window to reflect current program
-      setw -g automatic-rename on
+     # Fenster- und Pane-Splits
+     bind v split-window -h -c "#{pane_current_path}"
+     bind s split-window -v -c "#{pane_current_path}"
+     unbind '"'
+     unbind %
 
-      # renumber windows when a window is closed
-      set -g renumber-windows on
+     # Konfigurationsdatei neu laden
+     bind r source-file ~/.config/tmux/tmux.conf \; display-message "⛩️  tmux.conf reloaded (NixPro Style)"
 
-      # don't do anything when a 'bell' rings
-      set -g visual-activity off
-      set -g visual-bell off
-      set -g visual-silence off
-      setw -g monitor-activity off
-      set -g bell-action none
+     # Fenster-Navigation
+     bind -n S-Left previous-window
+     bind -n S-Right next-window
 
-      # clock mode
-      setw -g clock-mode-colour yellow
+     # Pane-Navigation
+     bind -n M-Left select-pane -L
+     bind -n M-Right select-pane -R
+     bind -n M-Up select-pane -U
+     bind -n M-Down select-pane -D
 
-      # copy mode
-      setw -g mode-style 'fg=black bg=yellow bold'
+     # Synchronisation
+     bind S set-window-option synchronize-panes
 
-      # panes
-      set -g pane-border-style 'fg=yellow'
-      set -g pane-active-border-style 'fg=green'
+     # --- Farbpalette (Catppuccin Mocha) ---
+     set -g default-terminal "tmux-256color"
+     set -ag terminal-features ",xterm-256color:RGB"
 
-      # statusbar
-      set -g status-position top
-      set -g status-justify left
-      set -g status-style 'fg=green'
-      set -g status-left ""
-      set -g status-left-length 10
-      set -g status-right '#[fg=green,bg=default,bright]#(tmux-mem-cpu-load) #[fg=red,dim,bg=default]#(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") #[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=blue]%Y-%m-%d'
+     # Variablen
+     CTP_BASE="#1e1e2e"
+     CTP_SURFACE2="#585b70"
+     CTP_LAVENDER="#b4befe"
+     CTP_BLUE="#89b4fa"
+     CTP_GREEN="#a6e3a1"
+     CTP_YELLOW="#f9e2af"
+     CTP_RED="#f38ba8"
+     CTP_TEXT="#cdd6f4"
 
-      setw -g window-status-current-style 'fg=black bg=green'
-      setw -g window-status-current-format ' #I #W #F '
-      setw -g window-status-style 'fg=green bg=black'
-      setw -g window-status-format ' #I #[fg=white]#W #[fg=yellow]#F '
-      setw -g window-status-bell-style 'fg=black bg=yellow bold'
+     # Statusbar-Stil
+     set -g status-style "bg=$CTP_BASE,fg=$CTP_TEXT"
+     set -g status-position top
 
-      # messages
-      set -g message-style 'fg=black bg=yellow bold'
+     # Fenster-Status
+     setw -g window-status-style "fg=$CTP_SURFACE2,bg=$CTP_BASE"
+     setw -g window-status-format ' #I #W '
 
-      # start new session
-      new-session -s main
+     # Aktuelles Fenster (Blau/Blue)
+     setw -g window-status-current-style "fg=$CTP_BASE,bg=$CTP_BLUE,bold"
+     setw -g window-status-current-format "#[fg=$CTP_BASE,bg=$CTP_BLUE]#[fg=$CTP_BASE,bg=$CTP_BLUE] #I  #W #[fg=$CTP_BLUE,bg=$CTP_BASE]"
+
+     # Pane-Ränder (Lavender/Surface2)
+     set -g pane-active-border-style "fg=$CTP_LAVENDER"
+     set -g pane-border-style "fg=$CTP_SURFACE2"
+
+     # Nachrichten (Yellow)
+     set -g message-style "fg=$CTP_BASE,bg=$CTP_YELLOW,bold"
+     set -g message-command-style "fg=$CTP_BASE,bg=$CTP_YELLOW,bold"
+
+     # --- Statusbar Layout ---
+     set -g status-right-length 150
+     set -g status-left-length 30
+     
+     # Links: Sensei/Mac-Info (Rot/Red)
+     set -g status-left "#[fg=$CTP_BASE,bg=$CTP_RED]#[fg=$CTP_TEXT,bg=$CTP_RED]  MacBachi #[fg=$CTP_RED,bg=$CTP_BASE]"
+
+     # Rechts: CPU/RAM (Grün) | Zeit (Lavender) | Datum (Blau)
+     set -g status-right "\
+       #[fg=$CTP_GREEN,bg=$CTP_BASE]\
+       #[fg=$CTP_BASE,bg=$CTP_GREEN]  #(tmux-mem-cpu-load --interval 2)\
+       #[fg=$CTP_GREEN,bg=$CTP_BASE]\
+       #[fg=$CTP_LAVENDER,bg=$CTP_BASE]\
+       #[fg=$CTP_BASE,bg=$CTP_LAVENDER]  %H:%M:%S \
+       #[fg=$CTP_LAVENDER,bg=$CTP_BASE]\
+       #[fg=$CTP_BLUE,bg=$CTP_BASE]\
+       #[fg=$CTP_BASE,bg=$CTP_BLUE]  %Y-%m-%d \
+       #[fg=$CTP_BLUE,bg=$CTP_BASE]"
+
+     # Start new session, falls keine vorhanden ist
+     new-session -s main
+
+
     '';
   };
 
