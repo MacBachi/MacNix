@@ -84,8 +84,8 @@
     vimAlias = true;
     extraConfig = ''
       set mouse=a
-      " Setzt die systemweite Zwischenablage ('unnamedplus')
       set clipboard=unnamed,unnamedplus
+      set guicursor=n-v-c-r:block-blink,i:block-blinkwait100-blinkon50-blinkoff50,a:block,sm:block
     '';
 
     plugins = with pkgs.vimPlugins; [
