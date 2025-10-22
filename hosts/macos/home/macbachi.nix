@@ -32,6 +32,8 @@
           AutoFillCreditCardData = false;
           AutoOpenSafeDownloads = false;
           ShowOverlayStatusBar = true;
+          SpellCheckingEnabled = false;
+          GrammarCheckingEnabled = false;
         };
         "com.apple.desktopservices" = {
           DSDontWriteNetworkStores = true;
