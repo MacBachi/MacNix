@@ -42,7 +42,30 @@ require('gitsigns').setup {
     topdelete    = { text = '❌' }, -- Oberste gelöschte Zeile
     changedelete = { text = '⚡️' }, -- Geändert und gelöscht
     untracked    = { text = '❔' }, -- Nicht verfolgte Zeile
-  };
+  },
+
+  signcolumn = true, -- Aktiviert die Zeichenspalte (zeigt Emojis)
+  numhl = true,      -- AKTIVIERT die spezielle Hervorhebung der GEÄNDERTEN Zeilennummern
+  linehl = false,    -- Deaktiviert die Hervorhebung der gesamten Zeile (optional)
+  word_diff = true,  -- AKTIVIERT die Hervorhebung von Wort-Unterschieden in der Zeile
+
+-- Einbindung von Keymaps (Sensei Navigation)
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+    
+    -- Leet-Keymaps für die Navigation
+    -- [g (Previous Hunk), ]g (Next Hunk)
+    vim.keymap.set('n', '[g', gs.prev_hunk, { buffer = bufnr, desc = 'Git: Previous Change Hunk' })
+    vim.keymap.set('n', ']g', gs.next_hunk, { buffer = bufnr, desc = 'Git: Next Change Hunk' })
+
+    -- Stage/Reset Actions
+    vim.keymap.set('n', '<leader>gs', gs.stage_hunk, { buffer = bufnr, desc = 'Git: Stage Hunk' }) -- Hunk stagen
+    vim.keymap.set('n', '<leader>gr', gs.reset_hunk, { buffer = bufnr, desc = 'Git: Reset Hunk' }) -- Hunk zurücksetzen
+    
+    -- Textobjekt-Mapping (visuell)
+    vim.keymap.set({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { buffer = bufnr, desc = 'Git: Select Hunk' })
+  end,
+
 }
   
 
@@ -56,13 +79,6 @@ require("ibl").setup {
 require('dashboard').setup {
   theme = 'hyper', -- Beispiel-Theme
   config = {
-    header = {
-		  "                                              ",
-		  "        >>  W.O.P.R. ACTIVATION SEQUENCE  <<  ",
-		  "          ** CRITICAL SYSTEM STATUS: RED **   ",
-		  "            [ TARGETING PROTOCOL ENGAGED ]    ",
-		  "                                              ",
-		},
 	center = {
       { icon = '👀', desc = ' Find Files (Telescope)', action = 'Telescope find_files', key = 'f' },
       { icon = '🔎', desc = ' Grep Code (RipGrep)', action = 'Telescope live_grep', key = 'g' },
@@ -70,12 +86,6 @@ require('dashboard').setup {
       { icon = '♻️', desc = ' Session Restore', action = 'RestoreSession', key = 's' },
       { icon = '🏥', desc = ' Health Check (LSP)', action = 'checkhealth lsp', key = 'h' },
       { icon = '😩', desc = ' Quit Neovim', action = 'qa', key = 'q' },
-
-    footer = { 
-      'WARNING: GLOBAL THERMONUCLEAR WAR INITIATED.',
-      'The only winning move is not to play. - WOPR',
-      'Have a nice day.',
-    },
 
     shortcut = 'c',
     },
@@ -134,3 +144,14 @@ map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', default_opts)
 
 -- Speichern
 map('n', '<C-s>', ':w<CR>', default_opts)
+
+
+vim.api.nvim_create_autocmd("BufEnter", {
+      group = vim.api.nvim_create_augroup("DashboardFix", { clear = true }),
+      pattern = "dashboard",
+      callback = function()
+        if vim.g.ibl_started then
+              vim.cmd("IndentBlanklineDisable")
+        end
+  end,
+})

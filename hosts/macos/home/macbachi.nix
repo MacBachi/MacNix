@@ -86,7 +86,11 @@
       plenary-nvim    # Allgemeine Lua-Bibliothek, oft Abhängigkeit
       lualine-nvim    # Produktive Statuszeile
       catppuccin-nvim
-    ];
+      indent-blankline-nvim
+      gitsigns-nvim
+      dashboard-nvim
+      nvim-lint
+];
       extraLuaConfig = builtins.readFile ./neovim/init.lua;
   };
 
@@ -94,7 +98,7 @@
     enable = true;
     settings = {
       "app:theme" = "dark";
-      "term:fontfamily" = "JetBrains Mono";
+      "term:fontfamily" = "FiraCode Nerd Font";
       "term:fontsize" = 12;
       "window:opacity" = 0.95;
       "autoupdate:enabled" = false;
@@ -102,6 +106,11 @@
       "term:optionasmeta" = true;
       "remote:autossh" = true;
       "telemetry:enabled" = false;
+      
+     font = {
+        family = "FiraCode Nerd Font"; 
+        size = 12; # Beispiel-Größe
+      }; 
     };
   };
 
