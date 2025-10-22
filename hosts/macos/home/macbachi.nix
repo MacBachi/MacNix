@@ -90,7 +90,7 @@
       gitsigns-nvim
       dashboard-nvim
       nvim-lint
-];
+    ];
       extraLuaConfig = builtins.readFile ./neovim/init.lua;
   };
 
@@ -119,6 +119,12 @@
     enable = true;
     profiles.default = {
       userSettings = {
+        "editor.fontFamily" = "Fira Code Nerd Font"; 
+        "editor.fontLigatures" = true;
+        "workbench.colorTheme" = "Catppuccin Mocha";
+        "editor.minimap.side" = "right";
+        "terminal.integrated.fontFamily" = "Fira Code Nerd Font";
+        "terminal.integrated.fontSize" = 12;
         "editor.formatOnSave" = true;
         "update.channel" = "none";
         "telemetry.telemetryLevel" = "off";
@@ -128,6 +134,11 @@
         "editor.wordWrap" = "on";
         "breadcrumbs.enabled" = true;
         "window.zoomlevel" = 0;
+        "extensions.ignoreRecommendations" = true;
+        "workbench.welcomePage.persistence" = "off";
+        "workbench.iconTheme" = "vscode-icons";
+        "vsicons.dontShowNewVersionMessage" = true;
+        "vsicons.dontShowWelcomeMessage" = true;
         "files.exclude" = {
           # Standard
           "**/.github" = true;
@@ -177,6 +188,7 @@
         }
       ];
       extensions = with pkgs.vscode-marketplace-release; [
+        catppuccin.catppuccin-vsc
         eamodio.gitlens
         github.copilot
         github.copilot-chat
