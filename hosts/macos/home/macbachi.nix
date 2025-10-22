@@ -48,8 +48,6 @@
     '';
   };
 
-
-
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
 
