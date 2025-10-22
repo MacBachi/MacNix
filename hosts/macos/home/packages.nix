@@ -3,18 +3,18 @@
 {
   home.packages = with pkgs; [
     # Shell & Terminal
-    atuin
-    chroma
-    hostmux
+    atuin       # Improved shell history for zsh and others. Syncs history between hosts.
+    chroma      # syntax highlighting library
+    hostmux     # connection to multiple SSH hosts by integrating with a terminal multiplexer like Tmux
     # neovim
-    nushell
-    ranger
-    starship
-    z-lua
-    zellij
+    nushell     # shell that processes data as structured tables (instead of raw text) 
+    ranger      # Console-based two-pane file manager
+    starship    # customizable, and extremely fast cross-shell prompt
+    z-lua       # Command line utility that tracks frequently visited directories for quick jumping
+    zellij      # Terminal workspace and multiplexer
 
     # Development & Tools
-    fabric-ai
+    fabric-ai   # CLI tool for executing pre-defined AI recipes (tasks, utilities)
     gh
     jq
     nixfmt-rfc-style
