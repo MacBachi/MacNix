@@ -29,6 +29,7 @@
   networking.applicationFirewall = {
     enable = true;
     allowSigned = true;
+    enableStealthMode = true;
   };
 
   # Hostname und Zeitzone (optional)
