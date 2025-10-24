@@ -1,4 +1,3 @@
-# ./flake.nix
 {
   description = "Markus zenful darwin system flake";
 
@@ -25,6 +24,7 @@
       ...
     }:
     let
+    # Gemeinsame Basis-Module, die für alle Hosts gelten
       baseModules = [
         ./darwin
         mac-app-util.darwinModules.default
@@ -43,23 +43,38 @@
           }
         )
       ];
+
+      # Hosts mit ARM-Architektur (Apple Silicon)
       aarch64_hosts = [
-        "rizzo2025"
-        "beaker2025"
-      ];
-    in
-    {
-      darwinConfigurations = builtins.listToAttrs (
-        map (host: {
-          name = host;
-          value = nix-darwin.lib.darwinSystem {
-            system = "aarch64-darwin";
-            specialArgs = { inherit inputs; };
-            modules = baseModules;
-          };
-        }) aarch64_hosts
-      );
+            "rizzo2025"
+            "beaker2025"
+          ];
+          
+          # Hosts mit Intel-Architektur (x86_64)
+          x86_64_hosts = [
+            "scooter2016"
+          ];
+          
+          # Generiert darwinConfigurations für eine bestimmte Architektur
+          mkHostConfigs = system: hosts:
+            builtins.listToAttrs (
+              map (host: {
+                name = host;
+                value = nix-darwin.lib.darwinSystem {
+                  system = system;
+                  specialArgs = { inherit inputs; };
+                  # Lädt nur die Basis-Module, um den Fehler der fehlenden Host-Datei zu vermeiden
+                  modules = baseModules; 
+                };
+              }) hosts
+            );
+
+        in
+        {
+          darwinConfigurations =
+            # Apple Silicon Hosts
+        (mkHostConfigs "aarch64-darwin" aarch64_hosts)
+        // # Intels Hosts
+               (mkHostConfigs "x86_64-darwin" x86_64_hosts);
     };
 }
-
-
