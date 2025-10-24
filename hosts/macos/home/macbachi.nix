@@ -438,7 +438,7 @@
       "*" = {
         extraOptions = {
           HashKnownHosts = "yes";
-          StrictHostKeyChecking = "yes";
+          StrictHostKeyChecking = "ask";
           LogLevel = "ERROR";
           ForwardX11 = "no";
           ForwardAgent = "no";

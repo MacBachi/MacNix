@@ -90,6 +90,10 @@
       };
     };
 
+    WindowManager = {
+      EnableStandardClickToShowDesktop = false;
+    };
+
     loginwindow = {
       GuestEnabled = false;
       LoginwindowText = "🤙 markus@bachlechner.org, ☎️ +4368110274079, 🌍 Austria ";
