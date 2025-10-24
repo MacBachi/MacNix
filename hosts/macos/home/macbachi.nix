@@ -16,7 +16,7 @@
     top = "btop";
     renix = "sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)";
     flushdns = "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder";
-
+    shownix = "find . -type f -name \"*.nix\" -exec echo \"--- FILE: {} ---\" \\; -exec cat {} \\;";
     l = "eza -i";
     ll = "eza -lgha --icons --group-directories-first";
     vim = "nvim";
