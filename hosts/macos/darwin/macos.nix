@@ -53,6 +53,16 @@
       };
     };
 
+    CustomSystemPreferences = {
+      "com.apple.TimeMachine" = {
+        EncryptBackups = true;
+      };
+      "com.apple.SoftwareUpdate" = {
+        AutomaticCheckEnabled = true;
+        CriticalUpdateInstall = 1;
+      };
+    };
+
     loginwindow = {
       GuestEnabled = false;
       LoginwindowText = "🤙 markus@bachlechner.org, ☎️ +4368110274079, 🌍 Austria ";

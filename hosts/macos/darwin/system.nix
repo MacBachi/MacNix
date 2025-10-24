@@ -32,10 +32,6 @@
     enableStealthMode = true;
   };
 
-  # Hostname und Zeitzone (optional)
-  # networking.hostName = "macbachi";
-  # time.timeZone = "Europe/Vienna";
-
   # System-State-Version
   system.stateVersion = 6;
 
@@ -44,8 +40,5 @@
     touchIdAuth = true;
     watchIdAuth = true;
   };
-
-  # Optionale Systempakete
-  # environment.systemPackages = with pkgs; [ git htop ];
 
 }

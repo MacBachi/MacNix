@@ -24,6 +24,7 @@
       "ultimaker-cura"
       "uhk-agent"
       "little-snitch"
+      "knockknock"
     ];
     brews = [
       "dug"
