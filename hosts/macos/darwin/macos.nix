@@ -51,9 +51,36 @@
           };
         };
       };
+      "com.apple.AppleMultitouchTrackpad" = {
+        Clicking = 1;
+        Dragging = 1;
+        TrackpadThreeFingerDrag = 1;
+      };
     };
 
     CustomSystemPreferences = {
+      "com.apple.Safari" = {
+        AlwaysRestoreSessionAtLaunch = false;
+        AutoFillCreditCardData = false;
+        AutoFillFromAddressBook = true;
+        AutoFillMiscellaneousForms = false;
+        AutoOpenSafeDownloads = false;
+        EnableEnhancedPrivacyInRegularBrowsing = true;
+        HistoryAgeInDaysLimit = 1;
+        HomePage = "https://homepage.secure.guggug.at/";
+        IncludeDevelopMenu = true;
+        NewTabBehavior = 4;
+        SearchProviderShortName = "DuckDuckGo";
+        ShowFullURLInSmartSearchField = true;
+        WarnAboutFraudulentWebsites = true;
+        ExtensionsEnabled = 1;
+        GrammarCheckingEnabled = 0;
+        ShowSidebarInNewWindows = 1;
+        ShowSidebarInTopSites = 1;
+        SpellCheckingEnabled = 0;
+        WebContinuousSpellCheckingEnabled = 0;
+        "WebKitPreferences.applePayEnabled" = 1;
+      };
       "com.apple.TimeMachine" = {
         EncryptBackups = true;
       };
@@ -157,12 +184,8 @@
       NSUseAnimatedFocusRing = true;
       NSWindowShouldDragOnGesture = true;
       PMPrintingExpandedStateForPrint = true;
-      "com.apple.mouse.tapBehavior" = 1;
-      "com.apple.sound.beep.feedback" = 0;
-      "com.apple.swipescrolldirection" = true;
-      "com.apple.trackpad.enableSecondaryClick" = true;
-      "com.apple.trackpad.scaling" = 1.7;
     };
+
     SoftwareUpdate = {
       AutomaticallyInstallMacOSUpdates = true;
     };
@@ -172,21 +195,7 @@
     iCal = {
       CalendarSidebarShown = true;
     };
-    CustomSystemPreferences."com.apple.Safari" = {
-      AlwaysRestoreSessionAtLaunch = false;
-      AutoFillCreditCardData = false;
-      AutoFillFromAddressBook = true;
-      AutoFillMiscellaneousForms = false;
-      AutoOpenSafeDownloads = false;
-      EnableEnhancedPrivacyInRegularBrowsing = true;
-      HistoryAgeInDaysLimit = 1;
-      HomePage = "https://homepage.secure.guggug.at/";
-      IncludeDevelopMenu = true;
-      NewTabBehavior = 4;
-      SearchProviderShortName = "DuckDuckGo";
-      ShowFullURLInSmartSearchField = true;
-      WarnAboutFraudulentWebsites = true;
-    };
+    
     controlcenter = {
       AirDrop = true;
       BatteryShowPercentage = true;
