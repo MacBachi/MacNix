@@ -118,7 +118,7 @@
     dock = {
       autohide = false;
       show-recents = false;
-      wvous-bl-corner = 2;
+      wvous-bl-corner = 11;
       wvous-tr-corner = 5;
       wvous-br-corner = 12;
       tilesize = 32;
