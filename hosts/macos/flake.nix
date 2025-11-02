@@ -24,57 +24,71 @@
       ...
     }:
     let
-    # Gemeinsame Basis-Module, die für alle Hosts gelten
-      baseModules = [
-        ./darwin
-        mac-app-util.darwinModules.default
-        home-manager.darwinModules.home-manager
-        (
-          {
-            pkgs,
-            config,
-            inputs,
-            ...
-          }:
-          {
-            home-manager.sharedModules = [
-              mac-app-util.homeManagerModules.default
-            ];
-          }
-        )
-      ];
-
       # Hosts mit ARM-Architektur (Apple Silicon)
       aarch64_hosts = [
-            "rizzo2025"
-            "beaker2025"
-          ];
-          
-          # Hosts mit Intel-Architektur (x86_64)
-          x86_64_hosts = [
-            "scooter2016"
-          ];
-          
-          # Generiert darwinConfigurations für eine bestimmte Architektur
-          mkHostConfigs = system: hosts:
-            builtins.listToAttrs (
-              map (host: {
-                name = host;
-                value = nix-darwin.lib.darwinSystem {
-                  system = system;
-                  specialArgs = { inherit inputs; };
-                  # Lädt nur die Basis-Module, um den Fehler der fehlenden Host-Datei zu vermeiden
-                  modules = baseModules; 
-                };
-              }) hosts
-            );
+        "rizzo2025"
+        "beaker2025"
+      ];
+      
+      # Hosts mit Intel-Architektur (x86_64)
+      x86_64_hosts = [
+        "scooter2016"
+      ];
+      
+      # Generiert darwinConfigurations für eine bestimmte Architektur
+      mkHostConfigs = system: hosts:
+        let
+          # Definiert die Module basierend auf dem 'system' Argument
+          currentModules = [
+            ./darwin
+            home-manager.darwinModules.home-manager
+            
+            # Bedingte Inklusion des mac-app-util Darwin-Moduls
+            (
+              if system == "aarch64-darwin" then
+                mac-app-util.darwinModules.default
+              else
+                {} # Leeres Modul für x86_64
+            )
 
+            # Home-Manager Modul (muss hier neu definiert werden, um 'system' zu prüfen)
+            (
+              {
+                pkgs,
+                config,
+                inputs,
+                ...
+              }:
+              let
+                # Bedingte Inklusion des mac-app-util Home-Manager Moduls
+                hmUtilModule = 
+                  if system == "aarch64-darwin"
+                  then [ mac-app-util.homeManagerModules.default ]
+                  else [];
+              in
+              {
+                home-manager.sharedModules = hmUtilModule;
+              }
+            )
+          ];
         in
-        {
-          darwinConfigurations =
-            # Apple Silicon Hosts
+        builtins.listToAttrs (
+          map (host: {
+            name = host;
+            value = nix-darwin.lib.darwinSystem {
+              system = system;
+              specialArgs = { inherit inputs; };
+              modules = currentModules; 
+            };
+          }) hosts
+        );
+
+    in
+    {
+      darwinConfigurations =
+        # Apple Silicon Hosts
         (mkHostConfigs "aarch64-darwin" aarch64_hosts)
-        // # Intels Hosts
-               (mkHostConfigs "x86_64-darwin" x86_64_hosts);
+        # Intels Hosts
+        // (mkHostConfigs "x86_64-darwin" x86_64_hosts);
     };
 }
