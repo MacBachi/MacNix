@@ -36,7 +36,6 @@
     icdiff      # Improved, colorized, side-by-side command line diff utility.
     lolcat      # Concatenates input (like cat) and applies a rainbow color effect to the text.
     mc          # Visual dual-pane file manager for the terminal; a Norton Commander clone.
-    ncdu        # NCurses Disk Usage; TUI file explorer to view and clean disk space.
     procs       # Modern ps alternative; colored, human-readable process viewer with extra info.
     progress    # Monitors coreutils commands (cp, mv, dd) to display copy percentage and speed.
     pv          # Pipe Viewer; monitors data flow through a pipe, showing progress bar, rate, and ETA.

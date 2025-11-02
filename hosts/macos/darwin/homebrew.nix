@@ -27,6 +27,8 @@
       "knockknock"
     ];
     brews = [
+      "zoxide"
+      "ncdu"
       "dug"
       "mas"
       "httping"

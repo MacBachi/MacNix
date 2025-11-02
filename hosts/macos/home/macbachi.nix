@@ -429,8 +429,6 @@
     config.theme = "Nord";
   };
 
-  programs.zoxide.enable = true;
-
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
