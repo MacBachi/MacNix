@@ -228,6 +228,7 @@
         oderwat.indent-rainbow
         vscode-icons-team.vscode-icons
         yzhang.markdown-all-in-one
+        idleberg.applescript
       ];
     };
   };
