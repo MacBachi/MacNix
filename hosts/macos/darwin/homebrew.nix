@@ -25,9 +25,12 @@
       "uhk-agent"
       "little-snitch"
       "knockknock"
+      "rustdesk"
     ];
     brews = [
       "zoxide"
+      "rustscan"
+      "nuclei"
       "ncdu"
       "dug"
       "mas"
