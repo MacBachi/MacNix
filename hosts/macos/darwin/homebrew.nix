@@ -10,7 +10,10 @@
       upgrade = true;
       cleanup = "zap";
     };
-
+    
+    caskArgs = {
+      no_quarantine = true;
+    };
     casks = [
       "alfred"
       "setapp"
