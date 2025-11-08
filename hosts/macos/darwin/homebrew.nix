@@ -26,6 +26,7 @@
       "little-snitch"
       "knockknock"
       "rustdesk"
+      "chromium"
     ];
     brews = [
       "zoxide"
