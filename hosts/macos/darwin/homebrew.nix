@@ -32,6 +32,13 @@
       "chromium"
     ];
     brews = [
+      "gocheat"
+      "cheat"
+      "bottom"                 # bottom - top/htop replacement
+      "piknik"                 # Ausgabe eines Befehls schnell als Gist oder in einer Pastebin-Instanz speichern
+      "ripgrep"
+      "croc"                   # Tool für die plattformübergreifende Dateiübertragung
+      "tealdeer"               # alternative zu tldr
       "zoxide"
       "rustscan"
       "nuclei"

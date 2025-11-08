@@ -18,7 +18,10 @@
 
     initContent = ''
       source /etc/zshrc;
-
+      function rtfm() {
+        # Verwendet "$1" für das erste Argument (z.B. "tar", "git")
+        curl cheat.sh/"$1"
+      }
       zstyle ':omz:plugins:alias-finder' autoload yes
       zstyle ':omz:plugins:alias-finder' longer yes
       zstyle ':omz:plugins:alias-finder' exact yes
