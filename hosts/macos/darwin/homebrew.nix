@@ -30,6 +30,7 @@
       "knockknock"
       "rustdesk"
       "chromium"
+      "telegram"
     ];
     brews = [
       "gocheat"
