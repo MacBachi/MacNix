@@ -16,48 +16,130 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    # Declarative history config (replaces manual HIST* exports in initContent)
+    history = {
+      path = "$HOME/.zsh_history";
+      size = 20000;
+      save = 20000;
+      share = true;
+      ignoreDups = true;
+      ignoreSpace = true;
+      extended = true;
+    };
+
     initContent = ''
-      source /etc/zshrc;
-      function rtfm() {
-        # Verwendet "$1" für das erste Argument (z.B. "tar", "git")
-        curl cheat.sh/"$1"
-      }
-      zstyle ':omz:plugins:alias-finder' autoload yes
-      zstyle ':omz:plugins:alias-finder' longer yes
-      zstyle ':omz:plugins:alias-finder' exact yes
-      zstyle ':omz:plugins:alias-finder' cheaper yes
-      MAGIC_ENTER_GIT_COMMAND='git status -u .'
-      MAGIC_ENTER_OTHER_COMMAND='ls -lh .'
+                  source /etc/zshrc;
 
-      # renix Funktion: Erst App-Store Updates (mas), dann Nix/Darwin Rebuild.
-      renix() {
-        # Falls mas installiert ist: Upgrade aller App-Store Apps.
-        if command -v mas >/dev/null 2>&1; then
-          echo "[renix] Aktualisiere App-Store Apps (mas upgrade)…"
-          mas upgrade || echo "[renix] Warnung: mas upgrade fehlgeschlagen (fortgesetzt)."
-        else
-          echo "[renix] mas nicht installiert – überspringe App-Store Updates."
-        fi
+                  zstyle ':omz:plugins:alias-finder' autoload yes
+                  zstyle ':omz:plugins:alias-finder' longer yes
+                  zstyle ':omz:plugins:alias-finder' exact yes
+                  zstyle ':omz:plugins:alias-finder' cheaper yes
+                  MAGIC_ENTER_GIT_COMMAND='git status -u .'
+                  MAGIC_ENTER_OTHER_COMMAND='ls -lh .'
 
-        # Standard-Kommando für Rebuild (Pfad ggf. anpassen).
-        local rebuild_cmd="sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)"
+                  # Zusätzliche Zsh Optionen (history variables now handled via programs.zsh.history)
+                  setopt HIST_IGNORE_DUPS SHARE_HISTORY EXTENDED_GLOB AUTO_CD NO_BEEP \
+                         APPEND_HISTORY HIST_IGNORE_SPACE HIST_REDUCE_BLANKS HIST_VERIFY INC_APPEND_HISTORY
 
-        # Wenn Argumente übergeben wurden: Diese als komplettes Kommando verwenden.
-        if [ "$#" -gt 0 ]; then
-          rebuild_cmd="$*"
-        fi
+                  # Extra ergonomics / safety
+                  setopt NO_CLOBBER
+                  setopt GLOB_DOTS
 
-        echo "[renix] Starte: $rebuild_cmd"
-        eval "$rebuild_cmd"
+                  # Parametrisierbarer Flake-Root
+                  : "''${RENIX_FLAKE_ROOT:=$HOME/mynix/hosts/macos}"
 
-        echo "[renix] Führe Garbage Collection durch…"
-        nix-collect-garbage -d
+                  unalias renix 2>/dev/null || true
 
-        echo "[renix] Berechne NIX Disk Usage nach GC…"
-        du -sh /nix/store
+                  # rtfm: cheat.sh mit Fallback tldr
+                  rtfm() {
+                    if [ -z "$1" ]; then
+                      echo "Usage: rtfm <topic>"
+                      return 1
+                    fi
+                    if curl -fsSL "https://cheat.sh/$1" >/dev/null 2>&1; then
+                      curl -fsSL "https://cheat.sh/$1"
+                    else
+                      command -v tldr >/dev/null 2>&1 && tldr "$1" || echo "No cheat.sh or tldr available."
+                    fi
+                  }
 
-        echo "[renix] Fertig."     
-      }
+                  # eza aliases
+                  if command -v eza >/dev/null 2>&1; then
+                    alias ll='eza -l --git'
+                    alias la='eza -la --git'
+                    alias lt='eza -lT --git'
+                  fi
+
+                  # renix Flags: --no-gc --no-mas --no-rebuild --help
+                  renix() {
+                    local host="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
+                    local flake="''${RENIX_FLAKE_ROOT}#''${host}"
+                    local do_gc=1
+                    local do_mas=1
+                    local do_rebuild=1
+                    local -a passthru=()
+
+                    for a in "$@"; do
+                      case "$a" in
+                        --no-gc) do_gc=0 ;;
+                        --no-mas) do_mas=0 ;;
+                        --no-rebuild) do_rebuild=0 ;;
+                        -h|--help)
+                          cat <<EOF
+      renix [options] [custom rebuild command]
+        --no-gc        Skip nix-collect-garbage
+        --no-mas       Skip mas upgrade
+        --no-rebuild   Skip darwin-rebuild
+        --help         Hilfe
+      Falls weitere Args (ohne --no-*) übergeben werden, ersetzen sie den Standard-Rebuild.
+      ENV: RENIX_FLAKE_ROOT='$RENIX_FLAKE_ROOT'
+      EOF
+                          return 0
+                          ;;
+                        --no-*) ;;
+                        *) passthru+=("$a") ;;
+                      esac
+                    done
+
+                    if [ "$do_mas" -eq 1 ] && command -v mas >/dev/null 2>&1; then
+                      echo "[renix] mas upgrade…"
+                      mas upgrade || echo "[renix] (warn) mas upgrade failed."
+                    elif [ "$do_mas" -eq 1 ]; then
+                      echo "[renix] mas not installed (skip)."
+                    fi
+
+                    local rebuild_cmd="sudo darwin-rebuild switch --flake ''${flake}"
+                    if [ "''${#passthru[@]}" -gt 0 ]; then
+                      rebuild_cmd="''${passthru[*]}"
+                    fi
+
+                    if [ "$do_rebuild" -eq 1 ]; then
+                      if ! command -v darwin-rebuild >/dev/null 2>&1; then
+                        echo "[renix] darwin-rebuild not found."
+                        return 2
+                      fi
+                      echo "[renix] Running: $rebuild_cmd"
+                      if ! eval "$rebuild_cmd"; then
+                        echo "[renix] Rebuild failed."
+                        return 3
+                      fi
+                    else
+                      echo "[renix] Skipping rebuild (--no-rebuild)."
+                    fi
+
+                    if [ "$do_gc" -eq 1 ]; then
+                      echo "[renix] Garbage collect…"
+                        nix-collect-garbage -d || echo "[renix] (warn) GC failed."
+                      if command -v du >/dev/null 2>&1; then
+                        echo "[renix] Store size:"
+                        du -sh /nix/store 2>/dev/null || true
+                      fi
+                    else
+                      echo "[renix] Skipping GC (--no-gc)."
+                    fi
+
+                    echo "[renix] Done."
+                  }
     '';
 
     oh-my-zsh = {
