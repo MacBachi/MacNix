@@ -28,6 +28,28 @@
       zstyle ':omz:plugins:alias-finder' cheaper yes
       MAGIC_ENTER_GIT_COMMAND='git status -u .'
       MAGIC_ENTER_OTHER_COMMAND='ls -lh .'
+
+      # renix Funktion: Erst App-Store Updates (mas), dann Nix/Darwin Rebuild.
+      renix() {
+        # Falls mas installiert ist: Upgrade aller App-Store Apps.
+        if command -v mas >/dev/null 2>&1; then
+          echo "[renix] Aktualisiere App-Store Apps (mas upgrade)…"
+          mas upgrade || echo "[renix] Warnung: mas upgrade fehlgeschlagen (fortgesetzt)."
+        else
+          echo "[renix] mas nicht installiert – überspringe App-Store Updates."
+        fi
+
+        # Standard-Kommando für Rebuild (Pfad ggf. anpassen).
+        local rebuild_cmd="sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)"
+
+        # Wenn Argumente übergeben wurden: Diese als komplettes Kommando verwenden.
+        if [ "$#" -gt 0 ]; then
+          rebuild_cmd="$*"
+        fi
+
+        echo "[renix] Starte: $rebuild_cmd"
+        eval "$rebuild_cmd"
+      }
     '';
 
     oh-my-zsh = {

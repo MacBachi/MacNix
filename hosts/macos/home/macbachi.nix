@@ -11,10 +11,9 @@
 
   home.shell.enableShellIntegration = true;
   home.shellAliases = {
-    # aliases. should only be used to manage 
+    # aliases. should only be used to manage
     # simple aliases that are compatible across all shells.
     top = "btop";
-    renix = "sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)";
     flushdns = "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder";
     shownix = "find . -type f -name \"*.nix\" -exec echo \"--- FILE: {} ---\" \\; -exec cat {} \\;";
     l = "eza -i";
@@ -24,7 +23,7 @@
   };
 
   targets = {
-    darwin = { 
+    darwin = {
       defaults = {
         "com.apple.Safari" = {
           AutoFillPasswords = false;
@@ -41,8 +40,7 @@
         };
       };
     };
-  }; 
-
+  };
 
   home.file.".config/git/allowed_signers" = {
     text = ''
@@ -51,10 +49,10 @@
   };
 
   home.file.".config/fabric/config.json" = {
-    force = true; 
+    force = true;
     text = builtins.toJSON {
-      openai_api_key = ""; 
-      anthropic_api_key = ""; 
+      openai_api_key = "";
+      anthropic_api_key = "";
       model = "gpt-4o-mini";
       provider = "openai";
       patterns_directory = "$HOME/.config/fabric/patterns";
@@ -64,7 +62,7 @@
   };
 
   home.file.".config/fabric/.env" = {
-    force = true; 
+    force = true;
     text = "";
   };
 
@@ -98,17 +96,17 @@
       cmp-vsnip
       luasnip
       nvim-treesitter.withAllGrammars
-      nvim-tree-lua   # Moderner Datei-Explorer
-      telescope-nvim  # Fuzzy Finder für Dateien/Greps/LSPs
-      plenary-nvim    # Allgemeine Lua-Bibliothek, oft Abhängigkeit
-      lualine-nvim    # Produktive Statuszeile
+      nvim-tree-lua # Moderner Datei-Explorer
+      telescope-nvim # Fuzzy Finder für Dateien/Greps/LSPs
+      plenary-nvim # Allgemeine Lua-Bibliothek, oft Abhängigkeit
+      lualine-nvim # Produktive Statuszeile
       catppuccin-nvim
       indent-blankline-nvim
       gitsigns-nvim
       dashboard-nvim
       nvim-lint
     ];
-      extraLuaConfig = builtins.readFile ./neovim/init.lua;
+    extraLuaConfig = builtins.readFile ./neovim/init.lua;
   };
 
   programs.waveterm = {
@@ -123,20 +121,19 @@
       "term:optionasmeta" = true;
       "remote:autossh" = true;
       "telemetry:enabled" = false;
-      
-     font = {
-        family = "FiraCode Nerd Font"; 
+
+      font = {
+        family = "FiraCode Nerd Font";
         size = 12; # Beispiel-Größe
-      }; 
+      };
     };
   };
-
 
   programs.vscode = {
     enable = true;
     profiles.default = {
       userSettings = {
-        "editor.fontFamily" = "Fira Code Nerd Font"; 
+        "editor.fontFamily" = "Fira Code Nerd Font";
         "editor.fontLigatures" = true;
         "workbench.colorTheme" = "Catppuccin Mocha";
         "editor.minimap.side" = "right";
@@ -166,7 +163,7 @@
           "**/.DS_Store" = true;
           "**/Thumbs.db" = true;
           "**/.vscode" = true;
-  
+
           # Node.js / JavaScript
           "**/node_modules" = true;
           "**/dist" = true;
@@ -187,7 +184,7 @@
         "editor.inlineSuggest.enabled" = true;
         "editor.acceptSuggestionOnEnter" = "smart";
         "editor.rulers" = [
-	  80
+          80
           100
         ];
         "editor.guides.bracketPairs" = true;
@@ -251,22 +248,22 @@
     enableGitIntegration = true;
   };
 
- # programs.git = {
- #   enable = true;
- #   settings = {
- #     user.email = "mac@bachi.at";
- #     user.name = "MacBachi";
- #   };
- #   lfs.enable = true;
- #   settings = {
- #     init.defaultBranch = "main";
- #     merge = {
- #       conflictStyle = "diff3";
- #       tool = "meld";
- #     };
- #     pull.rebase = true;
- #   };
- # };
+  # programs.git = {
+  #   enable = true;
+  #   settings = {
+  #     user.email = "mac@bachi.at";
+  #     user.name = "MacBachi";
+  #   };
+  #   lfs.enable = true;
+  #   settings = {
+  #     init.defaultBranch = "main";
+  #     merge = {
+  #       conflictStyle = "diff3";
+  #       tool = "meld";
+  #     };
+  #     pull.rebase = true;
+  #   };
+  # };
 
   programs.git = {
     enable = true;
@@ -300,7 +297,6 @@
     };
   };
 
-
   programs.htop = {
     enable = true;
     settings.show_program_path = true;
@@ -308,120 +304,122 @@
 
   programs.lf.enable = true;
 
-  programs.tmux = let
-    zshPath = "${pkgs.zsh}/bin/zsh";
-    # Für macOS ist reattach-to-user-namespace oft notwendig
-    reattachPath = "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace"; 
-  in {
-    enable = true;
-    keyMode = "vi";
-    clock24 = true;
-    historyLimit = 9999999;
-    mouse = true;
-    plugins = with pkgs.tmuxPlugins; [
-      gruvbox
-      sensible
-      vim-tmux-navigator
-      resurrect
-      yank
-    ];
-    extraConfig = ''
+  programs.tmux =
+    let
+      zshPath = "${pkgs.zsh}/bin/zsh";
+      # Für macOS ist reattach-to-user-namespace oft notwendig
+      reattachPath = "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace";
+    in
+    {
+      enable = true;
+      keyMode = "vi";
+      clock24 = true;
+      historyLimit = 9999999;
+      mouse = true;
+      plugins = with pkgs.tmuxPlugins; [
+        gruvbox
+        sensible
+        vim-tmux-navigator
+        resurrect
+        yank
+      ];
+      extraConfig = ''
 
 
-# --- Allgemeine Einstellungen ---
-     set -g default-shell ${zshPath}
-     set -g default-command "${reattachPath} -l ${zshPath}"
+        # --- Allgemeine Einstellungen ---
+             set -g default-shell ${zshPath}
+             set -g default-command "${reattachPath} -l ${zshPath}"
 
 
-     unbind C-b
-     set-option -g prefix C-a
-     bind-key C-a send-prefix
+             unbind C-b
+             set-option -g prefix C-a
+             bind-key C-a send-prefix
 
-     set -g status-interval 1
-     set -g display-time 4000
-     set -g allow-rename off
+             set -g status-interval 1
+             set -g display-time 4000
+             set -g allow-rename off
 
-     # Fenster- und Pane-Splits
-     bind v split-window -h -c "#{pane_current_path}"
-     bind s split-window -v -c "#{pane_current_path}"
-     unbind '"'
-     unbind %
+             # Fenster- und Pane-Splits
+             bind v split-window -h -c "#{pane_current_path}"
+             bind s split-window -v -c "#{pane_current_path}"
+             unbind '"'
+             unbind %
 
-     # Konfigurationsdatei neu laden
-     bind r source-file ~/.config/tmux/tmux.conf \; display-message "⛩️  tmux.conf reloaded (NixPro Style)"
+             # Konfigurationsdatei neu laden
+             bind r source-file ~/.config/tmux/tmux.conf \; display-message "⛩️  tmux.conf reloaded (NixPro Style)"
 
-     # Fenster-Navigation
-     bind -n S-Left previous-window
-     bind -n S-Right next-window
+             # Fenster-Navigation
+             bind -n S-Left previous-window
+             bind -n S-Right next-window
 
-     # Pane-Navigation
-     bind -n M-Left select-pane -L
-     bind -n M-Right select-pane -R
-     bind -n M-Up select-pane -U
-     bind -n M-Down select-pane -D
+             # Pane-Navigation
+             bind -n M-Left select-pane -L
+             bind -n M-Right select-pane -R
+             bind -n M-Up select-pane -U
+             bind -n M-Down select-pane -D
 
-     # Synchronisation
-     bind S set-window-option synchronize-panes
+             # Synchronisation
+             bind S set-window-option synchronize-panes
 
-     # --- Farbpalette (Catppuccin Mocha) ---
-     set -g default-terminal "tmux-256color"
-     set -ag terminal-features ",xterm-256color:RGB"
+             # --- Farbpalette (Catppuccin Mocha) ---
+             set -g default-terminal "tmux-256color"
+             set -ag terminal-features ",xterm-256color:RGB"
 
-     # Variablen
-     CTP_BASE="#1e1e2e"
-     CTP_SURFACE2="#585b70"
-     CTP_LAVENDER="#b4befe"
-     CTP_BLUE="#89b4fa"
-     CTP_GREEN="#a6e3a1"
-     CTP_YELLOW="#f9e2af"
-     CTP_RED="#f38ba8"
-     CTP_TEXT="#cdd6f4"
+             # Variablen
+             CTP_BASE="#1e1e2e"
+             CTP_SURFACE2="#585b70"
+             CTP_LAVENDER="#b4befe"
+             CTP_BLUE="#89b4fa"
+             CTP_GREEN="#a6e3a1"
+             CTP_YELLOW="#f9e2af"
+             CTP_RED="#f38ba8"
+             CTP_TEXT="#cdd6f4"
 
-     # Statusbar-Stil
-     set -g status-style "bg=$CTP_BASE,fg=$CTP_TEXT"
-     set -g status-position top
+             # Statusbar-Stil
+             set -g status-style "bg=$CTP_BASE,fg=$CTP_TEXT"
+             set -g status-position top
 
-     # Fenster-Status
-     setw -g window-status-style "fg=$CTP_SURFACE2,bg=$CTP_BASE"
-     setw -g window-status-format ' #I #W '
+             # Fenster-Status
+             setw -g window-status-style "fg=$CTP_SURFACE2,bg=$CTP_BASE"
+             setw -g window-status-format ' #I #W '
 
-     # Aktuelles Fenster (Blau/Blue)
-     setw -g window-status-current-style "fg=$CTP_BASE,bg=$CTP_BLUE,bold"
-     setw -g window-status-current-format "#[fg=$CTP_BASE,bg=$CTP_BLUE]#[fg=$CTP_BASE,bg=$CTP_BLUE] #I  #W #[fg=$CTP_BLUE,bg=$CTP_BASE]"
+             # Aktuelles Fenster (Blau/Blue)
+             setw -g window-status-current-style "fg=$CTP_BASE,bg=$CTP_BLUE,bold"
+             setw -g window-status-current-format "#[fg=$CTP_BASE,bg=$CTP_BLUE]#[fg=$CTP_BASE,bg=$CTP_BLUE] #I  #W #[fg=$CTP_BLUE,bg=$CTP_BASE]"
 
-     # Pane-Ränder (Lavender/Surface2)
-     set -g pane-active-border-style "fg=$CTP_LAVENDER"
-     set -g pane-border-style "fg=$CTP_SURFACE2"
+             # Pane-Ränder (Lavender/Surface2)
+             set -g pane-active-border-style "fg=$CTP_LAVENDER"
+             set -g pane-border-style "fg=$CTP_SURFACE2"
 
-     # Nachrichten (Yellow)
-     set -g message-style "fg=$CTP_BASE,bg=$CTP_YELLOW,bold"
-     set -g message-command-style "fg=$CTP_BASE,bg=$CTP_YELLOW,bold"
+             # Nachrichten (Yellow)
+             set -g message-style "fg=$CTP_BASE,bg=$CTP_YELLOW,bold"
+             set -g message-command-style "fg=$CTP_BASE,bg=$CTP_YELLOW,bold"
 
-     # --- Statusbar Layout ---
-     set -g status-right-length 150
-     set -g status-left-length 30
-     
-     # Links: Sensei/Mac-Info (Rot/Red)
-     set -g status-left "#[fg=$CTP_BASE,bg=$CTP_RED]#[fg=$CTP_TEXT,bg=$CTP_RED]  MacBachi #[fg=$CTP_RED,bg=$CTP_BASE]"
+             # --- Statusbar Layout ---
+             set -g status-right-length 150
+             set -g status-left-length 30
+             
+             # Links: Sensei/Mac-Info (Rot/Red)
+             set -g status-left "#[fg=$CTP_BASE,bg=$CTP_RED]#[fg=$CTP_TEXT,bg=$CTP_RED]  MacBachi #[fg=$CTP_RED,bg=$CTP_BASE]"
 
-     # Rechts: CPU/RAM (Grün) | Zeit (Lavender) | Datum (Blau)
-     set -g status-right "\
-       #[fg=$CTP_GREEN,bg=$CTP_BASE]\
-       #[fg=$CTP_BASE,bg=$CTP_GREEN]  #(tmux-mem-cpu-load --interval 2)\
-       #[fg=$CTP_GREEN,bg=$CTP_BASE]\
-       #[fg=$CTP_LAVENDER,bg=$CTP_BASE]\
-       #[fg=$CTP_BASE,bg=$CTP_LAVENDER]  %H:%M:%S \
-       #[fg=$CTP_LAVENDER,bg=$CTP_BASE]\
-       #[fg=$CTP_BLUE,bg=$CTP_BASE]\
-       #[fg=$CTP_BASE,bg=$CTP_BLUE]  %Y-%m-%d \
-       #[fg=$CTP_BLUE,bg=$CTP_BASE]"
+             # Rechts: CPU/RAM (Grün) | Zeit (Lavender) | Datum (Blau)
+             set -g status-right "\
+               #[fg=$CTP_GREEN,bg=$CTP_BASE]\
+               #[fg=$CTP_BASE,bg=$CTP_GREEN]  #(tmux-mem-cpu-load --interval 2)\
+               #[fg=$CTP_GREEN,bg=$CTP_BASE]\
+               #[fg=$CTP_LAVENDER,bg=$CTP_BASE]\
+               #[fg=$CTP_BASE,bg=$CTP_LAVENDER]  %H:%M:%S \
+               #[fg=$CTP_LAVENDER,bg=$CTP_BASE]\
+               #[fg=$CTP_BLUE,bg=$CTP_BASE]\
+               #[fg=$CTP_BASE,bg=$CTP_BLUE]  %Y-%m-%d \
+               #[fg=$CTP_BLUE,bg=$CTP_BASE]"
 
-     # Start new session, falls keine vorhanden ist
-     new-session -s main
+             # Start new session, falls keine vorhanden ist
+             new-session -s main
 
 
-    '';
-  };
+      '';
+    };
 
   programs.nix-index.enable = true;
 

@@ -19,6 +19,7 @@
     obsidian
     teams
     waveterm
+    mas
 
     # nix-output-monitor: TUI zur Live-Ansicht von laufenden Nix-Builds (Fortschritt, Phasen, Downloads, Fehler)
     nix-output-monitor
