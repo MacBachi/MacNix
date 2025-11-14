@@ -49,6 +49,14 @@
 
         echo "[renix] Starte: $rebuild_cmd"
         eval "$rebuild_cmd"
+
+        echo "[renix] Führe Garbage Collection durch…"
+        nix-collect-garbage -d
+
+        echo "[renix] Berechne NIX Disk Usage nach GC…"
+        du -sh /nix/store
+
+        echo "[renix] Fertig."     
       }
     '';
 
