@@ -72,8 +72,8 @@
 
                   # renix Flags: --no-gc --no-mas --no-rebuild --help
                   renix() {
-                    local host="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
-                    local flake="''${RENIX_FLAKE_ROOT}#''${host}"
+                    local host="$(scutil --get LocalHostName 2>/dev/null)"
+                    local flake="''${RENIX_FLAKE_ROOT}\#''${host}"
                     local do_gc=1
                     local do_mas=1
                     local do_rebuild=1
