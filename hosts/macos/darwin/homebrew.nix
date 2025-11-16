@@ -59,6 +59,7 @@
       "uBlock Origin Lite" = 6745342698;
       "Vinegar" = 1591303229;
       "1Blocker" = 1365531024;
+      "Goodnotes" = 1444383602;
     };
   };
 }
