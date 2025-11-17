@@ -60,6 +60,9 @@
       "Vinegar" = 1591303229;
       "1Blocker" = 1365531024;
       "Goodnotes: KI-Notizen, PDF" = 1444383602;
+      "Microsoft PowerPoint" = 462062816;
+      "Microsoft Excel" = 462058435;
+      "Microsoft Word" = 462054704;
     };
   };
 }
