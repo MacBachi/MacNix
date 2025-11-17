@@ -11,7 +11,7 @@
     starship # customizable, and extremely fast cross-shell prompt
     z-lua # Command line utility that tracks frequently visited directories for quick jumping
     zellij # Terminal workspace and multiplexer
-
+    lftp   # command-line program client for several file transfer protocols.
     # Development & Tools
     fabric-ai # CLI tool for executing pre-defined AI recipes (tasks, utilities)
     gh # Official GitHub CLI tool to manage pull requests, workflows, ..., directly from the terminal.
