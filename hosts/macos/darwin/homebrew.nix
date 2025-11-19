@@ -33,6 +33,7 @@
       "telegram"
     ];
     brews = [
+      "ollama"
       "gocheat"
       "cheat"
       "bottom"                 # bottom - top/htop replacement

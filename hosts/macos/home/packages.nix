@@ -17,7 +17,6 @@
     gh # Official GitHub CLI tool to manage pull requests, workflows, ..., directly from the terminal.
     jq # Configuration-as-Code data templating tool
     nixfmt-rfc-style # Code formatter for the Nix language
-    ollama # Framework to run large language models (LLMs) locally
     pipx # Installs and runs Python command-line applications in isolated virtual environments
     rlwrap # Readline wrapper that provides command history, completion, and editing capabilities for any command-line program that lacks these features.
 
