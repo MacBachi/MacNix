@@ -41,8 +41,5 @@
     agg # asciinema gif generator (agg); converts terminal session recordings into animated GIFs.
     asciinema # Records terminal sessions into lightweight, text-based, replayable files (.cast format).
     fortune # Displays a random humorous or poignant aphorism from a database of quotes.
-    gnupg # Encrypts, signs, and manages data and communication using the OpenPGP standard.
-    lynis # Open-source security auditing tool; performs in-depth system and compliance checks.
-    yubikey-manager
   ];
 }

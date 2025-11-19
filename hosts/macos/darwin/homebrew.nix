@@ -38,6 +38,8 @@
     ];
     brews = [
       "atuin"
+      "lynis"
+      "gnupg"
       "colordiff"
       "cowsay"
       "mc"
