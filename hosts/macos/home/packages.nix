@@ -2,40 +2,12 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # Shell & Terminal
-    atuin # Improved shell history for zsh and others. Syncs history between hosts.
-    chroma # syntax highlighting library
     hostmux # connection to multiple SSH hosts by integrating with a terminal multiplexer like Tmux
-    nushell # shell that processes data as structured tables (instead of raw text)
-    ranger # Console-based two-pane file manager
-    starship # customizable, and extremely fast cross-shell prompt
-    z-lua # Command line utility that tracks frequently visited directories for quick jumping
-    zellij # Terminal workspace and multiplexer
-    lftp   # command-line program client for several file transfer protocols.
-    # Development & Tools
-    fabric-ai # CLI tool for executing pre-defined AI recipes (tasks, utilities)
-    gh # Official GitHub CLI tool to manage pull requests, workflows, ..., directly from the terminal.
-    jq # Configuration-as-Code data templating tool
     nixfmt-rfc-style # Code formatter for the Nix language
     pipx # Installs and runs Python command-line applications in isolated virtual environments
     rlwrap # Readline wrapper that provides command history, completion, and editing capabilities for any command-line program that lacks these features.
 
     # CLI Utilities
-    aria2 # command-line download utility supporting multi-protocol and multi-source segmented downloads
-    autojump # utility that learns visited directories, allowing quick navigation via partial keywords
-    broot # terminal file manager
-    btop # Resource monitor providing a TUI display of CPU, MEM, disks, network, and running processes.
-    colordiff
-    cowsay # Prints ASCII animal (default: cow) with user text in a speech bubble.
-    duf # Disk Usage/Free utility; modern, colorized alternative to df.
-    dust # Disk Usage tree viewer (Rust); intuitive, colored, du alternative.
-    fd # Fast, user-friendly file system search; find alternative.
-    glances # Cross-platform system monitoring tool; provides a detailed, real-time overview.
-    httpie # Human-friendly CLI HTTP client; formatted, colorized JSON support.
-    icdiff # Improved, colorized, side-by-side command line diff utility.
-    lolcat # Concatenates input (like cat) and applies a rainbow color effect to the text.
-    mc # Visual dual-pane file manager for the terminal; a Norton Commander clone.
-    procs # Modern ps alternative; colored, human-readable process viewer with extra info.
     progress # Monitors coreutils commands (cp, mv, dd) to display copy percentage and speed.
     pv # Pipe Viewer; monitors data flow through a pipe, showing progress bar, rate, and ETA.
     ripgrep # Fast, recursive regex search tool; respects gitignore, faster than grep.
@@ -72,7 +44,5 @@
     gnupg # Encrypts, signs, and manages data and communication using the OpenPGP standard.
     lynis # Open-source security auditing tool; performs in-depth system and compliance checks.
     yubikey-manager
-    sops # Secret Operations (sops); tool for managing and encrypting secrets in structured files.
-    age # Simple, modern, and secure file encryption tool designed to replace GPG for everyday use.
   ];
 }
