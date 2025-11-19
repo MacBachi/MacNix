@@ -203,7 +203,7 @@
       ];
       extensions = with pkgs.vscode-marketplace-release; [
         catppuccin.catppuccin-vsc
-        eamodio.gitlens
+        # eamodio.gitlens
         github.copilot
         github.copilot-chat
         github.vscode-pull-request-github
