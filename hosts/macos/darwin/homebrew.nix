@@ -15,6 +15,7 @@
       no_quarantine = true;
     };
     casks = [
+      "dockdoor"
       "microsoft-powerpoint"
       "microsoft-word"
       "microsoft-excel"
@@ -35,6 +36,7 @@
       "rustdesk"
       "chromium"
       "telegram"
+      "launchos"
     ];
     brews = [
       "atuin"
