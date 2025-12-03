@@ -87,14 +87,15 @@
       "no-more-secrets"         # Recreates the SETEC ASTRONOMY effect from 'Sneakers'
     ];
     masApps = {
-            #"1Password for Safari" = 1569813296;
-            #"Paperparrot" = 1663665267;
-            #"Wireguard" = 1451685025;
-            #"Actions for Obsidian" = 1659667937;
-            #"uBlock Origin Lite" = 6745342698;
-            #"Vinegar" = 1591303229;
-            #"1Blocker" = 1365531024;
-            #"Goodnotes: KI-Notizen, PDF" = 1444383602;
+      "1Password for Safari" = 1569813296;
+      "Paperparrot" = 1663665267;
+      "Wireguard" = 1451685025;
+      "Actions for Obsidian" = 1659667937;
+      "uBlock Origin Lite" = 6745342698;
+      "Vinegar" = 1591303229;
+      "1Blocker" = 1365531024;
+      "Goodnotes: KI-Notizen, PDF" = 1444383602;
+      "Googly Eyes" = 6743048714;
     };
   };
 }
