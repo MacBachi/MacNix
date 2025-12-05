@@ -4,6 +4,7 @@
     mb = {
       name = "mb";
       home = "/Users/mb";
+      uid = 501;
     };
   };
 }
