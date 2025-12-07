@@ -37,6 +37,7 @@
       "chromium"
       "telegram"
       "launchos"
+      "utm"
     ];
     brews = [
       "atuin"
