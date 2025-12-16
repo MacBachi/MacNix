@@ -205,32 +205,41 @@
           when = "terminalFocus";
         }
       ];
-      extensions = with pkgs.vscode-marketplace-release; [
-        catppuccin.catppuccin-vsc
-        # eamodio.gitlens
-        github.copilot
-        github.copilot-chat
-        github.vscode-pull-request-github
-        janisdd.vscode-edit-csv
-        jnoortheen.nix-ide
-        mechatroner.rainbow-csv
-        mhutchie.git-graph
-        ms-python.debugpy
-        ms-python.python
-        ms-python.vscode-pylance
-        ms-toolsai.jupyter
-        ms-toolsai.jupyter-keymap
-        ms-toolsai.jupyter-renderers
-        ms-toolsai.vscode-jupyter-cell-tags
-        ms-toolsai.vscode-jupyter-slideshow
-        ms-vscode-remote.remote-ssh
-        ms-vscode-remote.remote-ssh-edit
-        ms-vscode.remote-explorer
-        oderwat.indent-rainbow
-        vscode-icons-team.vscode-icons
-        yzhang.markdown-all-in-one
-        idleberg.applescript
-      ];
+      extensions = let
+        # 1. Wir definieren eine kleine Hilfsfunktion
+        addUnzip = pkg: pkg.overrideAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.unzip ];
+        });
+        myExtensions = with pkgs.vscode-extensions; [
+      # extensions = with pkgs.vscode-marketplace-release; [
+          catppuccin.catppuccin-vsc
+          eamodio.gitlens
+          github.copilot
+          github.copilot-chat
+          github.vscode-pull-request-github
+          # janisdd.vscode-edit-csv
+          jnoortheen.nix-ide
+          mechatroner.rainbow-csv
+          mhutchie.git-graph
+          ms-python.debugpy
+          ms-python.python
+          ms-python.vscode-pylance
+          ms-toolsai.jupyter
+          ms-toolsai.jupyter-keymap
+          ms-toolsai.jupyter-renderers
+          ms-toolsai.vscode-jupyter-cell-tags
+          ms-toolsai.vscode-jupyter-slideshow
+          ms-vscode-remote.remote-ssh
+          ms-vscode-remote.remote-ssh-edit
+          ms-vscode.remote-explorer
+          oderwat.indent-rainbow
+          vscode-icons-team.vscode-icons
+          yzhang.markdown-all-in-one
+          # idleberg.applescript
+        ];
+      in 
+        # 3. Wir wenden die Funktion auf ALLE Extensions in der Liste an
+        map addUnzip myExtensions;
     };
   };
 
