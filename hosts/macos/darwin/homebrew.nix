@@ -38,6 +38,7 @@
       "telegram"
       "launchos"
       "utm"
+      "zoom"
     ];
     brews = [
       "atuin"
