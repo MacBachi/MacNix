@@ -44,6 +44,7 @@
     ];
     brews = [
       "gping"
+      "node"
       "magic-wormhole"
       "progress"
       "ripgrep"
