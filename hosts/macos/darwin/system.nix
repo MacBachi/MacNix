@@ -28,7 +28,7 @@
   # Firewall-Einstellungen
   networking.applicationFirewall = {
     enable = true;
-    allowSigned = true;
+    allowSigned = false; ## false = congress mode, true=normal mode
     enableStealthMode = true;
   };
 

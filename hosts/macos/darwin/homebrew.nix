@@ -16,6 +16,7 @@
     };
     casks = [
       "dockdoor"
+      "claude"
       "microsoft-powerpoint"
       "microsoft-word"
       "microsoft-excel"
