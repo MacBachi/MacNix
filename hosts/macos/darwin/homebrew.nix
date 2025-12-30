@@ -15,7 +15,7 @@
       no_quarantine = true;
     };
     casks = [
-
+      "ngrok"
       "dockdoor"
       "claude"
       "microsoft-powerpoint"
@@ -54,7 +54,6 @@
       "nmap"
       "termshark"
       "prettyping"
-      "ngrok"
       "mosh"
       "agg"
       "asciinema"
