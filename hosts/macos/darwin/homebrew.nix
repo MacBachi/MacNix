@@ -15,6 +15,7 @@
       no_quarantine = true;
     };
     casks = [
+
       "dockdoor"
       "claude"
       "microsoft-powerpoint"
@@ -42,6 +43,28 @@
       "zoom"
     ];
     brews = [
+      "gping"
+      "magic-wormhole"
+      "progress"
+      "ripgrep"
+      "ripgrep-all"
+      "watch"
+      "fping"
+      "masscan"
+      "nmap"
+      "termshark"
+      "prettyping"
+      "ngrok"
+      "mosh"
+      "agg"
+      "asciinema"
+      "fortune"
+      "mtr"
+      "pv"
+      "rlwrap"
+      "wget"
+      "tree"
+      "arping"
       "atuin"
       "lynis"
       "gnupg"
