@@ -48,6 +48,21 @@
     '';
   };
 
+  home.file."Library/Application Support/Claude/claude_desktop_config.json".text = builtins.toJSON {
+    mcpServers = {
+      hexstrike = {
+        command = "ssh";
+        args = [
+          "user@hex.lab.guggug.at"
+          "hexstrike_mcp"
+          "--server"
+          "http://127.0.0.1:8888"
+        ];
+      };
+    };
+  };
+
+
   home.file.".config/fabric/config.json" = {
     force = true;
     text = builtins.toJSON {
