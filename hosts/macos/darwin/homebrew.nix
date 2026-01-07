@@ -15,9 +15,6 @@
       no_quarantine = true;
     };
     casks = [
-      "freecad"
-      "libreoffice"
-      "libreoffice-language-pack"
       "ngrok"
       "dockdoor"
       "claude"
