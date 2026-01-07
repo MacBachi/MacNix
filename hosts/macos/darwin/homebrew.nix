@@ -43,6 +43,9 @@
       "zoom"
     ];
     brews = [
+      "freecad"
+      "libreoffice"
+      "libreoffice-language-pack"
       "gping"
       "node"
       "magic-wormhole"
