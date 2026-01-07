@@ -15,6 +15,9 @@
       no_quarantine = true;
     };
     casks = [
+      "freecad"
+      "libreoffice"
+      "libreoffice-language-pack"
       "ngrok"
       "dockdoor"
       "claude"
@@ -43,9 +46,6 @@
       "zoom"
     ];
     brews = [
-      "freecad"
-      "libreoffice"
-      "libreoffice-language-pack"
       "gping"
       "node"
       "magic-wormhole"
