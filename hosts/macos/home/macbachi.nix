@@ -93,6 +93,7 @@
 
   programs.neovim = {
     enable = true;
+    withNodeJs = true;
     viAlias = true;
     vimAlias = true;
     extraConfig = ''
@@ -102,6 +103,7 @@
     '';
 
     plugins = with pkgs.vimPlugins; [
+      nvim-treesitter
       nvim-lspconfig
       nvim-cmp
       cmp-nvim-lsp
