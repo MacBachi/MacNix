@@ -103,7 +103,6 @@
     '';
 
     plugins = with pkgs.vimPlugins; [
-      nvim-treesitter
       nvim-lspconfig
       nvim-cmp
       cmp-nvim-lsp
