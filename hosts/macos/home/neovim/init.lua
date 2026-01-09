@@ -2,22 +2,6 @@
 -- Neovim init.lua (Home Manager)
 -- ===================================
 
--- Fix for Nix Neovim runtime path (macOS)
-local ts_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/nvim-treesitter"
-if vim.fn.isdirectory(ts_path) == 0 then
-  -- Try to locate plugin under Nix store
-  for _, p in ipairs(vim.split(vim.o.runtimepath, ",")) do
-    if p:match("nvim%-treesitter") then
-      vim.opt.runtimepath:append(p)
-    end
-  end
-end
-
-
-
-
-
-
 --  Allgemeine Optionen
 vim.o.termguicolors = true
 vim.o.number = true
@@ -41,10 +25,9 @@ vim.cmd [[
 ]]
 
 -- nvim-treesitter Setup
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter').setup {
   highlight = { enable = true },
   indent = { enable = true },
-  ensure_installed = { "lua", "bash", "nix", "python" },
 }
 
 

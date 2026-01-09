@@ -110,11 +110,12 @@
       cmp-path
       cmp-vsnip
       luasnip
+
       nvim-treesitter.withAllGrammars
+ 
       nvim-tree-lua # Moderner Datei-Explorer
       telescope-nvim # Fuzzy Finder für Dateien/Greps/LSPs
       plenary-nvim # Allgemeine Lua-Bibliothek, oft Abhängigkeit
-      # lualine-nvim # Produktive Statuszeile
       (pkgs.vimUtils.buildVimPlugin {
         name = "lualine-nvim";
         src = inputs.lualine-src;
