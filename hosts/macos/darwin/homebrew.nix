@@ -43,6 +43,7 @@
       "zoom"
     ];
     brews = [
+      "tree-sitter-cli"
       "tree-sitter"
       "gping"
       "magic-wormhole"
