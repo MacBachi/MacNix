@@ -100,6 +100,8 @@
       set mouse=a
       set clipboard=unnamed,unnamedplus
       set guicursor=n-v-c-r:block-blink,i:block-blinkwait100-blinkon50-blinkoff50,a:block,sm:block
+      set runtimepath+=${pkgs.vimPlugins.nvim-treesitter.withPlugins (p: with p; [ nix python bash lua markdown ])}
+      set runtimepath+=${pkgs.vimPlugins.nvim-treesitter.grammarPlugins.nix}
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -111,7 +113,24 @@
       cmp-vsnip
       luasnip
 
-      nvim-treesitter.withAllGrammars
+      # nvim-treesitter.withAllGrammars
+      (nvim-treesitter.withPlugins (p: with p; [
+        # Kern
+        lua
+        vim
+        vimdoc
+        query # Wichtig für Treesitter-Debugging
+        
+        # Deine Sprachen
+        nix
+        python
+        bash
+        markdown
+        markdown_inline
+        json
+        yaml
+        dockerfile
+      ])) 
  
       nvim-tree-lua # Moderner Datei-Explorer
       telescope-nvim # Fuzzy Finder für Dateien/Greps/LSPs
@@ -126,7 +145,7 @@
       dashboard-nvim
       nvim-lint
     ];
-    extraLuaConfig = builtins.readFile ./neovim/init.lua;
+    initLua = builtins.readFile ./neovim/init.lua;
   };
 
   programs.waveterm = {
