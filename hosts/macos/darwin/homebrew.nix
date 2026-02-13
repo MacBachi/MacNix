@@ -16,6 +16,7 @@
     };
     casks = [
       "ngrok"
+      "antigravity"
       "dockdoor"
       "claude"
       "microsoft-powerpoint"
