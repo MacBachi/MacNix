@@ -15,6 +15,8 @@
       no_quarantine = true;
     };
     casks = [
+      "comet"
+      "microsoft-edge"
       "chatgpt-atlas"
       "ngrok"
       "antigravity"
