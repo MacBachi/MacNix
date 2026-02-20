@@ -15,6 +15,7 @@
       no_quarantine = true;
     };
     casks = [
+      "chatgpt-atlas"
       "ngrok"
       "antigravity"
       "dockdoor"
