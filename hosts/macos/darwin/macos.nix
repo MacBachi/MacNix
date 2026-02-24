@@ -129,7 +129,7 @@
       orientation = "right";
       persistent-apps = [
         "/Applications/Setapp/Path Finder.app"
-        "/Applications/Safari.app"
+        "/Applications/Microsoft Edge.app"
         "/System/Applications/Messages.app"
         "/Applications/Nix Apps/Wave.app"
         "/Applications/Nix Apps/1Password.app"
