@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     hostmux # connection to multiple SSH hosts by integrating with a terminal multiplexer like Tmux
-    nixfmt-rfc-style # Code formatter for the Nix language
+    pkgs.nixfmt # Code formatter for the Nix language
     pipx # Installs and runs Python command-line applications in isolated virtual environments
 
     # CLI Utilities
