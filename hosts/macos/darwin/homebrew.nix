@@ -15,11 +15,13 @@
       no_quarantine = true;
     };
     casks = [
-      "comet"
+      "golang"
+      "mactex"
+      "texmaker"
+      "google-chrome"
+      "claude-code"
       "microsoft-edge"
-      "chatgpt-atlas"
       "ngrok"
-      "antigravity"
       "dockdoor"
       "claude"
       "microsoft-powerpoint"
@@ -36,7 +38,6 @@
       "yubico-authenticator"
       "hazel"
       "ultimaker-cura"
-      "uhk-agent"
       "little-snitch"
       "knockknock"
       "rustdesk"
@@ -105,7 +106,6 @@
       "cheat"
       "bottom"                 # bottom - top/htop replacement
       "piknik"                 # Ausgabe eines Befehls schnell als Gist oder in einer Pastebin-Instanz speichern
-      "ripgrep"
       "croc"                   # Tool für die plattformübergreifende Dateiübertragung
       "tealdeer"               # alternative zu tldr
       "zoxide"

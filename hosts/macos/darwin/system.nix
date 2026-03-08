@@ -19,7 +19,7 @@
         Weekday = 7;
       }
     ];
-    options = "--delete-older-than 5";
+    options = "--delete-older-than 2d";
   };
 
   # Unfreie Pakete erlauben (z.B. Chrome, VSCode)

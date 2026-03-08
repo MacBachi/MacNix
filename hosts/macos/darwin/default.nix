@@ -2,7 +2,7 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.home-manager.darwinModules.home-manager
+#    inputs.home-manager.darwinModules.home-manager
     ./system.nix
     ./packages.nix
     ./macos.nix
