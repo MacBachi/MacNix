@@ -15,7 +15,6 @@
       no_quarantine = true;
     };
     casks = [
-      "golang"
       "mactex"
       "texmaker"
       "google-chrome"
@@ -48,6 +47,7 @@
       "zoom"
     ];
     brews = [
+      "golang"
       "tree-sitter-cli"
       "tree-sitter"
       "gping"
