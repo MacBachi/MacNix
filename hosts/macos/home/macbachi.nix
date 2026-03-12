@@ -4,15 +4,12 @@
   inputs,
   pkgs,
   lib,
-  unstablePkgs,
   ...
 }:
 {
 
   home.shell.enableShellIntegration = true;
   home.shellAliases = {
-    # aliases. should only be used to manage
-    # simple aliases that are compatible across all shells.
     top = "btop";
     flushdns = "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder";
     shownix = "find . -type f -name \"*.nix\" -exec echo \"--- FILE: {} ---\" \\; -exec cat {} \\;";
@@ -48,19 +45,19 @@
     '';
   };
 
-  home.file."Library/Application Support/Claude/claude_desktop_config.json".text = builtins.toJSON {
-    mcpServers = {
-      hexstrike = {
-        command = "ssh";
-        args = [
-          "user@hex.lab.guggug.at"
-          "hexstrike_mcp"
-          "--server"
-          "http://127.0.0.1:8888"
-        ];
-      };
-    };
-  };
+# home.file."Library/Application Support/Claude/claude_desktop_config.json".text = builtins.toJSON {
+#    mcpServers = {
+#      hexstrike = {
+#        command = "ssh";
+#        args = [
+#          "user@hex.lab.guggug.at"
+#          "hexstrike_mcp"
+#          "--server"
+#          "http://127.0.0.1:8888"
+#        ];
+#      };
+#    };
+#  };
 
 
   home.file.".config/fabric/config.json" = {
@@ -81,15 +78,7 @@
     text = "";
   };
 
-  # list of programs
-  # https://mipmip.github.io/home-manager-option-search
-
   programs.gpg.enable = true;
-
-#  programs.direnv = {
-#    enable = true;
-#   nix-direnv.enable = true;
-#  };
 
   programs.neovim = {
     enable = true;
@@ -101,7 +90,6 @@
       set clipboard=unnamed,unnamedplus
       set guicursor=n-v-c-r:block-blink,i:block-blinkwait100-blinkon50-blinkoff50,a:block,sm:block
       set runtimepath+=${pkgs.vimPlugins.nvim-treesitter.withPlugins (p: with p; [ nix python bash lua markdown ])}
-      set runtimepath+=${pkgs.vimPlugins.nvim-treesitter.grammarPlugins.nix}
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -295,23 +283,6 @@
     enable = true;
     enableGitIntegration = true;
   };
-
-  # programs.git = {
-  #   enable = true;
-  #   settings = {
-  #     user.email = "mac@bachi.at";
-  #     user.name = "MacBachi";
-  #   };
-  #   lfs.enable = true;
-  #   settings = {
-  #     init.defaultBranch = "main";
-  #     merge = {
-  #       conflictStyle = "diff3";
-  #       tool = "meld";
-  #     };
-  #     pull.rebase = true;
-  #   };
-  # };
 
   programs.git = {
     enable = true;

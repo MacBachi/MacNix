@@ -15,6 +15,7 @@ flake.lock
 # Übliche Editor/IDE-Dateien
 .idea/
 .vscode/
+.claude/
 *~
 \#*
 .cache/
