@@ -132,6 +132,7 @@
         "/Applications/Microsoft Edge.app"
         "/System/Applications/Messages.app"
         "/Applications/Nix Apps/Wave.app"
+        #"/Applications/1Password.app"
         "/Applications/Nix Apps/1Password.app"
         "/System/Applications/Mail.app"
         "/Applications/Nix Apps/Obsidian.app"

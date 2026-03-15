@@ -15,6 +15,7 @@
       no_quarantine = true;
     };
     casks = [
+      "boosteroid"
       "mactex"
       "texmaker"
       "google-chrome"
