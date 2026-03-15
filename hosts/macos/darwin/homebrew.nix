@@ -11,9 +11,9 @@
       cleanup = "zap";
     };
     
-    caskArgs = {
-      no_quarantine = true;
-    };
+#    caskArgs = {
+#      no_quarantine = true;
+#    };
     casks = [
       "boosteroid"
       "mactex"
