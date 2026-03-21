@@ -15,6 +15,7 @@
 #      no_quarantine = true;
 #    };
     casks = [
+      "podman-gui"
       "boosteroid"
       "mactex"
       "texmaker"
@@ -48,6 +49,9 @@
       "zoom"
     ];
     brews = [
+      "podman"
+      "podman-compose"
+      "podman-tui"
       "golang"
       "tree-sitter-cli"
       "tree-sitter"
