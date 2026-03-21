@@ -15,7 +15,7 @@
 #      no_quarantine = true;
 #    };
     casks = [
-      "podman-gui"
+      "podman-desktop"
       "boosteroid"
       "mactex"
       "texmaker"
