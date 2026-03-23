@@ -125,6 +125,7 @@
       "no-more-secrets"         # Recreates the SETEC ASTRONOMY effect from 'Sneakers'
     ];
     masApps = {
+      "Kagi for Safari" = 1622835804;
       "1Password for Safari" = 1569813296;
       "Paperparrot" = 1663665267;
       "Wireguard" = 1451685025;
