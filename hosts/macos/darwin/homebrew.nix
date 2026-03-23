@@ -15,6 +15,7 @@
 #      no_quarantine = true;
 #    };
     casks = [
+      "orion"
       "podman-desktop"
 #      "mactex"              # uses a lot of disk space
 #      "texmaker"            # uses a lot of disk space

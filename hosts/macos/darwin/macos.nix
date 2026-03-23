@@ -130,6 +130,7 @@
       persistent-apps = [
         "/Applications/Setapp/Path Finder.app"
         "/Applications/Safari.app"
+        "/Applications/Orion.app"
         "/System/Applications/Messages.app"
         "/Applications/Nix Apps/Wave.app"
         #"/Applications/1Password.app"
