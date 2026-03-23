@@ -16,12 +16,9 @@
 #    };
     casks = [
       "podman-desktop"
-      "boosteroid"
       "mactex"
       "texmaker"
-      "google-chrome"
       "claude-code"
-      "microsoft-edge"
       "ngrok"
       "dockdoor"
       "claude"
@@ -42,7 +39,6 @@
       "little-snitch"
       "knockknock"
       "rustdesk"
-      "chromium"
       "telegram"
       "launchos"
       "utm"
