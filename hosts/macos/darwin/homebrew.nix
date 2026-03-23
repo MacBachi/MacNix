@@ -16,8 +16,8 @@
 #    };
     casks = [
       "podman-desktop"
-      "mactex"
-      "texmaker"
+#      "mactex"              # uses a lot of disk space
+#      "texmaker"            # uses a lot of disk space
       "claude-code"
       "ngrok"
       "dockdoor"
