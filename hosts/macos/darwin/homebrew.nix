@@ -23,7 +23,6 @@
       "ngrok"
       "dockdoor"
       "claude"
-      "microsoft-powerpoint"
       "microsoft-word"
       "microsoft-excel"
       "atuin-desktop"
@@ -130,7 +129,6 @@
       "uBlock Origin Lite" = 6745342698;
       "Vinegar" = 1591303229;
       "1Blocker" = 1365531024;
-      "Goodnotes: KI-Notizen, PDF" = 1444383602;
       "Googly Eyes" = 6743048714;
     };
   };

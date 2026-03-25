@@ -17,7 +17,6 @@
     drawio
     iterm2
     obsidian
-    teams
     waveterm
     mas
 
