@@ -7,6 +7,7 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     warn-dirty = false;
+    max-jobs = "auto";
   };
 
   # Garbage Collection
@@ -20,6 +21,18 @@
       }
     ];
     options = "--delete-older-than 2d";
+  };
+
+  # Nix Store Optimierung (Hardlinks fuer identische Dateien)
+  nix.optimise = {
+    automatic = true;
+    interval = [
+      {
+        Hour = 4;
+        Minute = 0;
+        Weekday = 7;
+      }
+    ];
   };
 
   # Unfreie Pakete erlauben (z.B. Chrome, VSCode)

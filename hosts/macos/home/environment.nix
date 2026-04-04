@@ -19,7 +19,6 @@
     XDG_STATE_HOME = "$HOME/.local/state";
 
     # Tools
-    BAT_THEME = "Nord";
     LESS = "-R";
     LESSHISTFILE = "-";
 
@@ -33,5 +32,6 @@
 
     # Homebrew
     HOMEBREW_NO_ANALYTICS = "1";
+    MAS_NO_AUTO_INDEX = "1";
   };
 }

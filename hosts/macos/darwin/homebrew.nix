@@ -1,7 +1,6 @@
 # ./darwin/homebrew.nix
 { ... }:
 {
-  # "inputs" wird nicht mehr gebraucht
   homebrew = {
     enable = true;
     user = "mb";
@@ -10,126 +9,155 @@
       upgrade = true;
       cleanup = "zap";
     };
-    
-#    caskArgs = {
-#      no_quarantine = true;
-#    };
+
+    # --- GUI Apps (Casks) ---
     casks = [
+      # Browser
       "orion"
-      "podman-desktop"
-#      "mactex"              # uses a lot of disk space
-#      "texmaker"            # uses a lot of disk space
-      "claude-code"
-      "ngrok"
-      "dockdoor"
-      "claude"
-      "microsoft-word"
-      "microsoft-excel"
-      "atuin-desktop"
+
+      # Kommunikation
+      "signal"
+      "telegram"
+      "zoom"
+
+      # Produktivitaet
       "alfred"
       "setapp"
-      "signal"
-      "nordvpn"
-      "keyclu"
-      "displaylink"
-      "arduino-ide"
-      "yubico-authenticator"
       "hazel"
-      "ultimaker-cura"
+      "dockdoor"
+      "keyclu"
+      "launchos"
+      "microsoft-excel"
+      "microsoft-word"
+
+      # KI & Development
+      "claude"
+      "claude-code"
+      "arduino-ide"
+      "ngrok"
+      "podman-desktop"
+
+      # Virtualisierung & Remote
+      "rustdesk"
+      "utm"
+      "displaylink"
+
+      # Security & VPN
       "little-snitch"
       "knockknock"
-      "rustdesk"
-      "telegram"
-      "launchos"
-      "utm"
-      "zoom"
+      "nordvpn"
+      "yubico-authenticator"
+
+      # Sonstiges
+      "atuin-desktop"
+      "ultimaker-cura"
     ];
+
+    # --- CLI Tools (Brews) ---
     brews = [
+      # Container & Virtualisierung
       "podman"
       "podman-compose"
       "podman-tui"
-      "golang"
-      "tree-sitter-cli"
-      "tree-sitter"
+
+      # Netzwerk & Security
+      "arping"
+      "fping"
       "gping"
-      "magic-wormhole"
-      "progress"
+      "httping"
+      "lynis"
+      "masscan"
+      "mosh"
+      "mtr"
+      "nethogs"
+      "nmap"
+      "nuclei"
+      "prettyping"
+      "rustscan"
+      "termshark"
+
+      # Dateien & Suche
+      "aria2"
+      "fd"
+      "lftp"
+      "ncdu"
       "ripgrep"
       "ripgrep-all"
-      "watch"
-      "fping"
-      "masscan"
-      "nmap"
-      "termshark"
-      "prettyping"
-      "mosh"
-      "agg"
-      "asciinema"
-      "fortune"
-      "mtr"
-      "pv"
-      "rlwrap"
       "wget"
-      "tree"
-      "arping"
-      "atuin"
-      "lynis"
-      "gnupg"
-      "colordiff"
-      "cowsay"
-      "mc"
-      "lolcat"
-      "age"
-      "sops"
-      "procs"
+
+      # System-Monitoring
+      "bottom"
       "btop"
       "broot"
-      "httpie"
-      "icdiff"
       "duf"
       "dust"
-      "fd"
       "glances"
-      "jq"
-      "autojump"
-      "gh"
-      "aria2"
-      "chroma"
-      "z.lua"
-      "zellij"
+      "procs"
+      "pv"
+      "progress"
+
+      # Shell & Navigation
+      "atuin"
       "nushell"
-      "lftp"
-      "starship"
       "ranger"
-      "fabric-ai"
-      "ollama"
-      "gocheat"
-      "cheat"
-      "bottom"                 # bottom - top/htop replacement
-      "piknik"                 # Ausgabe eines Befehls schnell als Gist oder in einer Pastebin-Instanz speichern
-      "croc"                   # Tool für die plattformübergreifende Dateiübertragung
-      "tealdeer"               # alternative zu tldr
+      "zellij"
       "zoxide"
-      "rustscan"
-      "nuclei"
-      "ncdu"
-      "dug"
-      "mas"
-      "httping"
-      "nethogs"
+
+      # Development
+      "gh"
+      "golang"
       "hugo"
-      "no-more-secrets"         # Recreates the SETEC ASTRONOMY effect from 'Sneakers'
+      "tree-sitter"
+      "tree-sitter-cli"
+
+      # Verschluesselung & Secrets
+      "age"
+      "gnupg"
+      "sops"
+
+      # Text, Diff & JSON
+      "cheat"
+      "chroma"
+      "colordiff"
+      "httpie"
+      "icdiff"
+      "jq"
+
+      # Dateitransfer
+      "croc"
+      "magic-wormhole"
+      "piknik"
+
+      # CLI Fun
+      "cowsay"
+      "fortune"
+      "lolcat"
+      "no-more-secrets"
+
+      # Sonstiges
+      "agg"
+      "asciinema"
+      "dug"
+      "fabric-ai"
+      "mas"
+      "mc"
+      "ollama"
+      "rlwrap"
+      "tree"
+      "watch"
     ];
+
+    # --- Mac App Store ---
     masApps = {
-      "Kagi for Safari" = 1622835804;
+      "1Blocker" = 1365531024;
       "1Password for Safari" = 1569813296;
-      "Paperparrot" = 1663665267;
-      "Wireguard" = 1451685025;
       "Actions for Obsidian" = 1659667937;
+      "Googly Eyes" = 6743048714;
+      "Kagi for Safari" = 1622835804;
+      "Paperparrot" = 1663665267;
       "uBlock Origin Lite" = 6745342698;
       "Vinegar" = 1591303229;
-      "1Blocker" = 1365531024;
-      "Googly Eyes" = 6743048714;
+      "Wireguard" = 1451685025;
     };
   };
 }

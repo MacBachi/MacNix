@@ -1,10 +1,14 @@
 # ./home/default.nix
 {
   imports = [
+    ./theme.nix
     ./environment.nix
-    ./macbachi.nix
-    ./packages.nix
     ./shell.nix
+    ./packages.nix
+    ./dotfiles.nix
+    ./git.nix
+    ./editors.nix
+    ./terminal.nix
   ];
 
   home = {

@@ -1,8 +1,12 @@
 # ./home/shell.nix
 {
+  config,
   home,
   ...
 }:
+let
+  colors = config.theme.catppuccin-mocha;
+in
 {
   home.sessionPath = [
     "/opt/homebrew/bin"
@@ -28,8 +32,6 @@
     };
 
     initContent = ''
-                  source /etc/zshrc;
-
                   zstyle ':omz:plugins:alias-finder' autoload yes
                   zstyle ':omz:plugins:alias-finder' longer yes
                   zstyle ':omz:plugins:alias-finder' exact yes
@@ -37,9 +39,9 @@
                   MAGIC_ENTER_GIT_COMMAND='git status -u .'
                   MAGIC_ENTER_OTHER_COMMAND='ls -lh .'
 
-                  # Zusätzliche Zsh Optionen (history variables now handled via programs.zsh.history)
-                  setopt HIST_IGNORE_DUPS SHARE_HISTORY EXTENDED_GLOB AUTO_CD NO_BEEP \
-                         APPEND_HISTORY HIST_IGNORE_SPACE HIST_REDUCE_BLANKS HIST_VERIFY INC_APPEND_HISTORY
+                  # Zsh Optionen (history-bezogene werden von programs.zsh.history gehandhabt)
+                  setopt EXTENDED_GLOB AUTO_CD NO_BEEP APPEND_HISTORY \
+                         HIST_REDUCE_BLANKS HIST_VERIFY INC_APPEND_HISTORY
 
                   # Extra ergonomics / safety
                   setopt NO_CLOBBER
@@ -62,13 +64,6 @@
                       command -v tldr >/dev/null 2>&1 && tldr "$1" || echo "No cheat.sh or tldr available."
                     fi
                   }
-
-                  # eza aliases
-                  if command -v eza >/dev/null 2>&1; then
-                    alias ll='eza -l --git'
-                    alias la='eza -la --git'
-                    alias lt='eza -lT --git'
-                  fi
 
                   # renix Flags: --no-gc --no-mas --no-rebuild --help
                   renix() {
@@ -130,6 +125,10 @@
                     if [ "$do_gc" -eq 1 ]; then
                       echo "[renix] Garbage collect…"
                         nix-collect-garbage -d || echo "[renix] (warn) GC failed."
+                      if command -v brew >/dev/null 2>&1; then
+                        echo "[renix] Brew cleanup…"
+                        brew cleanup --prune=7 2>/dev/null || true
+                      fi
                       if command -v du >/dev/null 2>&1; then
                         echo "[renix] Store size:"
                         du -sh /nix/store 2>/dev/null || true
@@ -148,8 +147,6 @@
         "1password"
         "aliases"
         "alias-finder"
-        "autopep8"
-        "autojump"
         "brew"
         "colored-man-pages"
         "colorize"
@@ -157,18 +154,12 @@
         "copyfile"
         "copypath"
         "cp"
-        "docker"
-        "emotty"
-        "encode64"
-        "eza"
         "extract"
         "fzf"
-        "genpass"
         "gh"
         "git"
         "git-escape-magic"
         "httpie"
-        "jump"
         "macos"
         "magic-enter"
         "mosh"
@@ -178,10 +169,9 @@
         "tmux"
         "vscode"
         "web-search"
-        "z"
         "zsh-navigation-tools"
       ];
-      theme = "jonathan";
+      theme = "";  # Starship uebernimmt den Prompt
     };
   };
 
@@ -342,36 +332,9 @@
         min_time_to_notify = 45000;
       };
 
-      # Definition der Farbpaletten
+      # Farbpalette aus zentraler theme.nix
       palettes = {
-        catppuccin_mocha = {
-          rosewater = "#f5e0dc";
-          flamingo = "#f2cdcd";
-          pink = "#f5c2e7";
-          mauve = "#cba6f7";
-          red = "#f38ba8";
-          maroon = "#eba0ac";
-          peach = "#fab387";
-          yellow = "#f9e2af";
-          green = "#a6e3a1";
-          teal = "#94e2d5";
-          sky = "#89dceb";
-          sapphire = "#74c7ec";
-          blue = "#89b4fa";
-          lavender = "#b4befe";
-          text = "#cdd6f4";
-          subtext1 = "#bac2de";
-          subtext0 = "#a6adc8";
-          overlay2 = "#9399b2";
-          overlay1 = "#7f849c";
-          overlay0 = "#6c7086";
-          surface2 = "#585b70";
-          surface1 = "#45475a";
-          surface0 = "#313244";
-          base = "#1e1e2e";
-          mantle = "#181825";
-          crust = "#11111b";
-        };
+        catppuccin_mocha = colors;
       };
     };
   };

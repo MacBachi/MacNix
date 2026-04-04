@@ -64,6 +64,7 @@
         AutoFillCreditCardData = false;
         AutoFillFromAddressBook = true;
         AutoFillMiscellaneousForms = false;
+        AutoFillPasswords = false;
         AutoOpenSafeDownloads = false;
         EnableEnhancedPrivacyInRegularBrowsing = true;
         HistoryAgeInDaysLimit = 1;
@@ -72,6 +73,7 @@
         NewTabBehavior = 4;
         SearchProviderShortName = "DuckDuckGo";
         ShowFullURLInSmartSearchField = true;
+        ShowOverlayStatusBar = true;
         WarnAboutFraudulentWebsites = true;
         ExtensionsEnabled = 1;
         GrammarCheckingEnabled = 0;
@@ -133,7 +135,6 @@
         "/Applications/Orion.app"
         "/System/Applications/Messages.app"
         "/Applications/Nix Apps/Wave.app"
-        #"/Applications/1Password.app"
         "/Applications/Nix Apps/1Password.app"
         "/System/Applications/Mail.app"
         "/Applications/Nix Apps/Obsidian.app"
