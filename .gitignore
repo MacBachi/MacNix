@@ -1,21 +1,22 @@
-# Build-Artefakte von Nix
-/result
-/results
-/nix/store/*
+# Nix Build-Artefakte
+result
+result-*
 
-# Temporäre Dateien und Verzeichnisse von Nix Flakes
+# Nix Flake Lock (bewusst ungetrackt — immer neueste Versionen)
+flake.lock
+
+# Entwicklungsumgebung
 .direnv/
 .envrc
-flake.lock
-*.swp
 
-# macOS spezifische Dateien
+# macOS
 .DS_Store
 
-# Übliche Editor/IDE-Dateien
+# Editor/IDE
 .idea/
 .vscode/
 .claude/
+*.swp
 *~
 \#*
 .cache/

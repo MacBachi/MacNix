@@ -1,82 +1,101 @@
-# MacNix ❄️
+# MacNix
 
-This is my personal [Nix](https://nixos.org/) configuration for macOS, managed with [nix-darwin](https://github.com/LnL7/nix-darwin) and [Home Manager](https://github.com/nix-community/home-manager). The goal is to create a reproducible, declarative, and consistent development environment.
+Personal [Nix](https://nixos.org/) configuration for macOS, managed with [nix-darwin](https://github.com/LnL7/nix-darwin) and [Home Manager](https://github.com/nix-community/home-manager). Structured as a [Nix Flake](https://nixos.wiki/wiki/Flakes) for reproducible, declarative system management.
 
-The project is structured as a [Nix Flake](https://nixos.wiki/wiki/Flakes) to pin dependencies precisely and make the configuration easily shareable and reproducable.
+## Features
 
-## ✨ Features
+- **Declarative system & user config** via nix-darwin + Home Manager
+- **Homebrew integration** for casks, brews, and Mac App Store apps
+- **Shell**: Zsh with Oh-my-zsh, Starship prompt (Catppuccin Mocha theme)
+- **Editors**: Neovim (LSP, Treesitter, Telescope) and VSCode
+- **Terminal**: Tmux (Catppuccin), Waveterm, Bat, Eza, Fzf
+- **Git**: SSH signing via 1Password, diff-so-fancy
+- **Security**: Firewall with stealth mode, Touch ID / Apple Watch sudo
+- **Maintenance**: Automatic GC, store optimization, brew cleanup via `renix`
 
-- **Reproducible Environment**: Once configured, the exact same environment can be restored on any macOS system.
-- **Declarative Package Management**: System and user packages, including Homebrew Casks, are managed centrally in Nix files.
-- **Shell**: Configures [Zsh](https://www.zsh.org/) with [Starship](https://starship.rs/) for an informative prompt.
-- **Editor**: [Neovim](https://neovim.io/) is pre-configured as the primary code editor.
-- **System Tools**: Includes essential tools like `git`, `htop`, and `tmux`, all managed via Nix.
-- **Git Configuration**: Global Git settings and aliases are managed directly through Home Manager.
+Some apps are managed via Setapp and not yet integrated into Nix.
 
-I don't adhere strictly to a declarative-only approach; some applications are installed through Setapp, and I haven't yet been able to integrate their management into Nix.
+## Structure
 
-## 🚀 Installation
-
-Ensure that Nix is installed on your macOS system and that you have enabled Flakes. If not, follow the [official guide](https://nixos.org/download.html).
-
-1.  **Install Nix (following the [official guide](https://nixos.org/download.html)):**
-    ```bash
-    sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
-    ```
-
-2.  **Install Homebrew (following the [official guide](https://brew.sh)):**
-    Homebrew should be installed upfront.
-    ```bash
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ```
-
-3.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/MacBachi/MacNix.git](https://github.com/MacBachi/MacNix.git) ~/mynix
-    cd ~/mynix
-    ```
-
-4.  **Host configuration:**
-    This repository uses fixed hostnames. You need to set up a configuration for your Mac.
-    Open the `flake.nix` file and add a new entry for your host.
-
-5.  **Build the system for the first time:**
-    ```bash
-    sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
-    sudo mv /etc/zshrc /etc/zhsrc.before-nix-darwin
-    ```
-
-    ```bash
-    sudo nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake $HOME/mynix/hosts/macos
-    ```
-## ♻️ Rebuild
-
-After changing the configuration, the system has to be rebuilt.
-
-``` bash
-sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)
 ```
-## 🛠️ Updating the System
+hosts/macos/
+├── flake.nix                 # Main flake (3 hosts: rizzo2025, beaker2025, scooter2016)
+├── darwin/                   # System-level (nix-darwin)
+│   ├── default.nix           # Imports + Home Manager wiring
+│   ├── system.nix            # Nix settings, GC, store optimization, firewall, sudo
+│   ├── packages.nix          # System packages (GUI apps, fonts)
+│   ├── homebrew.nix          # Brews, casks, Mac App Store apps
+│   ├── macos.nix             # macOS defaults (Finder, Dock, Safari, keyboard)
+│   └── users.nix             # User definitions
+├── home/                     # User-level (Home Manager)
+│   ├── default.nix           # Imports all home modules
+│   ├── theme.nix             # Catppuccin Mocha palette (shared across modules)
+│   ├── environment.nix       # Session variables, locale, XDG dirs
+│   ├── shell.nix             # Zsh, Oh-my-zsh, Starship, renix function
+│   ├── packages.nix          # CLI user packages
+│   ├── editors.nix           # Neovim + VSCode config
+│   ├── terminal.nix          # Tmux, Waveterm, Bat, Eza, Fzf, htop, lf
+│   ├── git.nix               # Git, SSH, GPG, diff-so-fancy
+│   ├── dotfiles.nix          # Shell aliases, macOS user-defaults, fabric config
+│   └── neovim/init.lua       # Neovim Lua config
+└── develop/
+    └── flake.nix             # Standalone Python dev environment
+```
 
-To update the system and all packages (Nix & Homebrew) to their latest versions, run the following commands. 
+## Installation
 
-1.  **Update flake inputs:**
-    ```bash
-    nix flake update --flake $HOME/mynix/hosts/macos
-    ```
-2.  **Apply the new configuration:**
-    ```bash
-    sudo darwin-rebuild switch --flake $HOME/mynix/hosts/macos#$(scutil --get LocalHostName)
-    ```
+Prerequisites: macOS, [Nix](https://nixos.org/download.html) with Flakes enabled, [Homebrew](https://brew.sh).
 
-## 💾 Freeing Up Disk Space
-
-Checking Nix Disk Space Usage:
 ```bash
-du -sh /nix/store
+# 1. Install Nix
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
+
+# 2. Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 3. Clone
+git clone https://github.com/MacBachi/MacNix.git ~/mynix
+cd ~/mynix
+
+# 4. Add your hostname to flake.nix (aarch64_hosts or x86_64_hosts)
+
+# 5. First build (move conflicting system files first)
+sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
+sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
+sudo nix run nix-darwin --extra-experimental-features 'nix-command flakes' -- switch --flake $HOME/mynix/hosts/macos
 ```
 
-To remove old, unused Nix generations and packages, perform a garbage collection:
-```bash
-nix-collect-garbage -d
+## Daily Usage
+
+### renix — the main rebuild command
+
+After any config change, run `renix` in your shell. It handles everything:
+
 ```
+renix [options]
+  --no-gc        Skip garbage collection
+  --no-mas       Skip Mac App Store upgrade
+  --no-rebuild   Skip darwin-rebuild
+  --help         Show help
+```
+
+What `renix` does:
+1. Upgrades Mac App Store apps (`mas upgrade`)
+2. Runs `darwin-rebuild switch` (applies nix + homebrew changes)
+3. Runs `nix-collect-garbage -d`
+4. Runs `brew cleanup --prune=7`
+5. Shows Nix store size
+
+### Update flake inputs
+
+```bash
+nix flake update --flake $HOME/mynix/hosts/macos
+renix
+```
+
+## Automatic Maintenance
+
+Configured in `darwin/system.nix`:
+- **Nix GC**: Weekly (Sunday 03:15), deletes generations older than 2 days
+- **Nix Store optimization**: Weekly (Sunday 04:00), hardlinks identical files
+- **Homebrew**: `onActivation.cleanup = "zap"` removes unused packages on every rebuild
