@@ -1,16 +1,14 @@
-# ./darwin/system.nix
+# Nix-Einstellungen, GC, Store-Optimierung, Firewall, sudo
 {
-  # Hauptbenutzer für benutzerspezifische Einstellungen (Homebrew, Dock etc.)
   system.primaryUser = "mb";
 
-  # Grundlegende Nix-Einstellungen
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     warn-dirty = false;
-    max-jobs = "auto";
+    max-jobs = "auto"; # alle CPU-Kerne fuer Builds nutzen
   };
 
-  # Garbage Collection
+  # GC: Sonntag 03:15, loescht Generationen aelter als 2 Tage
   nix.gc = {
     automatic = true;
     interval = [
@@ -23,7 +21,7 @@
     options = "--delete-older-than 2d";
   };
 
-  # Nix Store Optimierung (Hardlinks fuer identische Dateien)
+  # Store-Optimierung: Sonntag 04:00, dedupliziert via Hardlinks
   nix.optimise = {
     automatic = true;
     interval = [
@@ -35,20 +33,17 @@
     ];
   };
 
-  # Unfreie Pakete erlauben (z.B. Chrome, VSCode)
   nixpkgs.config.allowUnfree = true;
 
-  # Firewall-Einstellungen
+  # Firewall: allowSigned=false blockiert auch signierte Apps (congress mode)
   networking.applicationFirewall = {
     enable = true;
-    allowSigned = false; ## false = congress mode, true=normal mode
+    allowSigned = false;
     enableStealthMode = true;
   };
 
-  # System-State-Version
   system.stateVersion = 6;
 
-  # sudo mit Touch ID / Apple Watch aktivieren
   security.pam.services.sudo_local = {
     touchIdAuth = true;
     watchIdAuth = true;

@@ -1,11 +1,11 @@
-# Neovim und VSCode Konfiguration
+# Neovim + VSCode
 { inputs, pkgs, ... }:
 {
   programs.neovim = {
     enable = true;
     withNodeJs = true;
-    viAlias = true;
-    vimAlias = true;
+    viAlias = true;  # vi -> nvim
+    vimAlias = true; # vim -> nvim
     extraConfig = ''
       set mouse=a
       set clipboard=unnamed,unnamedplus
@@ -35,7 +35,7 @@
       nvim-tree-lua
       telescope-nvim
       plenary-nvim
-      (pkgs.vimUtils.buildVimPlugin {
+      (pkgs.vimUtils.buildVimPlugin { # lualine: nicht in nixpkgs, direkt von GitHub
         name = "lualine-nvim";
         src = inputs.lualine-src;
       })
@@ -48,6 +48,7 @@
     initLua = builtins.readFile ./neovim/init.lua;
   };
 
+  # VSCode: Catppuccin Mocha, Fira Code, Telemetrie aus
   programs.vscode = {
     enable = true;
     profiles.default = {
@@ -106,11 +107,12 @@
       };
       keybindings = [
         {
-          key = "shift+cmd+j";
+          key = "shift+cmd+j"; # Terminal -> Editor Focus
           command = "workbench.action.focusActiveEditorGroup";
           when = "terminalFocus";
         }
       ];
+      # addUnzip: Workaround fuer nixpkgs VSCode-Extension Build
       extensions = let
         addUnzip = pkg: pkg.overrideAttrs (old: {
           nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.unzip ];

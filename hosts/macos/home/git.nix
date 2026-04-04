@@ -1,4 +1,4 @@
-# Git, SSH, GPG und Signing-Konfiguration
+# Git, SSH, GPG — Signing via 1Password
 { config, pkgs, ... }:
 {
   programs.gpg.enable = true;
@@ -20,23 +20,17 @@
         name = "MacBachi";
         email = "mac@bachi.at";
       };
-      gpg = {
-        format = "ssh";
-      };
+      gpg.format = "ssh";
       "gpg \"ssh\"" = {
         program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
         allowedSignersFile = "${config.home.homeDirectory}/.config/git/allowed_signers";
       };
-      init = {
-        defaultBranch = "main";
-      };
+      init.defaultBranch = "main";
       merge = {
         conflictStyle = "diff3";
         tool = "meld";
       };
-      pull = {
-        rebase = true;
-      };
+      pull.rebase = true;
     };
   };
 
@@ -46,6 +40,7 @@
     '';
   };
 
+  # SSH: 1Password Agent, Port 443 fuer GitHub (Firewall-freundlich)
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;

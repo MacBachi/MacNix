@@ -1,4 +1,4 @@
-# ./darwin/users.nix
+# Benutzer-Definition
 {
   users.users = {
     mb = {

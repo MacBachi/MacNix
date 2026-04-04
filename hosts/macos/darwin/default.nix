@@ -1,8 +1,7 @@
-# ./darwin/default.nix
+# Darwin-Einstiegspunkt: System-Module + Home-Manager Wiring
 { inputs, ... }:
 {
   imports = [
-#    inputs.home-manager.darwinModules.home-manager
     ./system.nix
     ./packages.nix
     ./macos.nix

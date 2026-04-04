@@ -1,4 +1,5 @@
-# ./darwin/homebrew.nix
+# Homebrew: Casks, Brews, Mac App Store
+# zap = entfernt nicht-deklarierte Pakete bei jedem Rebuild
 { ... }:
 {
   homebrew = {
@@ -10,7 +11,6 @@
       cleanup = "zap";
     };
 
-    # --- GUI Apps (Casks) ---
     casks = [
       # Browser
       "orion"
@@ -53,9 +53,8 @@
       "ultimaker-cura"
     ];
 
-    # --- CLI Tools (Brews) ---
     brews = [
-      # Container & Virtualisierung
+      # Container
       "podman"
       "podman-compose"
       "podman-tui"
@@ -110,7 +109,7 @@
       "tree-sitter"
       "tree-sitter-cli"
 
-      # Verschluesselung & Secrets
+      # Secrets & Crypto
       "age"
       "gnupg"
       "sops"
@@ -128,7 +127,7 @@
       "magic-wormhole"
       "piknik"
 
-      # CLI Fun
+      # Fun
       "cowsay"
       "fortune"
       "lolcat"
@@ -147,7 +146,6 @@
       "watch"
     ];
 
-    # --- Mac App Store ---
     masApps = {
       "1Blocker" = 1365531024;
       "1Password for Safari" = 1569813296;

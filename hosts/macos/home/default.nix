@@ -1,4 +1,4 @@
-# ./home/default.nix
+# Home-Manager Einstiegspunkt: alle User-Module
 {
   imports = [
     ./theme.nix
@@ -11,7 +11,5 @@
     ./terminal.nix
   ];
 
-  home = {
-    stateVersion = "25.05";
-  };
+  home.stateVersion = "25.05";
 }

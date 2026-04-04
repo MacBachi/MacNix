@@ -1,54 +1,23 @@
-# ./darwin/macos.nix
+# macOS Defaults: Keyboard, Trackpad, Safari, Finder, Dock, etc.
+# Aenderungen werden nach Rebuild ohne Logout aktiviert (postActivation)
 {
   system.defaults = {
 
+    # Deaktivierte Hotkeys (Konflikte mit Aerospace/skhd vermeiden)
     CustomUserPreferences = {
       "com.apple.symbolichotkeys" = {
         AppleSymbolicHotKeys = {
-          "28" = {
-            # Save picture of screen as a file
-            enabled = false;
-          };
-          "29" = {
-            # Copy picture of screen to the clipboard
-            enabled = false;
-          };
-          "30" = {
-            # Save picture of selected area as a file
-            enabled = false;
-          };
-          "31" = {
-            # Copy picture of selected area to the clipboard
-            enabled = false;
-          };
-          "185" = {
-            # screenshot options
-            enabled = false;
-          };
-          "122" = {
-            # Fokus auf Menüleiste
-            enabled = false;
-          };
-          "123" = {
-            # Fokus auf Dock 
-            enabled = false;
-          };
-          "125" = {
-            # Fokus auf Symbolleiste
-            enabled = false;
-          };
-          "126" = {
-            # Fokus auf Schwebende Fenster
-            enabled = false;
-          };
-          "60" = {
-            # Vorherige Eingabequelle
-            enabled = false;
-          };
-          "61" = {
-            # Nächste Eingabequelle
-            enabled = false;
-          };
+          "28"  = { enabled = false; }; # Screenshot: Fullscreen to file
+          "29"  = { enabled = false; }; # Screenshot: Fullscreen to clipboard
+          "30"  = { enabled = false; }; # Screenshot: Selection to file
+          "31"  = { enabled = false; }; # Screenshot: Selection to clipboard
+          "185" = { enabled = false; }; # Screenshot: Options
+          "122" = { enabled = false; }; # Focus: Menu bar
+          "123" = { enabled = false; }; # Focus: Dock
+          "125" = { enabled = false; }; # Focus: Toolbar
+          "126" = { enabled = false; }; # Focus: Floating windows
+          "60"  = { enabled = false; }; # Input source: Previous
+          "61"  = { enabled = false; }; # Input source: Next
         };
       };
       "com.apple.AppleMultitouchTrackpad" = {
@@ -59,6 +28,7 @@
     };
 
     CustomSystemPreferences = {
+      # Safari: DuckDuckGo, kein Autofill, Privacy-fokussiert
       "com.apple.Safari" = {
         AlwaysRestoreSessionAtLaunch = false;
         AutoFillCreditCardData = false;
@@ -117,6 +87,8 @@
       ShowSeconds = false;
     };
 
+    # Dock: rechts, keine Recents, Hot Corners aktiv
+    # Hot Corners: bl=Mission Control, tr=Screen Saver, br=Notification Center
     dock = {
       autohide = false;
       show-recents = false;
@@ -142,6 +114,8 @@
         "/Applications/Signal.app"
       ];
     };
+
+    # Finder: Listenansicht, POSIX-Pfad in Titelleiste
     finder = {
       FXPreferredViewStyle = "Nlsv";
       AppleShowAllExtensions = true;
@@ -160,6 +134,7 @@
       FXRemoveOldTrashItems = true;
       NewWindowTarget = "Documents";
     };
+
     screensaver = {
       askForPassword = true;
       askForPasswordDelay = 3;
@@ -170,6 +145,8 @@
     LaunchServices = {
       LSQuarantine = true;
     };
+
+    # Globale Einstellungen: 24h, Celsius, metrisch, keine Autokorrektur
     NSGlobalDomain = {
       AppleEnableSwipeNavigateWithScrolls = true;
       AppleEnableMouseSwipeNavigateWithScrolls = true;
@@ -202,7 +179,7 @@
     iCal = {
       CalendarSidebarShown = true;
     };
-    
+
     controlcenter = {
       AirDrop = true;
       BatteryShowPercentage = true;
@@ -213,13 +190,16 @@
       Sound = false;
     };
   };
+
+  # Caps Lock -> Control, Tilde-Remap fuer non-US Keyboards
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToControl = true;
     nonUS.remapTilde = true;
   };
+
+  # Settings sofort aktivieren ohne Logout
   system.activationScripts.postActivation.text = ''
-      # Following line should allow us to avoid a logout/login cycle when changing settings
       sudo -u mb /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
       '';
 }

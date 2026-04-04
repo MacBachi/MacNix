@@ -1,4 +1,5 @@
-# Catppuccin Mocha Farbpalette — zentrale Definition fuer alle Module
+# Catppuccin Mocha Farbpalette
+# Zentral definiert, verwendet von: shell.nix (Starship), terminal.nix (Tmux)
 { lib, ... }:
 {
   options.theme.catppuccin-mocha = lib.mkOption {
@@ -31,6 +32,5 @@
       mantle    = "#181825";
       crust     = "#11111b";
     };
-    description = "Catppuccin Mocha color palette";
   };
 }

@@ -1,30 +1,28 @@
-# ./darwin/packages.nix
+# Systemweite Nix-Pakete (GUI-Apps, WM, Fonts)
 { pkgs, ... }:
 {
-  # Systemweit installierte Pakete (meist GUI-Apps)
-  # GC ist in darwin/system.nix über nix.gc bereits automatisch konfiguriert.
   environment.systemPackages = with pkgs; [
-    # System & WM
+    # Window-Management
     aerospace
     sketchybar
     skhd
+
+    # Security
     pinentry_mac
     yubikey-manager
-
-    # Apps
     _1password-gui
     _1password-cli
+
+    # Apps
     drawio
     iterm2
     obsidian
     waveterm
 
-    # nix-output-monitor: TUI zur Live-Ansicht von laufenden Nix-Builds (Fortschritt, Phasen, Downloads, Fehler)
+    # Build-Monitoring
     nix-output-monitor
   ];
 
-  # Schriftarten
-  # Die äußeren eckigen Klammern wurden hier entfernt
   fonts.packages = with pkgs.nerd-fonts; [
     fira-code
     lilex

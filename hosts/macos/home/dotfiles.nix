@@ -1,4 +1,4 @@
-# Dotfiles, home.file Eintraege und macOS User-Defaults
+# Shell-Aliases, macOS User-Defaults, Dotfiles
 { ... }:
 {
   home.shell.enableShellIntegration = true;
@@ -9,17 +9,15 @@
     shownix = "find . -type f -name \"*.nix\" -exec echo \"--- FILE: {} ---\" \\; -exec cat {} \\;";
   };
 
-  targets = {
-    darwin = {
-      defaults = {
-        "com.apple.desktopservices" = {
-          DSDontWriteNetworkStores = true;
-          DSDontWriteUSBStores = true;
-        };
-      };
+  # .DS_Store auf Netzwerk- und USB-Laufwerken verhindern
+  targets.darwin.defaults = {
+    "com.apple.desktopservices" = {
+      DSDontWriteNetworkStores = true;
+      DSDontWriteUSBStores = true;
     };
   };
 
+  # fabric-ai Konfiguration (API-Keys werden manuell gesetzt)
   home.file.".config/fabric/config.json" = {
     force = true;
     text = builtins.toJSON {

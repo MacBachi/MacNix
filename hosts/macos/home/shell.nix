@@ -1,4 +1,4 @@
-# ./home/shell.nix
+# Zsh, Oh-my-zsh, Starship Prompt, renix Rebuild-Funktion
 {
   config,
   home,
@@ -20,7 +20,6 @@ in
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    # Declarative history config (replaces manual HIST* exports in initContent)
     history = {
       path = "$HOME/.zsh_history";
       size = 20000;
@@ -32,27 +31,28 @@ in
     };
 
     initContent = ''
+                  # alias-finder: automatisch passende Aliases vorschlagen
                   zstyle ':omz:plugins:alias-finder' autoload yes
                   zstyle ':omz:plugins:alias-finder' longer yes
                   zstyle ':omz:plugins:alias-finder' exact yes
                   zstyle ':omz:plugins:alias-finder' cheaper yes
+
+                  # magic-enter: Enter ohne Befehl zeigt git status / ls
                   MAGIC_ENTER_GIT_COMMAND='git status -u .'
                   MAGIC_ENTER_OTHER_COMMAND='ls -lh .'
 
-                  # Zsh Optionen (history-bezogene werden von programs.zsh.history gehandhabt)
+                  # Zusaetzliche Zsh-Optionen (History wird von programs.zsh.history gehandhabt)
                   setopt EXTENDED_GLOB AUTO_CD NO_BEEP APPEND_HISTORY \
                          HIST_REDUCE_BLANKS HIST_VERIFY INC_APPEND_HISTORY
 
-                  # Extra ergonomics / safety
-                  setopt NO_CLOBBER
-                  setopt GLOB_DOTS
+                  setopt NO_CLOBBER  # > ueberschreibt nicht, >| erzwingen
+                  setopt GLOB_DOTS   # Dotfiles in Globs einschliessen
 
-                  # Parametrisierbarer Flake-Root
                   : "''${RENIX_FLAKE_ROOT:=$HOME/mynix/hosts/macos}"
 
                   unalias renix 2>/dev/null || true
 
-                  # rtfm: cheat.sh mit Fallback tldr
+                  # rtfm: cheat.sh Lookup, Fallback auf tldr
                   rtfm() {
                     if [ -z "$1" ]; then
                       echo "Usage: rtfm <topic>"
@@ -65,7 +65,8 @@ in
                     fi
                   }
 
-                  # renix Flags: --no-gc --no-mas --no-rebuild --help
+                  # renix: Kompletter System-Rebuild
+                  # 1) mas upgrade  2) darwin-rebuild  3) nix GC  4) brew cleanup
                   renix() {
                     local host="$(scutil --get LocalHostName 2>/dev/null)"
                     local flake="''${RENIX_FLAKE_ROOT}\#''${host}"
@@ -85,8 +86,8 @@ in
         --no-gc        Skip nix-collect-garbage
         --no-mas       Skip mas upgrade
         --no-rebuild   Skip darwin-rebuild
-        --help         Hilfe
-      Falls weitere Args (ohne --no-*) übergeben werden, ersetzen sie den Standard-Rebuild.
+        --help         Show help
+      Extra args (without --no-*) replace the default rebuild command.
       ENV: RENIX_FLAKE_ROOT='$RENIX_FLAKE_ROOT'
       EOF
                           return 0
@@ -171,10 +172,11 @@ in
         "web-search"
         "zsh-navigation-tools"
       ];
-      theme = "";  # Starship uebernimmt den Prompt
+      theme = ""; # deaktiviert — Starship uebernimmt den Prompt
     };
   };
 
+  # Starship: Catppuccin Mocha, Powerline-Segmente
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
@@ -182,29 +184,28 @@ in
     settings = {
       palette = "catppuccin_mocha";
 
-      format = ''[](red)''$os''$username[](bg:peach fg:red)''$directory[](bg:yellow fg:peach)''$git_branch''$git_status[](fg:yellow bg:green)''$c''$rust''$golang''$nodejs''$php''$java''$kotlin''$haskell''$python[](fg:green bg:sapphire)''$conda[](fg:sapphire bg:lavender)''$time[ ](fg:lavender)''$cmd_duration''$line_break''$character'';
+      format = ''[](red)''$os''$username[](bg:peach fg:red)''$directory[](bg:yellow fg:peach)''$git_branch''$git_status[](fg:yellow bg:green)''$c''$rust''$golang''$nodejs''$php''$java''$kotlin''$haskell''$python[](fg:green bg:sapphire)''$conda[](fg:sapphire bg:lavender)''$time[ ](fg:lavender)''$cmd_duration''$line_break''$character'';
 
-      # Module
       os = {
         disabled = false;
         style = "bg:red fg:crust";
         symbols = {
-          Windows = "";
+          Windows = "";
           Ubuntu = "󰕈";
-          SUSE = "";
+          SUSE = "";
           Raspbian = "󰐿";
           Mint = "󰣭";
           Macos = "󰀵";
-          Manjaro = "";
+          Manjaro = "";
           Linux = "󰌽";
           Gentoo = "󰣨";
           Fedora = "󰣛";
-          Alpine = "";
-          Amazon = "";
-          Android = "";
+          Alpine = "";
+          Amazon = "";
+          Android = "";
           Arch = "󰣇";
           Artix = "󰣇";
-          CentOS = "";
+          CentOS = "";
           Debian = "󰣚";
           Redhat = "󱄛";
           RedHatEnterprise = "󱄛";
@@ -225,15 +226,15 @@ in
         truncation_symbol = "…/";
         substitutions = {
           "Documents" = "󰈙 ";
-          "Downloads" = " ";
+          "Downloads" = " ";
           "Music" = "🎵 ";
-          "Pictures" = " ";
+          "Pictures" = " ";
           "Developer" = "󰲋 ";
         };
       };
 
       git_branch = {
-        symbol = "";
+        symbol = "";
         style = "bg:yellow";
         format = ''[[ ''$symbol ''$branch ](fg:crust bg:yellow)]( ''${style} )'';
       };
@@ -243,62 +244,19 @@ in
         format = ''[[(''${all_status}''${ahead_behind} )](fg:crust bg:yellow)]( ''${style} )'';
       };
 
-      nodejs = {
-        symbol = "";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      c = {
-        symbol = " ";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      rust = {
-        symbol = "";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      golang = {
-        symbol = "";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      php = {
-        symbol = "";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      java = {
-        symbol = " ";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      kotlin = {
-        symbol = "";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      haskell = {
-        symbol = "";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )'';
-      };
-
-      python = {
-        symbol = "";
-        style = "bg:green";
-        format = ''[[ ''$symbol( ''${version})(\(#''${virtualenv}\)) ](fg:crust bg:green)]( ''${style} )'';
-      };
+      # Sprach-Module (gleiches Format, gruenes Segment)
+      nodejs  = { symbol = ""; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      c       = { symbol = " "; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      rust    = { symbol = ""; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      golang  = { symbol = ""; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      php     = { symbol = ""; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      java    = { symbol = " "; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      kotlin  = { symbol = ""; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      haskell = { symbol = ""; style = "bg:green"; format = ''[[ ''$symbol( ''${version}) ](fg:crust bg:green)]( ''${style} )''; };
+      python  = { symbol = ""; style = "bg:green"; format = ''[[ ''$symbol( ''${version})(\(#''${virtualenv}\)) ](fg:crust bg:green)]( ''${style} )''; };
 
       conda = {
-        symbol = "  ";
+        symbol = "  ";
         style = "fg:crust bg:sapphire";
         format = ''[''$symbol''${environment} ](''${style})'';
         ignore_base = false;
@@ -308,7 +266,7 @@ in
         disabled = false;
         time_format = "%R";
         style = "bg:lavender";
-        format = ''[[  ''$time ](fg:crust bg:lavender)]( ''${style} )'';
+        format = ''[[  ''$time ](fg:crust bg:lavender)]( ''${style} )'';
       };
 
       line_break.disabled = false;
@@ -325,17 +283,14 @@ in
 
       cmd_duration = {
         show_milliseconds = true;
-        format = " in ''$duration ";
+        format = " in ''$duration ";
         style = "bg:lavender";
         disabled = false;
         show_notifications = true;
-        min_time_to_notify = 45000;
+        min_time_to_notify = 45000; # Desktop-Notification ab 45s
       };
 
-      # Farbpalette aus zentraler theme.nix
-      palettes = {
-        catppuccin_mocha = colors;
-      };
+      palettes.catppuccin_mocha = colors;
     };
   };
 }

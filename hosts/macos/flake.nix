@@ -1,5 +1,5 @@
 {
-  description = "Markus zenful darwin system flake";
+  description = "MacBachi nix-darwin flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -19,19 +19,18 @@
 
   outputs = inputs@{ self, nix-darwin, nix-vscode-extensions, home-manager, nixpkgs, mac-app-util, ... }:
   let
-    # --- Konfiguration ---
     aarch64_hosts = [ "rizzo2025" "beaker2025" ];
     x86_64_hosts  = [ "scooter2016" ];
     user = "mb";
 
-    # --- 1. Darwin System Builder ---
+    # Darwin System Builder: nix-darwin + home-manager + mac-app-util
     mkHostConfigs = system: hosts: let
       currentModules = [
         ./darwin
         home-manager.darwinModules.home-manager
         (if system == "aarch64-darwin" then mac-app-util.darwinModules.default else {})
         ({ pkgs, ... }: {
-           home-manager.sharedModules = 
+           home-manager.sharedModules =
              if system == "aarch64-darwin" then [ mac-app-util.homeManagerModules.default ] else [];
         })
       ];
@@ -44,14 +43,14 @@
         };
       }) hosts );
 
-    # --- 2. Home Manager Builder (NEU & FIX) ---
+    # Standalone Home-Manager Builder (fuer Debugging)
     mkHomeConfigs = system: hosts: builtins.listToAttrs (
       map (host: {
         name = host;
         value = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = { inherit inputs; };
-          modules = [ 
+          modules = [
             ./home/default.nix
             {
                home.username = user;
@@ -63,13 +62,11 @@
     );
 
   in {
-    # Output für renix / darwin-rebuild
-    darwinConfigurations = 
+    darwinConfigurations =
       (mkHostConfigs "aarch64-darwin" aarch64_hosts) //
       (mkHostConfigs "x86_64-darwin" x86_64_hosts);
 
-    # Output für Debugging & Standalone Builds
-    homeManagerConfigurations = 
+    homeManagerConfigurations =
       (mkHomeConfigs "aarch64-darwin" aarch64_hosts) //
       (mkHomeConfigs "x86_64-darwin" x86_64_hosts);
   };
