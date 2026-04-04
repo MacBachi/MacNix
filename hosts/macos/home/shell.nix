@@ -98,7 +98,7 @@ in
 
                     if [ "$do_mas" -eq 1 ] && command -v mas >/dev/null 2>&1; then
                       echo "[renix] mas upgrade…"
-                      mas upgrade || echo "[renix] (warn) mas upgrade failed."
+                      MAS_NO_AUTO_INDEX=1 mas upgrade || echo "[renix] (warn) mas upgrade failed."
                     elif [ "$do_mas" -eq 1 ]; then
                       echo "[renix] mas not installed (skip)."
                     fi
