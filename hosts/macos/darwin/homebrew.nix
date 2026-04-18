@@ -14,6 +14,7 @@
     casks = [
       # Browser
       "orion"
+      "brave-browser"
 
       # Kommunikation
       "signal"
