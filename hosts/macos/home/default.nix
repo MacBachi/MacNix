@@ -9,6 +9,7 @@
     ./git.nix
     ./editors.nix
     ./terminal.nix
+    ./firefox.nix
   ];
 
   home.stateVersion = "25.05";
