@@ -41,23 +41,22 @@
   };
 
   # SSH: 1Password Agent, Port 443 fuer GitHub (Firewall-freundlich)
+  # Neue API (Home Manager): programs.ssh.settings mit upstream OpenSSH-Directive-Namen
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
-        extraOptions = {
-          HashKnownHosts = "yes";
-          StrictHostKeyChecking = "ask";
-          LogLevel = "ERROR";
-          ForwardX11 = "no";
-          ForwardAgent = "no";
-          IdentityAgent = "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
-        };
+        HashKnownHosts = "yes";
+        StrictHostKeyChecking = "ask";
+        LogLevel = "ERROR";
+        ForwardX11 = "no";
+        ForwardAgent = "no";
+        IdentityAgent = "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
       };
       "github.com" = {
-        hostname = "ssh.github.com";
-        port = 443;
+        HostName = "ssh.github.com";
+        Port = 443;
       };
     };
   };

@@ -4,7 +4,9 @@
   home.packages = with pkgs; [
     hostmux    # SSH Multi-Host via Tmux
     nixfmt     # Nix Code Formatter
-    pipx       # Python CLI Apps in isolierten Envs
+    # pipx: tests in test_package_specifier.py failen aktuell in nixpkgs-unstable
+    # (whitespace-mismatch im packaging output). doCheck=false bis nixpkgs gefixt.
+    (pipx.overrideAttrs (_: { doCheck = false; doInstallCheck = false; }))
 
     # CLI
     tldr       # Kurzanleitungen fuer CLI-Tools

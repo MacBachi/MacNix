@@ -4,6 +4,8 @@
   programs.neovim = {
     enable = true;
     withNodeJs = true;
+    withRuby = false;    # neuer Default ab home.stateVersion 26.05
+    withPython3 = false; # neuer Default ab home.stateVersion 26.05
     viAlias = true;  # vi -> nvim
     vimAlias = true; # vim -> nvim
     extraConfig = ''
@@ -127,7 +129,7 @@
           mechatroner.rainbow-csv
           mhutchie.git-graph
           ms-python.debugpy
-          ms-python.python
+          # ms-python.python  # TODO: re-enable wenn nixpkgs jedi-language-server vs jedi 0.20 gefixt hat
           ms-python.vscode-pylance
           ms-toolsai.jupyter
           ms-toolsai.jupyter-keymap

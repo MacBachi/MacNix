@@ -73,25 +73,52 @@ After any config change, run `renix` in your shell. It handles everything:
 
 ```
 renix [options]
+  --no-update    Skip nix flake update
   --no-gc        Skip garbage collection
   --no-mas       Skip Mac App Store upgrade
   --no-rebuild   Skip darwin-rebuild
+  --rollback     Pick previous flake.lock via fzf and rebuild
+  --list-locks   List available flake.lock backups
+  --logs         List recent renix run logs
   --help         Show help
+
+ENV overrides:
+  RENIX_MODE=s|b|d        Skip mode prompt: switch / build / dry-run
+  RENIX_AUTOROLLBACK=1    On rebuild failure after update, auto-restore previous lock
 ```
 
-What `renix` does:
-1. Upgrades Mac App Store apps (`mas upgrade`)
-2. Runs `darwin-rebuild switch` (applies nix + homebrew changes)
-3. Runs `nix-collect-garbage -d`
-4. Runs `brew cleanup --prune=7`
-5. Shows Nix store size
+At the start of each interactive run, `renix` asks for the **rebuild mode**:
 
-### Update flake inputs
+- **switch** (default, just press Enter): build + activate (the normal rebuild)
+- **build**: build without activating, then show `nix store diff-closures` against the live system — see exactly which packages would change, without committing
+- **dry-run**: only evaluate the flake and report what would be built (no actual build)
+
+What `renix` does (switch mode):
+1. Upgrades Mac App Store apps (`mas upgrade`)
+2. Backs up current `flake.lock` to `$XDG_STATE_HOME/mynix/flake-locks/flake.lock.<timestamp>` (last 20 retained)
+3. Runs `nix flake update` (pulls latest inputs)
+4. Runs `darwin-rebuild switch` (applies nix + homebrew changes)
+5. Runs `nix-collect-garbage -d`
+6. Runs `brew cleanup --prune=7`
+7. Shows Nix store size
+
+(build / dry-run skip steps 4–7.)
+
+Every run is logged to `$XDG_STATE_HOME/mynix/logs/renix.<timestamp>.log` — header with host, args, mode, tool versions, nixpkgs revision; full stdout/stderr; footer with duration + exit code. Last 20 logs retained.
+
+**On build failure**, renix automatically extracts the failed derivations' build logs (via `nix log`) and appends them to the run log — no more hunting through `/nix/var/log/nix/drvs/`.
+
+### Rollback
+
+If a rebuild breaks after an update, pick a previous `flake.lock`:
 
 ```bash
-nix flake update --flake $HOME/mynix/hosts/macos
-renix
+renix --rollback          # fzf-Picker, restore lock, rebuild without update
+renix --list-locks        # list available backups
+renix --logs              # list recent run logs (paste path to your AI assistant for debugging)
 ```
+
+Backups and logs are host-local (not in git), so each machine has its own history.
 
 ## Automatic Maintenance
 
