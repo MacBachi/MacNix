@@ -5,6 +5,11 @@
 
   home.shellAliases = {
     top = "btop";
+    cat = "bat";
+    ls = "eza --icons";
+    ll = "eza --icons --long --git";
+    tree = "eza --tree --git-ignore";
+    watch = "viddy";
     flushdns = "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder";
     shownix = "find . -type f -name \"*.nix\" -exec echo \"--- FILE: {} ---\" \\; -exec cat {} \\;";
   };

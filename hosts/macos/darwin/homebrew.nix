@@ -78,6 +78,7 @@
 
       # Dateien & Suche
       "aria2"
+      "eza"
       "fd"
       "lftp"
       "ncdu"
@@ -95,6 +96,7 @@
       "procs"
       "pv"
       "progress"
+      "viddy"
 
       # Shell & Navigation
       "atuin"
@@ -116,9 +118,11 @@
       "sops"
 
       # Text, Diff & JSON
+      "bat"
       "cheat"
       "chroma"
       "colordiff"
+      "glow"
       "httpie"
       "icdiff"
       "jq"
@@ -129,6 +133,7 @@
       "piknik"
 
       # Fun
+      "chafa"
       "cowsay"
       "fortune"
       "lolcat"
