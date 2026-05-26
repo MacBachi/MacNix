@@ -27,6 +27,9 @@ let
   userJs = pkgs.writeText "firefox-user.js" ''
     // generiert von nix - manuelle edits werden ueberschrieben
 
+    // userChrome.css aktivieren (sonst wird die datei ignoriert, default false seit FF69)
+    user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+
     // telemetrie / studies / discovery
     user_pref("toolkit.telemetry.enabled", false);
     user_pref("toolkit.telemetry.unified", false);
