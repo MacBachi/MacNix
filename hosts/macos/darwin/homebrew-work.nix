@@ -10,5 +10,6 @@
     "microsoft-onenote"
     "microsoft-teams"
     "microsoft-auto-update"   # Lizenz-Pflicht fuer Office
+    "microsoft-edge"          # Browser fuer SSO/Tenant-spezifische Webapps
   ];
 }
