@@ -62,7 +62,7 @@ Four-layer composition, wired together in [hosts/macos/flake.nix](hosts/macos/fl
 
 ### Shared / private / work split
 
-Three host *flavors* exist: private machines (3x) and the corporate machine `PN1030UZ2568748`. To avoid host-specific tools leaking onto the wrong machine, `home/packages.nix` and `darwin/homebrew.nix` are each split into three files:
+Two host flavors exist: private machines (3x: `rizzo2025`, `beaker2025`, `scooter2016`) and the corporate machine `PN1030UZ2568748`. To avoid host-specific tools leaking onto the wrong machine, `home/packages.nix` and `darwin/homebrew.nix` are each split into three files:
 
 - **`*-shared.nix`** — gilt überall (every host imports it via its per-host file).
 - **`*-private.nix`** — only on private machines. Hold tools that EDR/corporate-policy would flag (offensive security, container CLI, personal apps).
