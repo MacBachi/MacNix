@@ -1,5 +1,6 @@
 # macOS Defaults: Keyboard, Trackpad, Safari, Finder, Dock, etc.
 # Aenderungen werden nach Rebuild ohne Logout aktiviert (postActivation)
+{ user, ... }:
 {
   system.defaults = {
 
@@ -200,6 +201,6 @@
 
   # Settings sofort aktivieren ohne Logout
   system.activationScripts.postActivation.text = ''
-      sudo -u mb /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+      sudo -u ${user} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
       '';
 }
