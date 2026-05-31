@@ -54,6 +54,7 @@
       "knockknock"
       "nordvpn"
       "yubico-authenticator"
+      "1password-cli"        # ehemals brew-formula, jetzt nur noch als cask
       # 1password: direct-install via darwin/onepassword.nix (Cask haengt versionsmaessig hinter)
     ];
 
@@ -111,7 +112,6 @@
       "age"
       "gnupg"
       "sops"
-      "1password-cli"
 
       # Text, Diff & JSON
       "bat"
