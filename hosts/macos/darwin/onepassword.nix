@@ -34,25 +34,47 @@
     trap 'rm -rf "$TMP"' EXIT
 
     echo "[1password] checking CDN..." >&2
-    if ${pkgs.curl}/bin/curl -fsSL -o "$TMP/1p.zip" "$URL"; then
-      ${pkgs.unzip}/bin/unzip -q "$TMP/1p.zip" -d "$TMP/extracted/"
-
-      NEW_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw "$TMP/extracted/1Password.app/Contents/Info.plist" 2>/dev/null || echo "")
-      OLD_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw "$TARGET/Contents/Info.plist" 2>/dev/null || echo "")
-
-      if [ -n "$NEW_VER" ] && [ "$NEW_VER" != "$OLD_VER" ]; then
-        if /usr/bin/pgrep -x "1Password" >/dev/null; then
-          echo "[1password] version differs (have:''${OLD_VER:-none} want:$NEW_VER) but 1Password is running. Quit it and rerun renix to upgrade." >&2
-        else
-          rm -rf "$TARGET"
-          mv "$TMP/extracted/1Password.app" "$TARGET"
-          echo "[1password] installed $NEW_VER (was: ''${OLD_VER:-none})" >&2
-        fi
-      else
-        echo "[1password] already at $NEW_VER" >&2
-      fi
-    else
+    if ! ${pkgs.curl}/bin/curl -fsSL -o "$TMP/1p.zip" "$URL"; then
       echo "[1password] WARN: CDN download failed" >&2
+      exit 0
+    fi
+    ${pkgs.unzip}/bin/unzip -q "$TMP/1p.zip" -d "$TMP/extracted/"
+
+    SRC="$TMP/extracted/1Password.app"
+    if [ ! -d "$SRC" ]; then
+      echo "[1password] WARN: zip ergab kein 1Password.app im erwarteten Pfad. Inhalt:" >&2
+      ${pkgs.coreutils}/bin/ls "$TMP/extracted/" >&2
+      exit 0
+    fi
+
+    # -o - forciert stdout (sonst je nach macOS-Version inkonsistent)
+    NEW_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw -o - "$SRC/Contents/Info.plist" 2>/dev/null || echo "")
+    OLD_VER=""
+    if [ -f "$TARGET/Contents/Info.plist" ]; then
+      OLD_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw -o - "$TARGET/Contents/Info.plist" 2>/dev/null || echo "")
+    fi
+
+    INSTALL=0
+    REASON=""
+    if [ ! -d "$TARGET" ]; then
+      INSTALL=1
+      REASON="target fehlt"
+    elif [ -z "$NEW_VER" ] || [ -z "$OLD_VER" ]; then
+      INSTALL=1
+      REASON="version-vergleich nicht moeglich (new:''${NEW_VER:-?} old:''${OLD_VER:-?}), zur Sicherheit ersetzen"
+    elif [ "$NEW_VER" != "$OLD_VER" ]; then
+      INSTALL=1
+      REASON="version-update $OLD_VER -> $NEW_VER"
+    fi
+
+    if [ "$INSTALL" -eq 0 ]; then
+      echo "[1password] already at $NEW_VER" >&2
+    elif /usr/bin/pgrep -x "1Password" >/dev/null; then
+      echo "[1password] $REASON, aber 1Password laeuft. Beenden und renix erneut starten." >&2
+    else
+      rm -rf "$TARGET"
+      mv "$SRC" "$TARGET"
+      echo "[1password] installed ''${NEW_VER:-?} ($REASON)" >&2
     fi
   '';
 }
