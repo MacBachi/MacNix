@@ -29,20 +29,25 @@
   # Version mit "heute" mtime installieren).
   system.activationScripts.postActivation.text = lib.mkAfter ''
     TARGET="/Applications/1Password.app"
-    URL="https://downloads.1password.com/mac/1Password.pkg"
+    URL="https://downloads.1password.com/mac/1Password.zip"
     TMP=$(mktemp -d)
     trap 'rm -rf "$TMP"' EXIT
 
     echo "[1password] checking CDN..." >&2
-    if ! ${pkgs.curl}/bin/curl -fsSL -o "$TMP/1p.pkg" "$URL"; then
-      echo "[1password] WARN: CDN download fehlgeschlagen ($URL)" >&2
+    if ! ${pkgs.curl}/bin/curl -fsSL --connect-timeout 10 --max-time 180 -o "$TMP/1p.zip" "$URL"; then
+      echo "[1password] WARN: CDN download fehlgeschlagen (timeout/error)" >&2
       exit 0
     fi
 
-    # Sicherheit: ist das ein PKG (xar archive)?
-    if ! /usr/bin/file "$TMP/1p.pkg" | /usr/bin/grep -qiE "xar|installer"; then
-      echo "[1password] WARN: heruntergeladene datei ist kein PKG:" >&2
-      /usr/bin/file "$TMP/1p.pkg" >&2
+    ${pkgs.unzip}/bin/unzip -q "$TMP/1p.zip" -d "$TMP/extracted/"
+
+    # CDN serviert mal direktes 1Password.app, mal Installer-Wrapper mit
+    # .pkg oder .app drin - recursive find findet beides.
+    APP=$(/usr/bin/find "$TMP/extracted" -maxdepth 5 -type d -name "1Password.app" 2>/dev/null | /usr/bin/grep -v Installer | /usr/bin/head -1)
+    PKG=$(/usr/bin/find "$TMP/extracted" -maxdepth 5 -name "*.pkg" 2>/dev/null | /usr/bin/head -1)
+
+    if /usr/bin/pgrep -x "1Password" >/dev/null; then
+      echo "[1password] 1Password laeuft - skip install" >&2
       exit 0
     fi
 
@@ -51,20 +56,21 @@
       OLD_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw -o - "$TARGET/Contents/Info.plist" 2>/dev/null || echo "")
     fi
 
-    if /usr/bin/pgrep -x "1Password" >/dev/null; then
-      echo "[1password] 1Password laeuft - skip installer (update beim naechsten renix wenn beendet)" >&2
-      exit 0
-    fi
-
-    if /usr/sbin/installer -pkg "$TMP/1p.pkg" -target / >/dev/null 2>&1; then
-      NEW_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw -o - "$TARGET/Contents/Info.plist" 2>/dev/null || echo "?")
-      if [ "$NEW_VER" = "$OLD_VER" ]; then
-        echo "[1password] reinstalled $NEW_VER (same version)" >&2
+    if [ -n "$PKG" ]; then
+      if /usr/sbin/installer -pkg "$PKG" -target / >/dev/null 2>&1; then
+        NEW_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw -o - "$TARGET/Contents/Info.plist" 2>/dev/null || echo "?")
+        echo "[1password] installed $NEW_VER via pkg (was: ''${OLD_VER:-none})" >&2
       else
-        echo "[1password] installed $NEW_VER (was: ''${OLD_VER:-none})" >&2
+        echo "[1password] WARN: pkg installer fehlgeschlagen" >&2
       fi
+    elif [ -n "$APP" ]; then
+      rm -rf "$TARGET"
+      /bin/cp -R "$APP" "$TARGET"
+      NEW_VER=$(/usr/bin/plutil -extract CFBundleShortVersionString raw -o - "$TARGET/Contents/Info.plist" 2>/dev/null || echo "?")
+      echo "[1password] installed $NEW_VER via app-copy (was: ''${OLD_VER:-none})" >&2
     else
-      echo "[1password] WARN: installer fehlgeschlagen" >&2
+      echo "[1password] WARN: weder .pkg noch echte 1Password.app im zip gefunden. tree:" >&2
+      /usr/bin/find "$TMP/extracted" -maxdepth 3 >&2
     fi
   '';
 }
