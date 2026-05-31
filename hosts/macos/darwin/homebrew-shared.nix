@@ -1,7 +1,16 @@
 # Homebrew shared: Casks, Brews, Mac App Store - was auf ALLEN Hosts gilt.
 # zap = entfernt nicht-deklarierte Pakete bei jedem Rebuild
-{ user, ... }:
+{ lib, user, ... }:
 {
+  # Sequenzielle Downloads (statt brew's default parallel).
+  # Grund: Corporate Inspection-Proxies (z.B. Defender for Endpoint) brechen
+  # parallele TLS-Streams bei grossen Cask-Downloads mit bad-decrypt Fehler ab.
+  # mkBefore = der Export laeuft vor dem nix-darwin homebrew Activation-Script,
+  # alle Scripte teilen sich denselben Shell-Prozess.
+  system.activationScripts.homebrew.text = lib.mkBefore ''
+    export HOMEBREW_DOWNLOAD_CONCURRENCY=1
+  '';
+
   homebrew = {
     enable = true;
     user = user;
@@ -42,7 +51,7 @@
       "knockknock"
       "nordvpn"
       "yubico-authenticator"
-      "1password"
+      # 1password: direct-install via darwin/onepassword.nix (Cask haengt versionsmaessig hinter)
     ];
 
     brews = [
