@@ -22,9 +22,9 @@
     # Per-Host Konfiguration. Wer einen neuen Host hinzufuegt, traegt ihn hier
     # ein und legt optional ./hosts/<hostname>.nix als 'extras'-Modul an.
     hosts = {
-      rizzo2025   = { system = "aarch64-darwin"; user = "mb"; uid = 501; extras = []; };
-      beaker2025  = { system = "aarch64-darwin"; user = "mb"; uid = 501; extras = []; };
-      scooter2016 = { system = "x86_64-darwin";  user = "mb"; uid = 501; extras = []; };
+      rizzo2025   = { system = "aarch64-darwin"; user = "mb"; uid = 501; extras = [ ./per-host/rizzo2025.nix ]; };
+      beaker2025  = { system = "aarch64-darwin"; user = "mb"; uid = 501; extras = [ ./per-host/beaker2025.nix ]; };
+      scooter2016 = { system = "x86_64-darwin";  user = "mb"; uid = 501; extras = [ ./per-host/scooter2016.nix ]; };
     };
 
     # Darwin System Builder: nix-darwin + home-manager + mac-app-util.

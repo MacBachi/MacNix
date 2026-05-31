@@ -1,10 +1,10 @@
-# Home-Manager Einstiegspunkt: alle User-Module
+# Home-Manager Einstiegspunkt: Module die auf JEDEM Host gelten.
+# packages-{shared,private,work}.nix wandern via per-host/HOSTNAME.nix rein.
 {
   imports = [
     ./theme.nix
     ./environment.nix
     ./shell.nix
-    ./packages.nix
     ./dotfiles.nix
     ./git.nix
     ./editors.nix
