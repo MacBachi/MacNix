@@ -42,6 +42,7 @@
       "knockknock"
       "nordvpn"
       "yubico-authenticator"
+      "1password"
     ];
 
     brews = [
@@ -97,6 +98,7 @@
       "age"
       "gnupg"
       "sops"
+      "1password-cli"
 
       # Text, Diff & JSON
       "bat"

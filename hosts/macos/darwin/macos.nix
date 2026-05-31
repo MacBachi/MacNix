@@ -107,7 +107,7 @@
         "/Applications/Firefox.app"
         "/System/Applications/Messages.app"
         "/Applications/Nix Apps/Wave.app"
-        "/Applications/Nix Apps/1Password.app"
+        "/Applications/1Password.app"
         "/System/Applications/Mail.app"
         "/Applications/Nix Apps/Obsidian.app"
         "/Applications/Setapp/Numi.app"

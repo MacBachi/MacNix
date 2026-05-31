@@ -10,8 +10,8 @@
     # Security
     pinentry_mac
     yubikey-manager
-    _1password-gui
-    _1password-cli
+    # 1password GUI + CLI via Homebrew (siehe homebrew-shared.nix) -
+    # nixpkgs-Hash drift hat Builds auf Hosts mit Inspection-Proxy gebrochen.
 
     # Apps
     drawio
