@@ -5,7 +5,7 @@
     ./system.nix
     ./packages.nix
     ./macos.nix
-    ./onepassword.nix
+    ./preflight.nix
     # homebrew-{shared,private,work}.nix wandern via per-host/HOSTNAME.nix rein
     ./users.nix
   ];
