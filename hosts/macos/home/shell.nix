@@ -289,7 +289,8 @@ in
                       # GC nur nach erfolgreichem switch (build/dry-run aendern System nicht)
                       if [ "$do_gc" -eq 1 ] && [ "$mode" = "switch" ]; then
                         echo "[renix] --- nix GC ---"
-                        nix-collect-garbage -d || echo "[renix] (warn) GC failed."
+                        # nur Store-Cleanup (kein -d): Generation-GC macht der nix-smart-gc launchd-Daemon
+                        nix-collect-garbage || echo "[renix] (warn) GC failed."
                         if command -v brew >/dev/null 2>&1; then
                           echo "[renix] --- brew cleanup ---"
                           brew cleanup --prune=7 2>/dev/null || true
