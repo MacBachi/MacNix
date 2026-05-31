@@ -1,5 +1,5 @@
 # Nix-Einstellungen, GC, Store-Optimierung, Firewall, sudo
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 
 let
   # Smart-GC: behaelt mind. die letzten minKeep System-Generations UND
@@ -47,7 +47,7 @@ let
   '';
 in
 {
-  system.primaryUser = "mb";
+  system.primaryUser = user;
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];

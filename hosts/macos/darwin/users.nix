@@ -1,10 +1,9 @@
-# Benutzer-Definition
+# Benutzer-Definition (Werte kommen via specialArgs aus flake.nix:hosts)
+{ user, uid, ... }:
 {
-  users.users = {
-    mb = {
-      name = "mb";
-      home = "/Users/mb";
-      uid = 501;
-    };
+  users.users.${user} = {
+    name = user;
+    home = "/Users/${user}";
+    inherit uid;
   };
 }

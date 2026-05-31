@@ -1,10 +1,10 @@
 # Homebrew: Casks, Brews, Mac App Store
 # zap = entfernt nicht-deklarierte Pakete bei jedem Rebuild
-{ ... }:
+{ user, ... }:
 {
   homebrew = {
     enable = true;
-    user = "mb";
+    user = user;
     onActivation = {
       autoUpdate = true;
       upgrade = true;

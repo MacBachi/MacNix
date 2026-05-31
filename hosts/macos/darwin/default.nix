@@ -1,5 +1,5 @@
 # Darwin-Einstiegspunkt: System-Module + Home-Manager Wiring
-{ inputs, ... }:
+{ inputs, user, ... }:
 {
   imports = [
     ./system.nix
@@ -18,7 +18,7 @@
 
   home-manager.extraSpecialArgs = { inherit inputs; };
 
-  home-manager.users.mb = {
+  home-manager.users.${user} = {
     imports = [
       ../home
     ];
