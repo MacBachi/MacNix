@@ -2,13 +2,16 @@
 # zap = entfernt nicht-deklarierte Pakete bei jedem Rebuild
 { lib, user, ... }:
 {
-  # Sequenzielle Downloads (statt brew's default parallel).
-  # Grund: Corporate Inspection-Proxies (z.B. Defender for Endpoint) brechen
-  # parallele TLS-Streams bei grossen Cask-Downloads mit bad-decrypt Fehler ab.
-  # mkBefore = der Export laeuft vor dem nix-darwin homebrew Activation-Script,
-  # alle Scripte teilen sich denselben Shell-Prozess.
+  # Brew env-Tweaks gegen Corporate-Network-Probleme.
+  # mkBefore = exports laufen im selben Shell-Kontext vor brew bundle.
+  # - DOWNLOAD_CONCURRENCY=1: keine parallelen Downloads (Inspection-Proxy bricht sonst TLS ab)
+  # - FORCE_BREWED_CURL=1: brew-eigene curl (OpenSSL) statt System-LibreSSL,
+  #   handles corporate-proxy TLS-Quirks oft besser. Setzt voraus dass brew curl installiert ist.
+  # - CURL_RETRIES=5: automatischer retry bei transient failures
   system.activationScripts.homebrew.text = lib.mkBefore ''
     export HOMEBREW_DOWNLOAD_CONCURRENCY=1
+    export HOMEBREW_FORCE_BREWED_CURL=1
+    export HOMEBREW_CURL_RETRIES=5
   '';
 
   homebrew = {
@@ -70,6 +73,7 @@
 
       # Dateien & Suche
       "aria2"
+      "curl"            # brew-eigene curl mit OpenSSL (siehe HOMEBREW_FORCE_BREWED_CURL oben)
       "eza"
       "fd"
       "lftp"
