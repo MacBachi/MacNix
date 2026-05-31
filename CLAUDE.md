@@ -32,6 +32,11 @@ RENIX_AUTOROLLBACK=1 renix                  # on failure after update, lock auto
 # Note: must quote the flake URL — zsh with EXTENDED_GLOB treats '#' as a glob qualifier
 sudo darwin-rebuild switch --flake "$HOME/mynix/hosts/macos#$(scutil --get LocalHostName)"
 
+# Fresh-machine bootstrap: before the first darwin-rebuild, move conflicting
+# system files aside or activation fails:
+#   sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
+#   sudo mv /etc/zshrc  /etc/zshrc.before-nix-darwin
+
 # Debugging a Home Manager module in isolation (without darwin-rebuild)
 nix build $HOME/mynix/hosts/macos#homeManagerConfigurations.<host>.activationPackage
 ```
@@ -79,3 +84,4 @@ Three-layer composition, wired together in [hosts/macos/flake.nix](hosts/macos/f
 - `home.sessionPath` includes `/opt/homebrew/bin` — brews installed via Nix's Homebrew module are on PATH automatically, no manual prepending needed.
 - `system.primaryUser = "mb"` and `users.users.mb.uid = 501` are hardcoded — this is a single-user config, not multi-user generic.
 - Firewall is set to `allowSigned = false` (signed-app block, "congress mode"). This is intentional; don't relax it without asking.
+- **Automatic maintenance is already scheduled** in `darwin/system.nix`: Nix GC runs weekly (Sun 03:15, deletes generations >2 days old) and Nix store optimization runs weekly (Sun 04:00). Don't add a second GC schedule.
