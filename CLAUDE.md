@@ -61,7 +61,7 @@ Three-layer composition, wired together in [hosts/macos/flake.nix](hosts/macos/f
 
 ### Cross-module conventions
 
-- **Theme palette** lives in [home/theme.nix](hosts/macos/home/theme.nix) as a Nix option (`config.theme.catppuccin-mocha`). Consumers (`shell.nix` Starship, `terminal.nix` Tmux) read it via `config.theme.catppuccin-mocha` — do **not** hardcode hex colors elsewhere.
+- **Theme palette** lives in [home/theme.nix](hosts/macos/home/theme.nix) as a Nix option (`config.theme.catppuccin-mocha`). Consumers (`shell.nix` Starship, `terminal.nix` Tmux, `firefox.nix` userChrome.css) read it via `config.theme.catppuccin-mocha` — do **not** hardcode hex colors elsewhere.
 - **Homebrew uses `cleanup = "zap"`** ([darwin/homebrew.nix](hosts/macos/darwin/homebrew.nix)): any cask/brew not declared here is **removed on every rebuild**. Don't `brew install` manually — add it to the file.
 - **`flake.lock` is gitignored** (see `.gitignore` — "bewusst ungetrackt"). `renix` runs `nix flake update` by default and backs up the previous lock to `$XDG_STATE_HOME/mynix/flake-locks/` for rollback. Don't commit it — hosts would diverge.
 - **`.claude/` is gitignored** — local Claude Code settings are not shared.
@@ -72,10 +72,11 @@ Three-layer composition, wired together in [hosts/macos/flake.nix](hosts/macos/f
 - New CLI tool from nixpkgs → `home/packages.nix`
 - New GUI app or CLI only on Homebrew → `darwin/homebrew.nix` (cask or brew)
 - New Mac App Store app → `homebrew.masApps` (needs app ID, find via `mas search`)
-- New shell alias → `home/dotfiles.nix` (`home.shellAliases`)
+- New shell alias → `home/dotfiles.nix` (`home.shellAliases`) — this file also holds **per-user macOS defaults** (`targets.darwin.defaults`, distinct from system-wide defaults in `darwin/macos.nix`) and the **fabric-ai config** stub
 - New session variable → `home/environment.nix`
-- New macOS default (Finder, Dock, etc.) → `darwin/macos.nix`
+- New system-wide macOS default (Finder, Dock, etc.) → `darwin/macos.nix`
 - Editor config → `home/editors.nix` (and `home/neovim/init.lua` for Neovim Lua)
+- Firefox `user.js` prefs or `userChrome.css` → `home/firefox.nix` (generated files are symlinked into the default profile via `home.activation`)
 
 ## Things that will trip you up
 
@@ -85,3 +86,4 @@ Three-layer composition, wired together in [hosts/macos/flake.nix](hosts/macos/f
 - `system.primaryUser = "mb"` and `users.users.mb.uid = 501` are hardcoded — this is a single-user config, not multi-user generic.
 - Firewall is set to `allowSigned = false` (signed-app block, "congress mode"). This is intentional; don't relax it without asking.
 - **Automatic maintenance is already scheduled** in `darwin/system.nix`: Nix GC runs weekly (Sun 03:15, deletes generations >2 days old) and Nix store optimization runs weekly (Sun 04:00). Don't add a second GC schedule.
+- **Firefox activation is conditional on a prior launch**: `home/firefox.nix` discovers the default profile via `~/Library/Application Support/Firefox/profiles.ini` and gracefully no-ops if it's missing. On a fresh machine, launch Firefox once, then re-run `renix` so `user.js` + `userChrome.css` actually get linked.
