@@ -11,6 +11,11 @@
       cleanup = "zap";
     };
 
+    # --adopt: vorhandene /Applications/<App>.app übernehmen statt zu blocken.
+    # Vor allem auf corporate Macs wo MDM/Intune Apps vorinstalliert hat.
+    # Auf privaten Hosts harmlos (keine Konflikte = kein Effekt).
+    caskArgs.adopt = true;
+
     casks = [
       # Browser
       "firefox"
