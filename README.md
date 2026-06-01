@@ -152,7 +152,8 @@ Configured in `darwin/system.nix`:
 
 - **Smart GC daemon (`nix-smart-gc`)**: weekly (Sunday 03:15). Keeps at least the latest 2 system generations AND anything younger than 7 days; deletes the rest. Logs to `/var/log/nix-smart-gc.log`. Replaces the built-in `nix.gc` which has no min-N floor — the previous "delete-older-than 2d" config could leave the system with zero rollback targets after idle periods.
 - **Nix Store optimization**: weekly (Sunday 04:00), hardlinks identical files
-- **Homebrew**: `onActivation.cleanup = "zap"` removes unused packages on every rebuild
+- **Homebrew auto-upgrade**: daily (12:40) via `darwin/brew-auto-upgrade.nix` — runs `brew update && brew upgrade && brew cleanup --prune=7` as launchd user agent. Logs to `~/.local/state/mynix/logs/brew-upgrade.log`. Independent of `renix` (which also upgrades via `onActivation.upgrade = true`).
+- **Homebrew cleanup**: `onActivation.cleanup = "zap"` removes unused packages on every rebuild
 
 The brew activation also sets `HOMEBREW_DOWNLOAD_CONCURRENCY=1`, `HOMEBREW_FORCE_BREWED_CURL=1`, and `HOMEBREW_CURL_RETRIES=5` (in `darwin/homebrew-shared.nix`). These work around corporate inspection-proxy quirks that broke parallel cask downloads with `bad decrypt` errors. `FORCE_BREWED_CURL=1` requires `curl` itself as a brew formula (it's in the brews list).
 

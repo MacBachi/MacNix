@@ -6,6 +6,7 @@
     ./packages.nix
     ./macos.nix
     ./preflight.nix
+    ./brew-auto-upgrade.nix
     # homebrew-{shared,private,work}.nix wandern via per-host/HOSTNAME.nix rein
     ./users.nix
   ];
