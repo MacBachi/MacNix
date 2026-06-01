@@ -53,7 +53,7 @@ The hostname (from `scutil --get LocalHostName`) **must** match a key in the `ho
 
 Four-layer composition, wired together in [hosts/macos/flake.nix](hosts/macos/flake.nix):
 
-1. **`darwin/`** — system-level (nix-darwin). `darwin/default.nix` imports the always-on modules (`system`, `packages`, `macos`, `users`) and wires Home Manager via `home-manager.users.${user} = { imports = [ ../home ]; }`. `user` and `uid` are passed via `specialArgs` per host.
+1. **`darwin/`** — system-level (nix-darwin). `darwin/default.nix` imports the always-on modules (`system`, `packages`, `macos`, `preflight`, `brew-auto-upgrade`, `users`) and wires Home Manager via `home-manager.users.${user} = { imports = [ ../home ]; }`. `user` and `uid` are passed via `specialArgs` per host. The three `homebrew-{shared,private,work}.nix` files are **not** imported here — they come in via `per-host/<hostname>.nix`.
 2. **`home/`** — user-level (Home Manager). `home/default.nix` imports the always-on modules. Per-host content (packages, brews, casks, masApps) comes from the split files below.
 3. **`per-host/<hostname>.nix`** — per-host overlay. Picks which `*-shared` / `*-private` / `*-work` fragments to import. This is where host divergence is declared. Wired in via the host's `extras` list in `flake.nix`.
 4. **`develop/flake.nix`** — standalone Python dev shell (Poetry + ruff + mypy). Independent of the system flake; entered with `nix develop` from inside a project that copies it.
@@ -90,6 +90,7 @@ The base homebrew settings (`enable`, `user`, `onActivation`) live **only** in `
 - Editor config → `home/editors.nix` (and `home/neovim/init.lua` for Neovim Lua)
 - Firefox `user.js` prefs or `userChrome.css` → `home/firefox.nix` (generated files are symlinked into the default profile via `home.activation`)
 - "App existiert nicht in /Applications" preflight warnings → `darwin/preflight.nix` (currently just 1Password, see below)
+- Daily Homebrew upgrade schedule / log path / env vars → `darwin/brew-auto-upgrade.nix` (see "trip you up" below)
 
 ## Things that will trip you up
 
@@ -106,4 +107,5 @@ The base homebrew settings (`enable`, `user`, `onActivation`) live **only** in `
 - **`darwin/macos.nix` must take `{ user, ... }`** in its function signature. It contains a `system.activationScripts.postActivation.text` block that runs `sudo -u ${user} .../activateSettings -u` to apply defaults without logout. Forgetting to parametrize this is what broke the workmac activation before — hardcoded `mb` becomes "unknown user" on the corporate machine.
 - **`darwin/homebrew-shared.nix` injects three `HOMEBREW_*` env exports** into the homebrew activation block via `mkBefore`: `DOWNLOAD_CONCURRENCY=1`, `FORCE_BREWED_CURL=1`, `CURL_RETRIES=5`. These work around corporate inspection proxies that break parallel TLS streams on large cask downloads (Office, Edge) with `bad decrypt` errors. `FORCE_BREWED_CURL=1` needs `curl` in the brews list (it is) so brew has its OpenSSL curl available.
 - **`renix` on workmac fails at the GitHub API step** even with `--no-update` because `darwin-rebuild` itself tries to update flake.lock when inputs aren't fully locked, and the corporate NAT shares a heavily-throttled IP. Workaround: invoke `darwin-rebuild switch` directly with `--no-write-lock-file` — `renix` doesn't pass that flag through.
+- **Brew can change state without `renix`.** `darwin/brew-auto-upgrade.nix` registers a launchd **user agent** (not daemon — runs as the user, no sudo) that fires daily at 12:40 and runs `brew update && brew upgrade && brew cleanup --prune=7`. It reuses the same `HOMEBREW_DOWNLOAD_CONCURRENCY=1` / `FORCE_BREWED_CURL=1` / `CURL_RETRIES=5` workarounds as the activation block (workmac would otherwise fail behind the inspection proxy). Logs at `~/.local/state/mynix/logs/brew-upgrade.log`. So if a cask seemingly updated on its own, or `brew outdated` is empty when you didn't run `renix`, that's why.
 - **Per-user macOS UI defaults are written then `activateSettings -u` refreshes them.** That refresh runs as `system.primaryUser` (parametrized) — if the active user account doesn't match `primaryUser`, defaults are written but won't take effect until logout/login.
