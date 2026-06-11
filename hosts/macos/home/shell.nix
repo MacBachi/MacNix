@@ -65,6 +65,17 @@ in
                     fi
                   }
 
+                  # restic-snap: restic-backup.service auf Remote-Host starten,
+                  #              auf Abschluss warten und die letzten Log-Marker zeigen
+                  restic-snap() {
+                    local host="''${1:?host required}"
+                    ssh "mb@$host" '
+                      sudo systemctl start restic-backup.service
+                      while sudo systemctl is-active --quiet restic-backup.service; do sleep 15; done
+                      sudo grep -E "Verify ENDE|Bind-Discovery|Backup ende" /var/log/restic-backup.log | tail -3
+                    '
+                  }
+
                   # renix: Kompletter System-Rebuild mit Logging
                   # Flow:     1) mode-prompt 2) mas upgrade 3) lock backup+update 4) rebuild 5) GC+brew cleanup
                   # Modes:    switch (default) | build (kein activate, mit closure-diff) | dry-run (kein build)
