@@ -20,7 +20,8 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "zap";
+      # cleanup = "zap";
+      cleanup = "none"; ## ZAP ist besser als uninstall, aber bugy in 06/2026
     };
 
     casks = [

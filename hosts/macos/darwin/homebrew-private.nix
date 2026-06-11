@@ -21,6 +21,7 @@
 
     # Sonstiges
     "ultimaker-cura"
+    "mattermost"
   ];
 
   homebrew.brews = [
