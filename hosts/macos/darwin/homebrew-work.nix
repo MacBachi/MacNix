@@ -6,6 +6,7 @@
 { ... }:
 {
   homebrew.casks = [
+    "copilot-cli"
     "microsoft-outlook"
     "microsoft-onenote"
     "microsoft-teams"
